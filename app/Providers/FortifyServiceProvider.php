@@ -31,7 +31,6 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
@@ -45,7 +44,7 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
 
-                
+
         //register
         Fortify::registerView(function () {
             return view('auth.register');
