@@ -18,6 +18,7 @@ class CreatePagawaiTable extends Migration
             $table->string('nama')->nullable();
             $table->string('nig')->nullable();
             $table->string('kategori_id')->nullable(); //kepsek/guru
+            $table->string('kategori_nama')->nullable(); //kepsek/guru
             $table->string('alamat')->nullable();
             $table->string('telp')->nullable();
             $table->timestamps();

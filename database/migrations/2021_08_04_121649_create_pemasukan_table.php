@@ -18,6 +18,7 @@ class CreatePemasukanTable extends Migration
             $table->string('nama')->nullable();
             $table->string('nominal')->nullable();
             $table->string('kategori_id')->nullable();
+            $table->string('kategori_nama')->nullable(); //danabos dll
             $table->string('catatan')->nullable();
             $table->timestamps();
         });
