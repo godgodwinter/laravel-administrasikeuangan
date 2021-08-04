@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +20,15 @@ Route::get('/', function () {
     return view('stisla-luar');
 });
 
-Route::get('/home', function () {
-    return view('guess/home');
+
+//halaman admin fixed
+Route::group(['middleware' => ['auth:web', 'verified']], function() {
+
+Route::get('/home', 'App\Http\Controllers\adminberandaController@index');
+
+
+// Route::get('/home', function () {
+//     return view('guess/home');
+// });
+
 });
