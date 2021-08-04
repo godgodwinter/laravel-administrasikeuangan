@@ -1,3 +1,8 @@
+@php
+    if(empty($pages)){
+        $pages='kosong';
+    }
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,7 +74,9 @@
           <ul class="sidebar-menu">
               <li class="menu-header">Dashboard</li>
             
-              <li class="nav-item dropdown">
+              <li @if ($pages==='beranda')
+              class="active"
+              @endif >
                 <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-home"></i><span>Beranda</span></a>
               </li>
 
@@ -78,16 +85,24 @@ if((Auth::user()->tipeuser)=='admin'){
     @endphp
 
               <li class="menu-header">Mastering</li>
-              <li class="nav-item dropdown">
+              <li @if ($pages==='tapel')
+                class="active"
+                @endif >
                 <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-calendar-alt"></i><span>Tahun Pelajaran</span></a>
               </li>
-              <li class="nav-item dropdown">
+              <li @if ($pages==='kelas')
+                class="active"
+                @endif >
                 <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-school"></i><span>Kelas</span></a>
               </li>
-              <li class="nav-item dropdown">
+              <li @if ($pages==='siswa')
+                class="active"
+                @endif >
                 <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-user-graduate"></i><span>Siswa</span></a>
               </li>
-              <li class="nav-item dropdown">
+              <li @if ($pages==='pegawai')
+                class="active"
+                @endif >
                 <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-building"></i><span>Pegawai</span></a>
               </li>
          
@@ -95,29 +110,32 @@ if((Auth::user()->tipeuser)=='admin'){
              
               <li class="menu-header">Transaksi</li>
 
-              <li class="nav-item dropdown">
+              <li @if ($pages==='pemasukan')
+                class="active"
+                @endif >
                 <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-hand-holding-usd"></i><span>Pemasukan</span></a>
               </li>
 
-              <li class="nav-item dropdown">
+              <li @if ($pages==='pengeluaran')
+                class="active"
+                @endif >
                 <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-file-invoice-dollar"></i><span>Pengeluaran</span></a>
               </li>
 
-              <li class="nav-item dropdown">
+              <li @if ($pages==='tagihanatur')
+                class="active"
+                @endif >
                 <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-fire"></i><span>Tagihan Atur</span></a>
               </li>
 
-              <li class="nav-item dropdown">
+              <li @if ($pages==='tagihansiswa')
+                class="active"
+                @endif >
                 <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-graduation-cap"></i><span>Tagihan Siswa</span></a>
               </li>
              
             </ul>
 
-            <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-              <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">
-                <i class="fas fa-rocket"></i> Documentation
-              </a>
-            </div>
             @php
     }elseif((Auth::user()->tipeuser)=='kepsek'){
         @endphp

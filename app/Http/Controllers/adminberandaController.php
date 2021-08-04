@@ -8,7 +8,8 @@ class adminberandaController extends Controller
 {
     public function index()
     {
-        // return view('beranda',compact('id'));
-        return view('admin.beranda');
+        $pages='beranda';
+        return view('admin.beranda',compact('pages'));
+        // return view('admin.beranda');
     }
 }
