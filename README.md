@@ -39,7 +39,7 @@
     <a href="https://github.com/godgodwinter/laravel-administrasikeuangan"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/godgodwinter/laravel-administrasikeuangan">View Demo https://inetwork.baemon.web.id</a>
+    <a href="https://github.com/godgodwinter/laravel-administrasikeuangan">View Demo</a>
     ·
     <a href="https://twitter.com/kakadlz">Report Bug</a>
     ·
@@ -76,7 +76,7 @@
 
 [![Product Name Screen Shot][product-screenshot-dashboardluar]](https://github.com/godgodwinter/laravel-administrasikeuangan)
 
-Ketika usaha jaringan internet anda semakin berkembang maka semakin banyak data yang perlu anda kelola. Untuk itu dengan sistem ini diharapkan dapat membantu usaha jaringan anda.
+Sistem administrasi keuangan sekolah
 
 ### Built With
 
@@ -92,8 +92,9 @@ Tools and Framework
 
 Library/Plugin
 * [Auth:Fortify](#)
-* [TailwindCSS v2+](https://tailwindcss.com/)
-* [VueJs](https://vuejs.org/)
+* [Auth:Jetstream](#)
+* [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
+* [Stisla](https://github.com/stisla/stisla)
 
 
 
@@ -137,16 +138,10 @@ This is an example of how to list things you need to use the software and how to
    ```
 6. Jika ingin menggunakan data palsu untuk testing lanjutkan langkah 6 ini
    ```sh
-   php artisan db:seed --class=userseeder  //untuk meload data user admin@gmail.com pass 12345678
+   php artisan db:seed --class=oneseeder  //untuk meload data user admin@gmail.com pass 12345678
    ```
+   
 
-   ```sh
-   php artisan db:seed --class=paketseeder  //untuk meload data paket, jenis alat, jenis pendapatan , jenis pengeluaran dll
-   ```
-
-   ```sh
-   php artisan db:seed  //untuk meload data pengaturan default, nama web, motto, logo dll
-   ```
    
 
 Buka browser dan tulis alamat berikut
