@@ -28,6 +28,11 @@ Route::group(['middleware' => ['auth:web', 'verified']], function() {
 Route::get('/home', 'App\Http\Controllers\adminberandaController@index');
 Route::get('/dashboard', 'App\Http\Controllers\adminberandaController@index')->name('dashboard');
 
+
+//kategori-MENU
+Route::resource('admin/kategori','App\Http\Controllers\kategoriController')->except(['index']);
+Route::get('admin/kategori', 'App\Http\Controllers\kategoriController@index')->name('kategori');
+
 //TAPEL-MENU
 Route::resource('admin/tapel','App\Http\Controllers\tapelController')->except(['index','store']);
 Route::get('admin/tapel', 'App\Http\Controllers\tapelController@index')->name('tapel');

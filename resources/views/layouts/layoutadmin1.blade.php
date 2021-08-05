@@ -80,6 +80,18 @@
                 <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-home"></i><span>Beranda</span></a>
               </li>
 
+              <li @if ($pages==='kategori')
+                class="active"
+                @endif >
+                <a href="{{ route('kategori') }}" class="nav-link"><i class="fab fa-korvue"></i><span>Kategori</span></a>
+              </li>
+
+              <li @if ($pages==='profil')
+                class="active"
+                @endif >
+                <a href="{{ route('profile.show') }}" class="nav-link"><i class="far fa-address-card"></i><span>Profile</span></a>
+              </li>
+
 @php
 if((Auth::user()->tipeuser)=='admin'){
     @endphp
