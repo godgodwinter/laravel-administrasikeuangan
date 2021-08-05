@@ -118,5 +118,25 @@ class oneseeder extends Seeder
          ]);
 
 
+         //KELAS SEEDER
+        DB::table('pegawai')->insert([
+            'nig' => '123',
+            'nama' => 'Admin',
+            'kategori_nama' => 'Administrator/Bendahara',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
+
+
+         //KELAS SEEDER
+        DB::table('pegawai')->insert([
+            'nig' => '111',
+            'nama' => 'Kepala Sekolah',
+            'kategori_nama' => 'Kepala Sekolah',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
+
+
     }
 }
