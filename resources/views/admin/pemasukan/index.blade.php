@@ -130,6 +130,52 @@
                   </div>
                  
 
+                  @if (old('nominal'))
+                      @php                    
+                        $nominal=old('nominal');
+                      @endphp
+                  @else
+                      @php
+                      $nominal=0;
+                      @endphp                    
+                  @endif
+                  <div class="form-group col-md-6 col-6">
+                    <label for="nominal">Nominal <code>*)</code> </label>
+                    <input type="text" name="labelrupiah" min="0" id="labelrupiah" class="form-control-plaintext" readonly="" value="Rp 0,00" >
+                    <input type="text" name="nominal" min="0" id="rupiah" class="form-control @error('nominal') is-invalid @enderror" value="{{ $nominal }}" required>
+                    @error('nominal')<div class="invalid-feedback"> {{$message}}</div>
+                    @enderror
+                  </div>
+
+                  <script type="text/javascript">
+                    
+                    var rupiah = document.getElementById('rupiah');
+                    var labelrupiah = document.getElementById('labelrupiah');
+                    rupiah.addEventListener('keyup', function(e){
+                      // tambahkan 'Rp.' pada saat form di ketik
+                      // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+                      // rupiah.value = formatRupiah(this.value, 'Rp. ');
+                      labelrupiah.value = formatRupiah(this.value, 'Rp. ');
+                    });
+                
+                    /* Fungsi formatRupiah */
+                    function formatRupiah(angka, prefix){
+                      var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                      split   		= number_string.split(','),
+                      sisa     		= split[0].length % 3,
+                      rupiah     		= split[0].substr(0, sisa),
+                      ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+                
+                      // tambahkan titik jika yang di input sudah menjadi angka ribuan
+                      if(ribuan){
+                        separator = sisa ? '.' : '';
+                        rupiah += separator + ribuan.join('.');
+                      }
+                
+                      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+                      return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+                    }
+                  </script>
 
                   <div class="form-group col-md-6 col-6">
                     <label>Kategori <code>*)</code></label>

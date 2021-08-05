@@ -1,7 +1,7 @@
 @extends('layouts.layoutadmin1')
 
-@section('title','Pemasukan')
-@section('halaman','pemasukan')
+@section('title','Pengeluaran')
+@section('halaman','pengeluaran')
 
 @section('csshere')
 @endsection
@@ -114,7 +114,7 @@
       </div>
       <div class="col-12 col-md-12 col-lg-7">
         <div class="card">
-          <form action="/admin/{{  $pages }}/{{ $pemasukan->id}}" method="post">
+          <form action="/admin/{{  $pages }}/{{ $pengeluaran->id}}" method="post">
               @method('put')
               @csrf
             <div class="card-header">
@@ -125,17 +125,17 @@
                  
                   <div class="form-group col-md-6 col-6">
                     <label for="nama">Nama <code>*)</code></label>
-                    <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" value="{{$pemasukan->nama}}" required>
+                    <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" value="{{$pengeluaran->nama}}" required>
                     @error('nama')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>
-                 
 
+                
                   <div class="form-group col-md-6 col-6">
                     <label for="nominal">Nominal <code>*)</code> </label>
-                    <input type="text" name="labelrupiah" min="0" id="labelrupiah" class="form-control-plaintext" readonly="" value="@currency($pemasukan->nominal)" >
-                    <input type="text" name="nominal" min="0" id="rupiah" class="form-control @error('nominal') is-invalid @enderror" value="{{ $pemasukan->nominal }}" required>
-                    @error('nominal')<div class="invalid-feedback"> {{$pemasukan->nominal}}</div>
+                    <input type="text" name="labelrupiah" min="0" id="labelrupiah" class="form-control-plaintext" readonly="" value="@currency($pengeluaran->nominal)" >
+                    <input type="text" name="nominal" min="0" id="rupiah" class="form-control @error('nominal') is-invalid @enderror" value="{{ $pengeluaran->nominal }}" required>
+                    @error('nominal')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>
 
@@ -168,14 +168,14 @@
                       return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
                     }
                   </script>
-
+                 
 
 
                   <div class="form-group col-md-6 col-6">
                     <label>Kategori <code>*)</code></label>
                     <select class="form-control form-control-lg" required name="kategori_nama">  
-                          @if ($pemasukan->kategori_nama)
-                          <option>{{$pemasukan->kategori_nama}}</option>                        
+                          @if ($pengeluaran->kategori_nama)
+                          <option>{{$pengeluaran->kategori_nama}}</option>                        
                           @endif
                       @foreach ($kategori as $t)
                           <option>{{ $t->nama }}</option>
@@ -185,7 +185,7 @@
 
                   <div class="form-group col-md-6 col-6">
                     <label for="catatan">Catatan <code>*)</code></label>
-                    <input type="text" name="catatan" id="catatan" class="form-control @error('catatan') is-invalid @enderror" value="{{$pemasukan->catatan}}" required>
+                    <input type="text" name="catatan" id="catatan" class="form-control @error('catatan') is-invalid @enderror" value="{{$pengeluaran->catatan}}" required>
                     @error('catatan')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>

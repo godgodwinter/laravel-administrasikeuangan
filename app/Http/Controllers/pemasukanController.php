@@ -52,6 +52,7 @@ class pemasukanController extends Controller
             'nama'=>'required',
             // 'catatan'=>'required',
             'kategori_nama'=>'required',
+            'nominal'=>'required|numeric',
 
         ],
         [
@@ -107,6 +108,7 @@ class pemasukanController extends Controller
     {
         $request->validate([
             'nama'=>'required',
+            'nominal'=>'required|numeric',
             // 'catatan'=>'required',
             'kategori_nama'=>'required',
 
@@ -121,6 +123,7 @@ class pemasukanController extends Controller
             ->update([
                 'nama'=>$request->nama,
                 'catatan'=>$request->catatan,
+                'nominal'=>$request->nominal,
                 'kategori_nama'=>$request->kategori_nama,
             ]);
             return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');

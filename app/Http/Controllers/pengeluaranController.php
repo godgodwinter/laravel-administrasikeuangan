@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\pengeluaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class pengeluaranController extends Controller
 {
@@ -14,7 +16,18 @@ class pengeluaranController extends Controller
      */
     public function index()
     {
-        //
+        #WAJIB
+        $pages='pengeluaran';
+        $jmldata='0';
+        $datas='0';
+
+
+        $datas=pengeluaran::all();
+        // $kategori=kategori::all();
+        $kategori = DB::table('kategori')->where('prefix','pengeluaran')->get();
+        $jmldata = DB::table('pengeluaran')->count();
+
+        return view('admin.pengeluaran.index',compact('pages','jmldata','datas','kategori'));
     }
 
     /**
@@ -35,7 +48,20 @@ class pengeluaranController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama'=>'required',
+            // 'catatan'=>'required',
+            'kategori_nama'=>'required',
+            'nominal'=>'required|numeric',
+
+        ],
+        [
+            'nama.required'=>'Nama harus diisi',
+
+        ]);
+            // dd($request);
+        pengeluaran::create($request->all());
+        return redirect()->back()->with('status','Data berhasil di tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
     }
 
     /**
@@ -46,7 +72,16 @@ class pengeluaranController extends Controller
      */
     public function show(pengeluaran $pengeluaran)
     {
-        //
+        #WAJIB
+        $pages='pengeluaran';
+        $jmldata='0';
+        $datas='0';
+
+
+        $datas=pengeluaran::all();
+        $jmldata = DB::table('pengeluaran')->count();
+        $kategori = DB::table('kategori')->where('prefix','pengeluaran')->get();
+        return view('admin.pengeluaran.edit',compact('pengeluaran','pages','jmldata','datas','kategori'));
     }
 
     /**
@@ -69,7 +104,27 @@ class pengeluaranController extends Controller
      */
     public function update(Request $request, pengeluaran $pengeluaran)
     {
-        //
+        $request->validate([
+            'nama'=>'required',
+            'nominal'=>'required|numeric',
+            // 'catatan'=>'required',
+            'kategori_nama'=>'required',
+
+        ],
+        [
+            'nama.required'=>'Nama harus diisi',
+
+        ]);
+         //aksi update
+
+        pengeluaran::where('id',$pengeluaran->id)
+            ->update([
+                'nama'=>$request->nama,
+                'catatan'=>$request->catatan,
+                'nominal'=>$request->nominal,
+                'kategori_nama'=>$request->kategori_nama,
+            ]);
+            return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
     }
 
     /**
@@ -80,6 +135,8 @@ class pengeluaranController extends Controller
      */
     public function destroy(pengeluaran $pengeluaran)
     {
-        //
+        pengeluaran::destroy($pengeluaran->id);
+        return redirect(URL::to('/').'/admin/pengeluaran')->with('status','Data berhasil dihapus!')->with('tipe','danger')->with('icon','fas fa-trash');
+    
     }
 }
