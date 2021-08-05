@@ -66,6 +66,8 @@ Route::resource('admin/tagihansiswa','App\Http\Controllers\siswaController')->ex
 Route::get('admin/tagihansiswa', 'App\Http\Controllers\siswaController@index')->name('tagihansiswa');
 
 
+// Route::post('/checkemail',['uses'=>'PagesController@checkEmail']);
+// Route::post('/checkemail', 'App\Http\Controllers\PagesController@checkEmail')->name('checkEmail');
 // Route::get('/home', function () {
 //     return view('guess/home');
 // });

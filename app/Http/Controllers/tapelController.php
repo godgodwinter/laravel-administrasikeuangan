@@ -80,6 +80,7 @@ class tapelController extends Controller
 
 
         $datas=tapel::all();
+        $jmldata = DB::table('tapel')->count();
         return view('admin.tapel.edit',compact('tapel','pages','jmldata','datas'));
     }
 
