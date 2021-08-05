@@ -203,6 +203,7 @@ class siswaController extends Controller
 
         User::where('nomerinduk',$siswa->nis)
         ->update([
+            'name'     =>   $request->nama,
            'nomerinduk'     =>   $request->nis,
            'email'     =>   $request->email,
            'updated_at'=>date("Y-m-d H:i:s")
