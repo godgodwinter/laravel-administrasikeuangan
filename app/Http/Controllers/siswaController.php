@@ -20,7 +20,6 @@ class siswaController extends Controller
      */
     public function index()
     {
-      
         #WAJIB
         $pages='siswa';
         $jmldata='0';

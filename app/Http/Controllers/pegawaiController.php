@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kategori;
 use App\Models\pegawai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class pegawaiController extends Controller
 {
@@ -14,7 +16,19 @@ class pegawaiController extends Controller
      */
     public function index()
     {
-        //
+        #WAJIB
+        $pages='pegawai';
+        $jmldata='0';
+        $datas='0';
+
+
+        $datas=pegawai::all();
+        // $kategori=kategori::all();
+        $kategori = DB::table('kategori')->where('prefix','pegawai')->get();
+        $jmldata = DB::table('pegawai')->count();
+
+        return view('admin.pegawai.index',compact('pages','jmldata','datas','kategori'));
+        // return view('admin.beranda');
     }
 
     /**

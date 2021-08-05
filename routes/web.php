@@ -44,26 +44,26 @@ Route::resource('admin/siswa','App\Http\Controllers\siswaController')->except(['
 Route::get('admin/siswa', 'App\Http\Controllers\siswaController@index')->name('siswa');
 
 //pegawai-MENU
-Route::resource('admin/pegawai','App\Http\Controllers\siswaController')->except(['index']);
-Route::get('admin/pegawai', 'App\Http\Controllers\siswaController@index')->name('pegawai');
+Route::resource('admin/pegawai','App\Http\Controllers\pegawaiController')->except(['index']);
+Route::get('admin/pegawai', 'App\Http\Controllers\pegawaiController@index')->name('pegawai');
 
 //pemasukan-MENU
-Route::resource('admin/pemasukan','App\Http\Controllers\siswaController')->except(['index']);
-Route::get('admin/pemasukan', 'App\Http\Controllers\siswaController@index')->name('pemasukan');
+Route::resource('admin/pemasukan','App\Http\Controllers\pemasukanController')->except(['index']);
+Route::get('admin/pemasukan', 'App\Http\Controllers\pemasukanController@index')->name('pemasukan');
 
 //pengeluaran-MENU
-Route::resource('admin/pengeluaran','App\Http\Controllers\siswaController')->except(['index']);
-Route::get('admin/pengeluaran', 'App\Http\Controllers\siswaController@index')->name('pengeluaran');
+Route::resource('admin/pengeluaran','App\Http\Controllers\pengeluaranController')->except(['index']);
+Route::get('admin/pengeluaran', 'App\Http\Controllers\pengeluaranController@index')->name('pengeluaran');
 
 
 //tagihanatur-MENU
-Route::resource('admin/tagihanatur','App\Http\Controllers\siswaController')->except(['index']);
-Route::get('admin/tagihanatur', 'App\Http\Controllers\siswaController@index')->name('tagihanatur');
+Route::resource('admin/tagihanatur','App\Http\Controllers\tagihanaturController')->except(['index']);
+Route::get('admin/tagihanatur', 'App\Http\Controllers\tagihanaturController@index')->name('tagihanatur');
 
 
 //tagihansiswa-MENU
-Route::resource('admin/tagihansiswa','App\Http\Controllers\siswaController')->except(['index']);
-Route::get('admin/tagihansiswa', 'App\Http\Controllers\siswaController@index')->name('tagihansiswa');
+Route::resource('admin/tagihansiswa','App\Http\Controllers\tagihansiswaController')->except(['index']);
+Route::get('admin/tagihansiswa', 'App\Http\Controllers\tagihansiswaController@index')->name('tagihansiswa');
 
 
 // Route::post('/checkemail',['uses'=>'PagesController@checkEmail']);

@@ -13,7 +13,7 @@ class CreatePagawaiTable extends Migration
      */
     public function up()
     {
-        Schema::create('pagawai', function (Blueprint $table) {
+        Schema::create('pegawai', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->nullable();
             $table->string('nig')->nullable();
