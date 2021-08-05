@@ -79,6 +79,7 @@
                           <tr>
                             <th width="5%" class="text-center">#</th>
                             <th>Nama</th>
+                            <th>Nominal</th>
                             <th width="20%" class="text-center">Aksi</th>
                           </tr>
 
@@ -86,6 +87,7 @@
                           <tr>
                             <td>{{ ($loop->index)+1 }}</td>
                             <td>{{ $data->nama }}</td>
+                            <td>@currency($data->nominal)</td>
                           
                             <td>
                                 <a href="/admin/{{ $pages }}/{{$data->id}}" class="btn btn-icon btn-warning"><i class="fas fa-edit"></i></a>
