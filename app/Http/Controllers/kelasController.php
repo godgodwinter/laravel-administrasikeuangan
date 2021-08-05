@@ -58,7 +58,7 @@ class kelasController extends Controller
         ]);
             // dd($request);
         kelas::create($request->all());
-        return redirect(URL::to('/').'/admin/kelas')->with('status','Data berhasil di tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
+        return redirect()->back()->with('status','Data berhasil di tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
     
     }
 
@@ -121,7 +121,7 @@ class kelasController extends Controller
             ->update([
                 'nama'=>$request->nama
             ]);
-            return redirect('/admin/kelas')->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
+            return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
     }
 
     /**

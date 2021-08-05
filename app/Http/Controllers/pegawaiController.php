@@ -100,7 +100,7 @@ class pegawaiController extends Controller
                'updated_at'=>date("Y-m-d H:i:s")
         ));
         
-        return redirect(URL::to('/').'/admin/pegawai')->with('status','Data berhasil di tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
+        return redirect()->back()->with('status','Data berhasil di tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
     
     }
 
@@ -218,7 +218,7 @@ class pegawaiController extends Controller
 
         }
 
-            return redirect('/admin/pegawai')->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
+        return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
     }
 
     /**

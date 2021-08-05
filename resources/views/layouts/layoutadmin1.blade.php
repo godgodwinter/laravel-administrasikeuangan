@@ -133,6 +133,13 @@ if((Auth::user()->tipeuser)=='admin'){
                 @endif >
                 <a href="{{ route('tagihansiswa') }}" class="nav-link"><i class="fas fa-graduation-cap"></i><span>Tagihan Siswa</span></a>
               </li>
+
+              <li class="menu-header">Reporting</li>
+              <li @if ($pages==='laporan')
+                class="active"
+                @endif >
+                <a href="{{ route('laporan') }}" class="nav-link"><i class="fab fa-resolving"></i><span>Laporan</span></a>
+              </li>
              
             </ul>
 

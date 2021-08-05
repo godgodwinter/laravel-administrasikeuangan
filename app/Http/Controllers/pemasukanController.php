@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\pemasukan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class pemasukanController extends Controller
 {
@@ -14,7 +16,18 @@ class pemasukanController extends Controller
      */
     public function index()
     {
-        //
+        #WAJIB
+        $pages='pemasukan';
+        $jmldata='0';
+        $datas='0';
+
+
+        $datas=pemasukan::all();
+        // $kategori=kategori::all();
+        $kategori = DB::table('kategori')->where('prefix','pemasukan')->get();
+        $jmldata = DB::table('pemasukan')->count();
+
+        return view('admin.pemasukan.index',compact('pages','jmldata','datas','kategori'));
     }
 
     /**
@@ -35,7 +48,20 @@ class pemasukanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama'=>'required',
+            // 'catatan'=>'required',
+            'kategori_nama'=>'required',
+
+        ],
+        [
+            'nama.required'=>'Nama harus diisi',
+
+        ]);
+            // dd($request);
+        pemasukan::create($request->all());
+        return redirect()->back()->with('status','Data berhasil di tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
+   
     }
 
     /**

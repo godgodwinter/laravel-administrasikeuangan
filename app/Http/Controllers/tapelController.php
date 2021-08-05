@@ -59,7 +59,7 @@ class tapelController extends Controller
         ]);
             // dd($request);
         tapel::create($request->all());
-        return redirect(URL::to('/').'/admin/tapel')->with('status','Data berhasil di tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
+        return redirect()->back()->with('status','Data berhasil di tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
     }
 
     /**
@@ -120,7 +120,7 @@ class tapelController extends Controller
             ->update([
                 'nama'=>$request->nama
             ]);
-            return redirect('/admin/tapel')->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
+            return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
     }
 
     /**

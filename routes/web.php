@@ -66,6 +66,11 @@ Route::resource('admin/tagihansiswa','App\Http\Controllers\tagihansiswaControlle
 Route::get('admin/tagihansiswa', 'App\Http\Controllers\tagihansiswaController@index')->name('tagihansiswa');
 
 
+//laporan-MENU
+Route::resource('admin/laporan','App\Http\Controllers\laporanController')->except(['index']);
+Route::get('admin/laporan', 'App\Http\Controllers\laporanController@index')->name('laporan');
+
+
 // Route::post('/checkemail',['uses'=>'PagesController@checkEmail']);
 // Route::post('/checkemail', 'App\Http\Controllers\PagesController@checkEmail')->name('checkEmail');
 // Route::get('/home', function () {
