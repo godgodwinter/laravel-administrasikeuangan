@@ -17,8 +17,8 @@
   <!-- CSS Libraries -->
 
   <!-- Template CSS -->
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="{{ asset("assets/") }}/css/style.css">
+  <link rel="stylesheet" href="{{ asset("assets/") }}/css/components.css">
   @yield('csshere')
 </head>
 
@@ -36,7 +36,7 @@
         <ul class="navbar-nav navbar-right">
        
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+            <img alt="image" src="{{ asset("assets/") }}/img/avatar/avatar-1.png" class="rounded-circle mr-1">
             <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name }}</div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-title">Logged in</div>
@@ -88,22 +88,22 @@ if((Auth::user()->tipeuser)=='admin'){
               <li @if ($pages==='tapel')
                 class="active"
                 @endif >
-                <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-calendar-alt"></i><span>Tahun Pelajaran</span></a>
+                <a href="{{ route('tapel') }}" class="nav-link"><i class="fas fa-calendar-alt"></i><span>Tahun Pelajaran</span></a>
               </li>
               <li @if ($pages==='kelas')
                 class="active"
                 @endif >
-                <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-school"></i><span>Kelas</span></a>
+                <a href="{{ route('kelas') }}" class="nav-link"><i class="fas fa-school"></i><span>Kelas</span></a>
               </li>
               <li @if ($pages==='siswa')
                 class="active"
                 @endif >
-                <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-user-graduate"></i><span>Siswa</span></a>
+                <a href="{{ route('siswa') }}" class="nav-link"><i class="fas fa-user-graduate"></i><span>Siswa</span></a>
               </li>
               <li @if ($pages==='pegawai')
                 class="active"
                 @endif >
-                <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-building"></i><span>Pegawai</span></a>
+                <a href="{{ route('pegawai') }}" class="nav-link"><i class="fas fa-building"></i><span>Pegawai</span></a>
               </li>
          
               {{-- <li class="active"><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank Page</span></a></li> --}}
@@ -113,25 +113,25 @@ if((Auth::user()->tipeuser)=='admin'){
               <li @if ($pages==='pemasukan')
                 class="active"
                 @endif >
-                <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-hand-holding-usd"></i><span>Pemasukan</span></a>
+                <a href="{{ route('pemasukan') }}" class="nav-link"><i class="fas fa-hand-holding-usd"></i><span>Pemasukan</span></a>
               </li>
 
               <li @if ($pages==='pengeluaran')
                 class="active"
                 @endif >
-                <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-file-invoice-dollar"></i><span>Pengeluaran</span></a>
+                <a href="{{ route('pengeluaran') }}" class="nav-link"><i class="fas fa-file-invoice-dollar"></i><span>Pengeluaran</span></a>
               </li>
 
               <li @if ($pages==='tagihanatur')
                 class="active"
                 @endif >
-                <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-fire"></i><span>Tagihan Atur</span></a>
+                <a href="{{ route('tagihanatur') }}" class="nav-link"><i class="fas fa-fire"></i><span>Tagihan Atur</span></a>
               </li>
 
               <li @if ($pages==='tagihansiswa')
                 class="active"
                 @endif >
-                <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-graduation-cap"></i><span>Tagihan Siswa</span></a>
+                <a href="{{ route('tagihansiswa') }}" class="nav-link"><i class="fas fa-graduation-cap"></i><span>Tagihan Siswa</span></a>
               </li>
              
             </ul>
@@ -155,6 +155,20 @@ if((Auth::user()->tipeuser)=='admin'){
 
 
         <section class="section">
+
+          {{-- HEADER-START --}}
+          <div class="section-header">
+            <h1>@yield('title')</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
+                {{-- <div class="breadcrumb-item"><a href="#">Bootstrap Components</a></div> --}}
+              <div class="breadcrumb-item">@yield('halaman')</div>
+            </div>
+          </div>
+          {{-- HEADER-END --}}
+
+          @yield('notif')
+
             @yield('container')
         </section>
 
@@ -178,13 +192,13 @@ if((Auth::user()->tipeuser)=='admin'){
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-  <script src="../assets/js/stisla.js"></script>
+  <script src="{{ asset("assets/") }}/js/stisla.js"></script>
 
   <!-- JS Libraies -->
 
   <!-- Template JS File -->
-  <script src="../assets/js/scripts.js"></script>
-  <script src="../assets/js/custom.js"></script>
+  <script src="{{ asset("assets/") }}/js/scripts.js"></script>
+  <script src="{{ asset("assets/") }}/js/custom.js"></script>
 
   <!-- Page Specific JS File -->
 </body>

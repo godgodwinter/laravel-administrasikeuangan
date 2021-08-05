@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class tapel extends Model
-{_
+{
         public $table = "tapel";
 
         use HasFactory;

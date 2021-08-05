@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\kelas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class kelasController extends Controller
 {
@@ -14,7 +16,18 @@ class kelasController extends Controller
      */
     public function index()
     {
-        //
+        #WAJIB
+        $pages='kelas';
+        $jmldata='0';
+        $datas='0';
+
+
+        $datas=kelas::all();
+
+        $jmldata = DB::table('kelas')->count();
+
+        return view('admin.kelas.index',compact('pages','jmldata','datas'));
+        // return view('admin.beranda');
     }
 
     /**
@@ -35,7 +48,18 @@ class kelasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama'=>'required'
+
+        ],
+        [
+            'nama.unique'=>'nik sudah digunakan',
+
+        ]);
+            // dd($request);
+        kelas::create($request->all());
+        return redirect(URL::to('/').'/admin/kelas')->with('status','Data berhasil di tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
+    
     }
 
     /**
@@ -44,9 +68,20 @@ class kelasController extends Controller
      * @param  \App\Models\kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function show(kelas $kelas)
+    public function show(kelas $kela)
     {
-        //
+        // $kela lihat di route:list
+        $kelas=$kela;
+
+        #WAJIB
+        $pages='kelas';
+        $jmldata='0';
+        $datas='0';
+
+
+        $datas=kelas::all();
+        $jmldata = DB::table('kelas')->count();
+        return view('admin.kelas.edit',compact('kelas','pages','jmldata','datas'));
     }
 
     /**
@@ -55,7 +90,7 @@ class kelasController extends Controller
      * @param  \App\Models\kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function edit(kelas $kelas)
+    public function edit(kelas $kela)
     {
         //
     }
@@ -67,9 +102,26 @@ class kelasController extends Controller
      * @param  \App\Models\kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, kelas $kelas)
+    public function update(Request $request, kelas $kela)
     {
-        //
+        $kelas=$kela;
+        // dd($kelas->id);
+
+        $request->validate([
+            'nama'=>'required'
+        ],
+        [
+            'nama.required'=>'Nama harus diisi'
+
+
+        ]);
+         //aksi update
+
+        kelas::where('id',$kelas->id)
+            ->update([
+                'nama'=>$request->nama
+            ]);
+            return redirect('/admin/kelas')->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
     }
 
     /**
@@ -78,8 +130,10 @@ class kelasController extends Controller
      * @param  \App\Models\kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(kelas $kelas)
+    public function destroy($id)
     {
-        //
+        kelas::destroy($id);
+        return redirect(URL::to('/').'/admin/kelas')->with('status','Data berhasil dihapus!')->with('tipe','danger')->with('icon','fas fa-trash');
+    
     }
 }

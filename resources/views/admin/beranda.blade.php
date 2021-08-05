@@ -17,16 +17,6 @@
 
 @section('container')
 
-{{-- HEADER-START --}}
-<div class="section-header">
-    <h1>@yield('title')</h1>
-    <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
-        {{-- <div class="breadcrumb-item"><a href="#">Bootstrap Components</a></div> --}}
-      <div class="breadcrumb-item">@yield('halaman')</div>
-    </div>
-  </div>
-  {{-- HEADER-END --}}
 
 {{-- <div class="section-header">
     <h1>Typography</h1>
