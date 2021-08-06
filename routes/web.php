@@ -70,6 +70,9 @@ Route::get('admin/tagihanatur', 'App\Http\Controllers\tagihanaturController@inde
 Route::resource('admin/tagihansiswa','App\Http\Controllers\tagihansiswaController')->except(['index']);
 Route::get('admin/tagihansiswa', 'App\Http\Controllers\tagihansiswaController@index')->name('tagihansiswa');
 
+Route::post('admin/tagihansiswa/sync', 'App\Http\Controllers\tagihansiswaController@sync')->name('tagihansiswa.sync');
+Route::post('admin/tagihansiswa/bayartagihan/{tagihansiswa}', 'App\Http\Controllers\tagihansiswaController@bayartagihan')->name('tagihansiswa.bayartagihan');
+
 
 //laporan-MENU
 Route::resource('admin/laporan','App\Http\Controllers\laporanController')->except(['index']);

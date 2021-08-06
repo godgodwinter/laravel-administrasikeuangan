@@ -18,19 +18,109 @@ class tagihansiswaController extends Controller
     public function index()
     {
         #WAJIB
-        $pages='tagihanatur';
+        $pages='tagihansiswa';
         $jmldata='0';
         $datas='0';
 
 
         $tapel=tapel::all();
         $kelas=kelas::all();
-        $datas=DB::table('tagihanatur')->orderBy('tapel_nama','asc')->get();
-        // // $tagihanatur=tagihanatur::all();
-        // $tagihanatur = DB::table('tagihanatur')->where('prefix','tagihanatur')->get();
-        $jmldata = DB::table('tagihanatur')->count();
+        $datas=DB::table('tagihansiswa')->orderBy('siswa_nis','asc')->get();
+        // // $tagihansiswa=tagihansiswa::all();
+        // $tagihansiswa = DB::table('tagihansiswa')->where('prefix','tagihansiswa')->get();
+        $jmldata = DB::table('tagihansiswa')->count();
 
         return view('admin.tagihansiswa.index',compact('pages','jmldata','datas','tapel','kelas'));
+    }
+
+    public function sync()
+    {
+        $tapel=tapel::all();
+        $kelas=kelas::all();
+        // 1.ambil tagihanatur
+        $tagihanatur=DB::table('tagihanatur')->orderBy('tapel_nama','asc')->get();
+        foreach ($tagihanatur as $ta){
+            $tapel_nama=$ta->tapel_nama;
+            $kelas_nama=$ta->kelas_nama;
+            $nominaltagihan=$ta->nominaltagihan;
+            $tagihanatur_kd=$ta->id;
+            // dd($tapel_nama,$kelas_nama,$nominaltagihan);
+
+            // 2. ambil datasiswa where tapel dan kelas
+                $siswa=DB::table('siswa')->where('tapel_nama',$tapel_nama)
+                    ->where('kelas_nama',$kelas_nama)
+                    ->orderBy('tapel_nama','asc')
+                    ->get();
+                foreach ($siswa as $s){
+                    $siswa_nama=$s->nama;
+                    $siswa_nis=$s->nis;
+                    // dd($tapel_nama,$kelas_nama,$nominaltagihan,$siswa_nama,$siswa_nis);
+                    // 3.cek apakah data siswanis&tapel&kelas sudah ada?
+                     $cektagihansiswa=DB::table('tagihansiswa')
+                        ->where('siswa_nis',$siswa_nis)
+                        ->where('tapel_nama',$tapel_nama)
+                        ->where('kelas_nama',$kelas_nama)
+                        ->count();
+
+                    if($cektagihansiswa>0){
+                        //jika sudah ada maka update nominal tagihan
+                        tagihansiswa::where('siswa_nis',$siswa_nis)
+                        ->where('tapel_nama',$tapel_nama)
+                        ->where('kelas_nama',$kelas_nama)
+                        ->update([
+                            'siswa_nama'=>$siswa_nama,
+                            'nominaltagihan'=>$nominaltagihan,
+                            'updated_at'=>date("Y-m-d H:i:s")
+                        ]);
+
+
+                    }else{
+                        //jika belum ada maka insert
+                            DB::table('tagihansiswa')->insert(
+                                array(
+                                    'siswa_nis'     =>   $siswa_nis,
+                                    'siswa_nama'     =>   $siswa_nama,
+                                    'tapel_nama'     =>   $tapel_nama,
+                                    'kelas_nama'     =>   $kelas_nama,
+                                    'tagihanatur_kd'     =>   $tagihanatur_kd,
+                                    'nominaltagihan'     =>   $nominaltagihan,
+                                    'created_at'=>date("Y-m-d H:i:s"),
+                                    'updated_at'=>date("Y-m-d H:i:s")
+                                ));
+
+                    }
+
+                }
+
+        }
+
+        return redirect()->back()->with('status','Data berhasil di Sinkroniasai!')->with('tipe','success')->with('icon','fas fa-retweet');
+
+    }
+    public function bayartagihan(Request $request,tagihansiswa $tagihansiswa)
+    {
+
+        $request->validate([
+            'nominal'=>'required|numeric|min:10000'
+
+        ],
+        [
+            'nominal.required'=>'Nominal Harus diisi',
+            'nominal.numeric'=>'Nominal Harus Angka',
+            'nominal.min'=>'Nominal bayar minimal Rp.10.000,00',
+
+        ]);
+
+        // dd($request);
+        DB::table('tagihansiswadetail')->insert(
+            array(
+                'tagihansiswa_id'     =>   $tagihansiswa->id,
+                'nominal'     =>   $request->nominal,
+                'created_at'=>date("Y-m-d H:i:s"),
+                'updated_at'=>date("Y-m-d H:i:s")
+            ));
+    return redirect()->back()->with('status','Pembayaran berhasil di lakukan!')->with('tipe','success')->with('icon','far fa-money-bill-alt');
+
     }
 
     /**

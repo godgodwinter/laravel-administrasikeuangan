@@ -189,7 +189,13 @@ if((Auth::user()->tipeuser)=='admin'){
           @yield('notif')
 
             @yield('container')
+
+
+
         </section>
+        @yield('container-modals')
+
+
 
 
       </div>
@@ -218,6 +224,7 @@ if((Auth::user()->tipeuser)=='admin'){
   <!-- Template JS File -->
   <script src="{{ asset("assets/") }}/js/scripts.js"></script>
   <script src="{{ asset("assets/") }}/js/custom.js"></script>
+  <script src="{{ asset("assets/") }}/js/page/bootstrap-modal.js"></script>
 
   <!-- Page Specific JS File -->
 </body>
