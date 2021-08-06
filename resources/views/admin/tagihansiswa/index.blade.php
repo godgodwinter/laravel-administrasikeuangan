@@ -96,7 +96,7 @@
                             <th>Terbayar</th>
                             <th>Kurang</th>
                             <th width="10%"  class="text-center">%</th>
-                            <th width="15%" class="text-center">Aksi</th>
+                            {{-- <th width="15%" class="text-center">Aksi</th> --}}
                           </tr>
 
                         @foreach ($datas as $data)
@@ -120,17 +120,16 @@
                             <td>@currency($kurang)</td>
                             <td class="text-center">{{ $persen }} %</td>
                           
-                            <td class="text-center">
+                            {{-- <td class="text-center">
                                 <a href="/admin/{{ $pages }}/{{$data->id}}"  class="btn btn-icon icon-left btn-info"><i class="fas fa-edit"></i> Detail</a>
-                                {{-- <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a> --}}
-                                <form action="/admin/{{ $pages }}/{{$data->id}}" method="post" class="d-inline">
+                              <form action="/admin/{{ $pages }}/{{$data->id}}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button class="btn btn-icon btn-danger"
                                         onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
                                             class="pcoded-micon"> <i class="fas fa-trash"></i></span></button>
                                 </form>
-                            </td>
+                            </td> --}}
                           </tr>
                           @endforeach
                         
@@ -146,109 +145,6 @@
      
       </div>
 
-      <div class="col-12 col-md-12 col-lg-7">
-        <div class="card">
-            <form action="/admin/{{ $pages }}" method="post">
-                @csrf
-            <div class="card-header">
-                <span class="btn btn-icon btn-light"><i class="fas fa-feather"></i> TAMBAH {{ Str::upper($pages) }}</span>
-            </div>
-            <div class="card-body">
-                <div class="row">
-
-                  <div class="form-group col-md-6 col-6">
-                    <label>Tahun Pelajaran <code>*)</code></label>
-                    <select class="form-control form-control-lg" required name="tapel_nama">  
-                          @if (old('tapel_nama'))
-                          <option>{{old('tapel_nama')}}</option>                        
-                          @endif
-                      @foreach ($tapel as $t)
-                          <option>{{ $t->nama }}</option>
-                      @endforeach
-                    </select>
-                  </div>
-
-                  <div class="form-group col-md-6 col-6">
-                    <label>Kelas <code>*)</code></label>
-                    <select class="form-control form-control-lg" required name="kelas_nama">
-                          @if (old('kelas_nama'))
-                          <option>{{old('kelas_nama')}}</option>                        
-                          @endif
-                      @foreach ($kelas as $k)
-                          <option>{{ $k->nama }}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                  
-
-
-                  @if (old('nominaltagihan'))
-                      @php                    
-                        $nominaltagihan=old('nominaltagihan');
-                      @endphp
-                  @else
-                      @php
-                      $nominaltagihan=0;
-                      @endphp                    
-                  @endif
-                  <div class="form-group col-md-6 col-6">
-                    <label for="nominaltagihan">Nominal <code>*)</code> </label>
-                    <input type="text" name="labelrupiah" min="0" id="labelrupiah" class="form-control-plaintext" readonly="" value="Rp 0,00" >
-                    <input type="text" name="nominaltagihan" min="0" id="rupiah" class="form-control @error('nominaltagihan') is-invalid @enderror" value="{{ $nominaltagihan }}" required>
-                    @error('nominaltagihan')<div class="invalid-feedback"> {{$message}}</div>
-                    @enderror
-                  </div>
-
-                  <script type="text/javascript">
-                    
-                    var rupiah = document.getElementById('rupiah');
-                    var labelrupiah = document.getElementById('labelrupiah');
-                    rupiah.addEventListener('keyup', function(e){
-                      // tambahkan 'Rp.' pada saat form di ketik
-                      // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-                      // rupiah.value = formatRupiah(this.value, 'Rp. ');
-                      labelrupiah.value = formatRupiah(this.value, 'Rp. ');
-                    });
-                
-                    /* Fungsi formatRupiah */
-                    function formatRupiah(angka, prefix){
-                      var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                      split   		= number_string.split(','),
-                      sisa     		= split[0].length % 3,
-                      rupiah     		= split[0].substr(0, sisa),
-                      ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
-                
-                      // tambahkan titik jika yang di input sudah menjadi angka ribuan
-                      if(ribuan){
-                        separator = sisa ? '.' : '';
-                        rupiah += separator + ribuan.join('.');
-                      }
-                
-                      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-                      return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
-                    }
-                  </script>
-                
-                </div>
-             
-            </div>
-            <div class="card-footer text-right">
-              <button class="btn btn-primary">Simpan</button>
-            </div>
-
-            <div class="card-body">
-                <div class="section-title mt-0">Catatan : </div>
-                <blockquote>
-                  Jika Tahun Pelajaran dan Kelas sudah ada maka akan edit data tersebut.
-                </blockquote>
-              </div>
-          </form>
-        </div>
-
-
-        
-
-      </div>
     </div>
   </div>
 @endsection
@@ -257,6 +153,13 @@
 @section('container-modals')
 
 @foreach ($datas as $data)
+@php
+$sumdetailbayar = DB::table('tagihansiswadetail')
+  ->where('tagihansiswa_id', '=', $data->id)
+  ->sum('nominal');
+  $kurang=$data->nominaltagihan-$sumdetailbayar;
+  $persen=number_format(($sumdetailbayar/$data->nominaltagihan*100),2);
+@endphp
     <div class="modal fade" tabindex="-1" role="dialog" id="modalbayar{{ $data->id }}">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -285,7 +188,14 @@
 
           <div class="input-group">
             <div class="input-group-prepend">
-              <div class="input-group-text">Nominal :
+              <div class="input-group-text">Sisa Tagihan :
+              </div>
+            </div>  
+             <input type="text" class="form-control-plaintext" readonly="" value="@currency($kurang)" >
+          </div>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Nominal Bayar:
               </div>
             </div>  
              <input type="text" name="labelrupiah" min="0" id="labelrupiah{{ $data->id }}" class="form-control-plaintext" readonly="" value="@currency($nominal)" >
@@ -360,7 +270,7 @@
                   <td class="text-left">
                     @currency($db->nominal)</td>
                   <td class="text-center"> 
-                    <form action="/admin/{{ $pages }}/tagihanbayar/{{$db->id}}/hapus  " method="post" class="d-inline">
+                    <form action="/admin/{{ $pages }}/bayartagihan/{{$db->id}}/hapus  " method="post" class="d-inline">
                         @method('delete')
                         @csrf
                         <button class="btn btn-icon btn-danger"

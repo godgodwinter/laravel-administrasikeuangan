@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\kelas;
 use App\Models\tagihansiswa;
+use App\Models\tagihansiswadetail;
 use App\Models\tapel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class tagihansiswaController extends Controller
 {
@@ -111,6 +113,19 @@ class tagihansiswaController extends Controller
 
         ]);
 
+        //jika lebih dari total nominal maka gagal
+            $sumdetailbayar = DB::table('tagihansiswadetail')
+            ->where('tagihansiswa_id', '=', $tagihansiswa->id)
+            ->sum('nominal');
+
+            $kurang=$tagihansiswa->nominaltagihan-$sumdetailbayar;
+
+            if($request->nominal>$kurang){
+                $kelebihan=$request->nominal-$kurang;
+                return redirect()->back()->with('status','Pembayaran gagal di lakukan! Uang Bayar Kelebihan '.$this->rupiah($kelebihan).' dari Tagihan')->with('tipe','danger')->with('icon','far fa-money-bill-alt');
+            }
+            // dd($kurang);
+
         // dd($request);
         DB::table('tagihansiswadetail')->insert(
             array(
@@ -121,6 +136,15 @@ class tagihansiswaController extends Controller
             ));
     return redirect()->back()->with('status','Pembayaran berhasil di lakukan!')->with('tipe','success')->with('icon','far fa-money-bill-alt');
 
+    }
+
+    public function bayartagihandestroy(tagihansiswadetail $tagihansiswadetail)
+    {
+        // dd($tagihansiswadetail);
+
+        tagihansiswadetail::destroy($tagihansiswadetail->id);
+        return redirect(URL::to('/').'/admin/tagihansiswa')->with('status','Data Pembayaran siswa berhasil dihapus!')->with('tipe','danger')->with('icon','fas fa-trash');
+    
     }
 
     /**

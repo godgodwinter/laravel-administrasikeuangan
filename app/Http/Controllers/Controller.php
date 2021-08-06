@@ -22,5 +22,12 @@ class Controller extends BaseController
 
        return response()->json($response,200);
     }
+
+    public function rupiah($angka){
+	
+        $hasil_rupiah = "Rp " . number_format($angka,2,',','.');
+        return $hasil_rupiah;
+     
+    }
     //gunakan  return $this->errorResponse('Validation Error',$validator->errors());
 }
