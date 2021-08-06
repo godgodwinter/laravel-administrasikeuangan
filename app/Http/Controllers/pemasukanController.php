@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\pemasukan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -14,7 +15,7 @@ class pemasukanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         #WAJIB
         $pages='pemasukan';
@@ -26,29 +27,50 @@ class pemasukanController extends Controller
         // $kategori=kategori::all();
         $kategori = DB::table('kategori')->where('prefix','pemasukan')->get();
         $jmldata = DB::table('pemasukan')->count();
+        $sekarang = Carbon::now();
 
-        return view('admin.pemasukan.index',compact('pages','jmldata','datas','kategori'));
+        return view('admin.pemasukan.index',compact('pages','jmldata','datas','kategori','sekarang','request'));
     }
 
     public function cari(Request $request)
     {
-        // dd('a');
+        // dd($request);
         $cari=$request->cari;
+        $yearmonth=$request->yearmonth;
+        $kategori_nama=$request->kategori_nama;
+
+        $year = date("Y",strtotime($yearmonth));
+        $month = date("m",strtotime($yearmonth));
+        // $year = date_format($yearmonth, "Y");
+        // $month = date_format($yearmonth, "m");
+        // dd($year);
         #WAJIB
         $pages='pemasukan';
         $jmldata='0';
         $datas='0';
 
+if($yearmonth!==null){
 
-        $datas=DB::table('pemasukan')
-        ->where('nama','like',"%".$cari."%")
-        ->paginate($this->paginationjml());
+    $datas=DB::table('pemasukan')
+    ->where('nama','like',"%".$cari."%")
+    ->where('kategori_nama','like',"%".$kategori_nama."%")
+    ->whereMonth('created_at', '=', $month)
+    ->whereYear('created_at', '=', $year)
+    ->paginate($this->paginationjml());
+}else{
+
+    $datas=DB::table('pemasukan')
+    ->where('nama','like',"%".$cari."%")
+    ->where('kategori_nama','like',"%".$kategori_nama."%")
+    ->paginate($this->paginationjml());
+}
 
         // $kategori=kategori::all();
         $kategori = DB::table('kategori')->where('prefix','pemasukan')->get();
         $jmldata = DB::table('pemasukan')->count();
 
-        return view('admin.pemasukan.index',compact('pages','jmldata','datas','kategori'));
+
+        return view('admin.pemasukan.index',compact('pages','jmldata','datas','kategori','request'));
     }
 
     /**
@@ -92,7 +114,7 @@ class pemasukanController extends Controller
      * @param  \App\Models\pemasukan  $pemasukan
      * @return \Illuminate\Http\Response
      */
-    public function show(pemasukan $pemasukan)
+    public function show(Request $request,pemasukan $pemasukan)
     {
 
         #WAJIB
@@ -101,10 +123,10 @@ class pemasukanController extends Controller
         $datas='0';
 
 
-        $datas=pemasukan::all();
+        $datas=DB::table('pemasukan')->paginate($this->paginationjml());
         $jmldata = DB::table('pemasukan')->count();
         $kategori = DB::table('kategori')->where('prefix','pemasukan')->get();
-        return view('admin.pemasukan.edit',compact('pemasukan','pages','jmldata','datas','kategori'));
+        return view('admin.pemasukan.edit',compact('pemasukan','pages','jmldata','datas','kategori','request'));
     }
 
     /**

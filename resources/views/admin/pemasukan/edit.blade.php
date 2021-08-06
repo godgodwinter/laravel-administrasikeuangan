@@ -52,6 +52,57 @@
 
   <div class="section-body">
 
+    <div class="row ">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <form action="{{ route('pemasukan.cari') }}" method="GET">
+              <div class="row">
+                  <div class="form-group col-md-3 col-3 mt-1 text-right">
+                    <input type="text" name="cari" id="cari" class="form-control @error('cari') is-invalid @enderror" value="{{$request->cari}}"  placeholder="Cari...">
+                    @error('cari')<div class="invalid-feedback"> {{$message}}</div>
+                    @enderror
+                  </div>
+
+                  <div class="form-group col-md-3 col-3 mt-1 text-right">
+                
+                  <input type="month" class="form-control" name="yearmonth"  value="{{$request->yearmonth}}">
+                  </div>
+                  <div class="form-group col-md-3 col-3 mt-1 text-right">
+             
+                  <select class="form-control form-control-lg" name="kategori_nama">  
+                    <option>{{$request->kategori_nama}}</option>
+                 
+                @foreach ($kategori as $t)
+                    <option>{{ $t->nama }}</option>
+                @endforeach
+              </select>
+              <button type="submit" value="CARI" class="btn btn-icon btn-info mt-1" ><span
+              class="pcoded-micon"> <i class="fas fa-search"></i> Pecarian</span></button>
+
+                  </div>
+               
+             
+            </form>
+            <div class="form-group col-md-3 col-3 mt-1 text-right">
+              <button type="submit" value="CARI" class="btn btn-icon btn-success"><span
+                class="pcoded-micon"> <i class="far fa-file-pdf"></i> Cetak PDF</span></button>
+
+              <button type="submit" value="CARI" class="btn btn-icon btn-success"><span
+                class="pcoded-micon"> <i class="fas fa-upload"></i> Import</span></button>
+
+              <button type="submit" value="CARI" class="btn btn-icon btn-success"><span
+                class="pcoded-micon"> <i class="fas fa-download"></i> Export </span></button>
+
+
+
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <div class="row mt-sm-4">
       <div class="col-12 col-md-12 col-lg-5">
         <div class="card profile-widget">
@@ -62,10 +113,6 @@
                 <div class="profile-widget-item-label">Tabel </div>
                 <div class="profile-widget-item-value">@yield('title')</div>
                 {{-- <h4>Simple Table</h4> --}}
-              </div>
-              <div class="profile-widget-item">
-                <div class="profile-widget-item-label">Jumlah Data</div>
-                <div class="profile-widget-item-value">{{ $jmldata }} Data</div>
               </div>
             </div>
           </div>
@@ -80,7 +127,7 @@
                             <th width="5%" class="text-center">#</th>
                             <th>Nama</th>
                             <th>Nominal</th>
-                            <th width="20%" class="text-center">Aksi</th>
+                            <th width="100px" class="text-center">Aksi</th>
                           </tr>
 
                         @foreach ($datas as $data)
@@ -89,21 +136,23 @@
                             <td>{{ $data->nama }}</td>
                             <td>@currency($data->nominal)</td>
                           
-                            <td>
-                                <a href="/admin/{{ $pages }}/{{$data->id}}" class="btn btn-icon btn-warning"><i class="fas fa-edit"></i></a>
-                                {{-- <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a> --}}
-                                <form action="/admin/{{ $pages }}/{{$data->id}}" method="post" class="d-inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button class="btn btn-icon btn-danger"
-                                        onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
-                                            class="pcoded-micon"> <i class="fas fa-trash"></i></span></button>
-                                </form>
-                            </td>
+                            <td class="text-center">
+                              <a href="/admin/{{ $pages }}/{{$data->id}}" class="btn btn-icon btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                              {{-- <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a> --}}
+                              <form action="/admin/{{ $pages }}/{{$data->id}}" method="post" class="d-inline">
+                                  @method('delete')
+                                  @csrf
+                                  <button class="btn btn-icon btn-danger btn-sm"
+                                      onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
+                                          class="pcoded-micon"> <i class="fas fa-trash"></i></span></button>
+                              </form>
+                          </td>
                           </tr>
                           @endforeach
-                        
+                       
                         </table>
+                        {{ $datas->links() }} <br>
+                        Halaman ke-{{ $datas->currentPage() }} || {{ $datas->total() }} Total Data || {{ $datas->perPage() }} Data Perhalaman
                       </div>
                     </div>
             
