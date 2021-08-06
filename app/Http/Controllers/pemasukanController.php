@@ -22,7 +22,7 @@ class pemasukanController extends Controller
         $datas='0';
 
 
-        $datas=pemasukan::all();
+        $datas=DB::table('pemasukan')->paginate(3);
         // $kategori=kategori::all();
         $kategori = DB::table('kategori')->where('prefix','pemasukan')->get();
         $jmldata = DB::table('pemasukan')->count();

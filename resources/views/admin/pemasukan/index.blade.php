@@ -104,6 +104,8 @@
                           @endforeach
                         
                         </table>
+                        {{ $datas->links() }} <br>
+                        {{ $datas->currentPage() }} Halaman - {{ $datas->total() }} Total Data - {{ $datas->perPage() }} Data Perhalaman
                       </div>
                     </div>
             
