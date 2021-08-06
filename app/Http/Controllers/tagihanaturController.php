@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kelas;
 use App\Models\tagihanatur;
+use App\Models\tapel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class tagihanaturController extends Controller
 {
@@ -14,7 +17,20 @@ class tagihanaturController extends Controller
      */
     public function index()
     {
-        //
+        #WAJIB
+        $pages='tagihanatur';
+        $jmldata='0';
+        $datas='0';
+
+
+        $tapel=tapel::all();
+        $kelas=kelas::all();
+        $datas=DB::table('tagihanatur')->orderBy('tapel_nama','asc')->get();
+        // // $tagihanatur=tagihanatur::all();
+        // $tagihanatur = DB::table('tagihanatur')->where('prefix','tagihanatur')->get();
+        $jmldata = DB::table('tagihanatur')->count();
+
+        return view('admin.tagihanatur.index',compact('pages','jmldata','datas','tapel','kelas'));
     }
 
     /**
@@ -35,7 +51,40 @@ class tagihanaturController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'tapel_nama'=>'required',
+            'kelas_nama'=>'required',
+            'nominaltagihan'=>'required|numeric'
+
+        ],
+        [
+            'tapel_nama.required'=>'tapel_nama Harus diisi',
+            'kelas_nama.required'=>'kelas_nama Harus diisi',
+            'nominaltagihan.required'=>'nominaltagihan Harus diisi',
+
+        ]);
+
+        //jika kelas dan nama sudah ada maka edit
+        $cek1 = DB::table('tagihanatur')
+        ->where('kelas_nama',$request->kelas_nama)
+        ->where('tapel_nama',$request->tapel_nama)
+        ->count();
+        // dd($cek1);
+
+        //jika sudah ada maka edit
+        if($cek1>0){
+            tagihanatur::where('kelas_nama',$request->kelas_nama)->where('tapel_nama',$request->tapel_nama)
+                ->update([
+                    'nominaltagihan'=>$request->nominaltagihan
+                ]);
+
+        }else{
+            tagihanatur::create($request->all());
+        }
+
+
+        return redirect()->back()->with('status','Data berhasil di tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
     }
 
     /**
@@ -46,7 +95,17 @@ class tagihanaturController extends Controller
      */
     public function show(tagihanatur $tagihanatur)
     {
-        //
+        #WAJIB
+        $pages='tagihanatur';
+        $jmldata='0';
+        $datas='0';
+
+
+        $datas=tagihanatur::all();
+        $tapel=tapel::all();
+        $kelas=kelas::all();
+        $jmldata = DB::table('tagihanatur')->count();
+        return view('admin.tagihanatur.edit',compact('tagihanatur','pages','jmldata','datas','tapel','kelas'));
     }
 
     /**
