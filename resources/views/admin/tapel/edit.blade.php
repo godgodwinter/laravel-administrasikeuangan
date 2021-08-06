@@ -62,7 +62,7 @@
                           <tr>
                             <th width="5%" class="text-center">#</th>
                             <th>Tahun Pelajaran</th>
-                            <th width="20%" class="text-center">Aksi</th>
+                            <th width="100px" class="text-center">Aksi</th>
                           </tr>
 
                         @foreach ($datas as $data)
@@ -70,17 +70,17 @@
                             <td>{{ ($loop->index)+1 }}</td>
                             <td>{{ $data->nama }}</td>
                           
-                            <td>
-                              <a href="/admin/{{ $pages }}/{{$data->id}}" class="btn btn-icon btn-warning"><i class="fas fa-edit"></i></a>
-                              {{-- <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a> --}}
-                              <form action="/admin/{{ $pages }}/{{$data->id}}" method="post" class="d-inline">
-                                  @method('delete')
-                                  @csrf
-                                  <button class="btn btn-icon btn-danger"
-                                      onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
-                                          class="pcoded-micon"> <i class="fas fa-trash"></i></span></button>
-                              </form>
-                            </td>
+                            <td class="text-center">
+                                <a href="/admin/{{ $pages }}/{{$data->id}}" class="btn btn-icon btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                {{-- <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a> --}}
+                                <form action="/admin/{{ $pages }}/{{$data->id}}" method="post" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button class="btn btn-icon btn-danger btn-sm"
+                                        onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
+                                            class="pcoded-micon"> <i class="fas fa-trash"></i></span></button>
+                                </form>
+                            </td> 
                           </tr>
                           @endforeach
                         

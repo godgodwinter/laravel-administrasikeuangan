@@ -84,7 +84,7 @@
                             <th>Tahun</th>
                             <th>Kelas</th>
                             <th>Nominal Tagihan</th>
-                            <th width="20%" class="text-center">Aksi</th>
+                            <th width="100px" class="text-center">Aksi</th>
                           </tr>
 
                         @foreach ($datas as $data)
@@ -94,13 +94,13 @@
                             <td>{{ $data->kelas_nama }}</td>
                             <td>@currency($data->nominaltagihan)</td>
                           
-                            <td>
-                                <a href="/admin/{{ $pages }}/{{$data->id}}" class="btn btn-icon btn-warning"><i class="fas fa-edit"></i></a>
+                            <td class="text-center">
+                                <a href="/admin/{{ $pages }}/{{$data->id}}" class="btn btn-icon btn-warning  btn-sm"><i class="fas fa-edit"></i></a>
                                 {{-- <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a> --}}
                                 <form action="/admin/{{ $pages }}/{{$data->id}}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
-                                    <button class="btn btn-icon btn-danger"
+                                    <button class="btn btn-icon btn-danger btn-sm"
                                         onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
                                             class="pcoded-micon"> <i class="fas fa-trash"></i></span></button>
                                 </form>

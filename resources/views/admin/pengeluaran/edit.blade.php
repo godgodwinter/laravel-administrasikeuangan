@@ -80,7 +80,7 @@
                             <th width="5%" class="text-center">#</th>
                             <th>Nama</th>
                             <th>Nominal</th>
-                            <th width="20%" class="text-center">Aksi</th>
+                            <th width="100px" class="text-center">Aksi</th>
                           </tr>
 
                         @foreach ($datas as $data)
@@ -89,13 +89,13 @@
                             <td>{{ $data->nama }}</td>
                             <td>@currency($data->nominal)</td>
                           
-                            <td>
-                                <a href="/admin/{{ $pages }}/{{$data->id}}" class="btn btn-icon btn-warning"><i class="fas fa-edit"></i></a>
+                            <td class="text-center">
+                                <a href="/admin/{{ $pages }}/{{$data->id}}" class="btn btn-icon btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                                 {{-- <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a> --}}
                                 <form action="/admin/{{ $pages }}/{{$data->id}}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
-                                    <button class="btn btn-icon btn-danger"
+                                    <button class="btn btn-icon btn-danger btn-sm"
                                         onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
                                             class="pcoded-micon"> <i class="fas fa-trash"></i></span></button>
                                 </form>
@@ -136,7 +136,7 @@
                   <div class="form-group col-md-6 col-6">
                     <label for="nominal">Nominal <code>*)</code> </label>
                     <input type="text" name="labelrupiah" min="0" id="labelrupiah" class="form-control-plaintext" readonly="" value="@currency($pengeluaran->nominal)" >
-                    <input type="text" name="nominal" min="0" id="rupiah" class="form-control @error('nominal') is-invalid @enderror" value="{{ $pengeluaran->nominal }}" required>
+                    <input type="number" name="nominal" min="0" id="rupiah" class="form-control @error('nominal') is-invalid @enderror" value="{{ $pengeluaran->nominal }}" required>
                     @error('nominal')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>

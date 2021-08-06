@@ -111,7 +111,7 @@
                             $persen=number_format(($sumdetailbayar/$data->nominaltagihan*100),2);
                               $warna='light';
                               $icon='fas fa-times';
-                            if($persen=='100'){
+                            if($persen>='100'){
                               $warna='success';
                               $icon='fas fa-check';
                             }

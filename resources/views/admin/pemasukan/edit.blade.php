@@ -58,40 +58,43 @@
           <div class="card-body">
             <form action="{{ route('pemasukan.cari') }}" method="GET">
               <div class="row">
-                  <div class="form-group col-md-3 col-3 mt-1 text-right">
-                    <input type="text" name="cari" id="cari" class="form-control @error('cari') is-invalid @enderror" value="{{$request->cari}}"  placeholder="Cari...">
+                  <div class="form-group col-md-2 col-2 mt-1 text-right">
+                    <input type="text" name="cari" id="cari" class="form-control form-control-sm @error('cari') is-invalid @enderror" value="{{$request->cari}}"  placeholder="Cari...">
                     @error('cari')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>
 
-                  <div class="form-group col-md-3 col-3 mt-1 text-right">
+                  <div class="form-group col-md-2 col-2 mt-1 text-right">
                 
-                  <input type="month" class="form-control" name="yearmonth"  value="{{$request->yearmonth}}">
+                  <input type="month" class="form-control form-control-sm" name="yearmonth"  value="{{$request->yearmonth}}">
                   </div>
-                  <div class="form-group col-md-3 col-3 mt-1 text-right">
+                  <div class="form-group  col-md-2 col-2 text-right">
              
-                  <select class="form-control form-control-lg" name="kategori_nama">  
+                  <select class="form-control form-control-sm" name="kategori_nama">  
                     <option>{{$request->kategori_nama}}</option>
                  
                 @foreach ($kategori as $t)
                     <option>{{ $t->nama }}</option>
                 @endforeach
               </select>
-              <button type="submit" value="CARI" class="btn btn-icon btn-info mt-1" ><span
+                  </div>
+              <div class="form-group   text-right">
+         
+              <button type="submit" value="CARI" class="btn btn-icon btn-info btn-sm mt-1" ><span
               class="pcoded-micon"> <i class="fas fa-search"></i> Pecarian</span></button>
 
                   </div>
                
              
             </form>
-            <div class="form-group col-md-3 col-3 mt-1 text-right">
-              <button type="submit" value="CARI" class="btn btn-icon btn-success"><span
+            <div class="form-group col-md-4 col-4 mt-1 text-right">
+              <button type="submit" value="CARI" class="btn btn-icon btn-success btn-sm"><span
                 class="pcoded-micon"> <i class="far fa-file-pdf"></i> Cetak PDF</span></button>
 
-              <button type="submit" value="CARI" class="btn btn-icon btn-success"><span
+              <button type="submit" value="CARI" class="btn btn-icon btn-success btn-sm"><span
                 class="pcoded-micon"> <i class="fas fa-upload"></i> Import</span></button>
 
-              <button type="submit" value="CARI" class="btn btn-icon btn-success"><span
+              <button type="submit" value="CARI" class="btn btn-icon btn-success btn-sm"><span
                 class="pcoded-micon"> <i class="fas fa-download"></i> Export </span></button>
 
 
@@ -101,7 +104,7 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
 
     <div class="row mt-sm-4">
       <div class="col-12 col-md-12 col-lg-5">
@@ -185,7 +188,7 @@
                   <div class="form-group col-md-6 col-6">
                     <label for="nominal">Nominal <code>*)</code> </label>
                     <input type="text" name="labelrupiah" min="0" id="labelrupiah" class="form-control-plaintext" readonly="" value="@currency($pemasukan->nominal)" >
-                    <input type="text" name="nominal" min="0" id="rupiah" class="form-control @error('nominal') is-invalid @enderror" value="{{ $pemasukan->nominal }}" required>
+                    <input type="number" name="nominal" min="0" id="rupiah" class="form-control @error('nominal') is-invalid @enderror" value="{{ $pemasukan->nominal }}" required>
                     @error('nominal')<div class="invalid-feedback"> {{$pemasukan->nominal}}</div>
                     @enderror
                   </div>
