@@ -51,6 +51,9 @@
 @section('container')
 
   <div class="section-body">
+    <p class="section-lead">
+     Menu untuk mengatur Nominal Tagihan siswa.
+    </p>
 
     <div class="row mt-sm-4">
       <div class="col-12 col-md-12 col-lg-5">

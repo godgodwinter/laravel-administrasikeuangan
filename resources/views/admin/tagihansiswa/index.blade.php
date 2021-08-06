@@ -51,6 +51,9 @@
 @section('container')
 
   <div class="section-body">
+    <p class="section-lead">
+     Menu untuk Melakukan Pembayaran Tagihan siswa.
+    </p>
 
     <div class="row mt-sm-4">
       <div class="col-12 col-md-12 col-lg-12">
@@ -106,11 +109,17 @@
                             ->sum('nominal');
                             $kurang=$data->nominaltagihan-$sumdetailbayar;
                             $persen=number_format(($sumdetailbayar/$data->nominaltagihan*100),2);
+                              $warna='light';
+                              $icon='fas fa-times';
+                            if($persen=='100'){
+                              $warna='success';
+                              $icon='fas fa-check';
+                            }
                        @endphp
                           <tr>
                             <td  class="text-center">{{ ($loop->index)+1 }}</td>
                             <td class="text-center">
-                              <button class="btn btn-icon btn-success" data-toggle="modal" data-target="#modalbayar{{ $data->id }}" ><i class="far fa-money-bill-alt"></i></button>
+                              <button class="btn btn-icon btn-{{ $warna }}" data-toggle="modal" data-target="#modalbayar{{ $data->id }}" ><i class="far fa-money-bill-alt"></i></button>
                             </td>
                             <td class="text-left">{{ $data->siswa_nis }} - {{ $data->siswa_nama }}</td>
                             <td class="text-left">{{ $data->tapel_nama }}</td>
@@ -118,7 +127,11 @@
                             <td class="text-left">@currency($data->nominaltagihan)</td>
                             <td class="text-left">@currency($sumdetailbayar)</td>
                             <td>@currency($kurang)</td>
-                            <td class="text-center">{{ $persen }} %</td>
+                            <td class="text-center">
+
+                      <span class="btn btn-icon icon-left btn-{{ $warna }}"><i class="{{ $icon }}"></i> {{ $persen }} %</span>
+                             
+                            </td>
                           
                             {{-- <td class="text-center">
                                 <a href="/admin/{{ $pages }}/{{$data->id}}"  class="btn btn-icon icon-left btn-info"><i class="fas fa-edit"></i> Detail</a>
