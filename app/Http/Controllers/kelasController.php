@@ -53,7 +53,7 @@ class kelasController extends Controller
 
         ],
         [
-            'nama.unique'=>'nik sudah digunakan',
+            'nama.required'=>'Nama Harus diisi',
 
         ]);
             // dd($request);

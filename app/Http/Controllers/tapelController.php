@@ -54,7 +54,7 @@ class tapelController extends Controller
 
         ],
         [
-            'nama.unique'=>'nik sudah digunakan',
+            'nama.required'=>'Nama Harus diisi',
 
         ]);
             // dd($request);
@@ -110,7 +110,7 @@ class tapelController extends Controller
             'nama'=>'required'
         ],
         [
-            'nama.required'=>'Nama harus diisi'
+            'nama.required'=>'Nama Harus diisi',
 
 
         ]);
