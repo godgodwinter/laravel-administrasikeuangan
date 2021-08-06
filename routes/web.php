@@ -55,6 +55,7 @@ Route::get('admin/pegawai', 'App\Http\Controllers\pegawaiController@index')->nam
 //pemasukan-MENU
 Route::resource('admin/pemasukan','App\Http\Controllers\pemasukanController')->except(['index']);
 Route::get('admin/pemasukan', 'App\Http\Controllers\pemasukanController@index')->name('pemasukan');
+Route::get('admin/caripemasukan', 'App\Http\Controllers\pemasukanController@cari')->name('pemasukan.cari');
 
 //pengeluaran-MENU
 Route::resource('admin/pengeluaran','App\Http\Controllers\pengeluaranController')->except(['index']);

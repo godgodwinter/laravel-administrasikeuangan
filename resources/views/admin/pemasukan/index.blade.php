@@ -64,8 +64,18 @@
                 {{-- <h4>Simple Table</h4> --}}
               </div>
               <div class="profile-widget-item">
-                <div class="profile-widget-item-label">Jumlah Data</div>
-                <div class="profile-widget-item-value">{{ $jmldata }} Data</div>
+               
+                <form action="{{ route('pemasukan.cari') }}" method="GET"">
+              
+                    <input type="text" name="cari" id="cari" class="form-control @error('cari') is-invalid @enderror" value="{{old('cari')}}" required>
+                    @error('cari')<div class="invalid-feedback"> {{$message}}</div>
+                    @enderror
+                 
+                
+                  <button type="submit" value="CARI" class="btn btn-icon btn-info"><span
+                          class="pcoded-micon"> <i class="fas fa-search"></i></span></button>
+
+              </form>
               </div>
             </div>
           </div>
@@ -105,7 +115,7 @@
                         
                         </table>
                         {{ $datas->links() }} <br>
-                        {{ $datas->currentPage() }} Halaman - {{ $datas->total() }} Total Data - {{ $datas->perPage() }} Data Perhalaman
+                        Halaman ke-{{ $datas->currentPage() }} || {{ $datas->total() }} Total Data || {{ $datas->perPage() }} Data Perhalaman
                       </div>
                     </div>
             

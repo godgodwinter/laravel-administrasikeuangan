@@ -30,6 +30,27 @@ class pemasukanController extends Controller
         return view('admin.pemasukan.index',compact('pages','jmldata','datas','kategori'));
     }
 
+    public function cari(Request $request)
+    {
+        // dd('a');
+        $cari=$request->cari;
+        #WAJIB
+        $pages='pemasukan';
+        $jmldata='0';
+        $datas='0';
+
+
+        $datas=DB::table('pemasukan')
+        ->where('nama','like',"%".$cari."%")
+        ->paginate(3);
+
+        // $kategori=kategori::all();
+        $kategori = DB::table('kategori')->where('prefix','pemasukan')->get();
+        $jmldata = DB::table('pemasukan')->count();
+
+        return view('admin.pemasukan.index',compact('pages','jmldata','datas','kategori'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
