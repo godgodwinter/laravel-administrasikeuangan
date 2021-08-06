@@ -17,7 +17,7 @@ class pegawaiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         #WAJIB
         $pages='pegawai';
@@ -25,13 +25,41 @@ class pegawaiController extends Controller
         $datas='0';
 
 
-        $datas=pegawai::all();
+        $datas=DB::table('pegawai')
+        ->paginate($this->paginationjml());
         // $kategori=kategori::all();
         $kategori = DB::table('kategori')->where('prefix','pegawai')->get();
         $jmldata = DB::table('pegawai')->count();
 
-        return view('admin.pegawai.index',compact('pages','jmldata','datas','kategori'));
+        return view('admin.pegawai.index',compact('pages','jmldata','datas','kategori','request'));
         // return view('admin.beranda');
+    }
+    public function cari(Request $request)
+    {
+        // dd($request);
+        $cari=$request->cari;
+        $kategori_nama=$request->kategori_nama;
+
+        #WAJIB
+        $pages='pegawai';
+        $jmldata='0';
+        $datas='0';
+
+
+    $datas=DB::table('pegawai')
+    // ->where('nis','like',"%".$cari."%")
+    ->where('nama','like',"%".$cari."%")
+    ->where('kategori_nama','like',"%".$kategori_nama."%")
+    ->orWhere('nig','like',"%".$cari."%")
+    ->where('kategori_nama','like',"%".$kategori_nama."%")
+    ->paginate($this->paginationjml());
+
+        // $kategori=kategori::all();
+        $kategori = DB::table('kategori')->where('prefix','pegawai')->get();
+        $jmldata = DB::table('pegawai')->count();
+
+
+        return view('admin.pegawai.index',compact('pages','jmldata','datas','kategori','request'));
     }
 
     /**
@@ -110,7 +138,7 @@ class pegawaiController extends Controller
      * @param  \App\Models\pegawai  $pegawai
      * @return \Illuminate\Http\Response
      */
-    public function show(pegawai $pegawai)
+    public function show(Request $request,pegawai $pegawai)
     {
         // dd($pegawai);
         #WAJIB
@@ -125,7 +153,7 @@ class pegawaiController extends Controller
         $jmldata = DB::table('pegawai')->count();
         $datausers = DB::table('users')->where('nomerinduk',$pegawai->nig)->get();
 
-        return view('admin.pegawai.edit',compact('pages','jmldata','datas','kategori','pegawai','datausers'));
+        return view('admin.pegawai.edit',compact('pages','jmldata','datas','kategori','pegawai','datausers','request'));
         // return view('admin.beranda');
     }
 

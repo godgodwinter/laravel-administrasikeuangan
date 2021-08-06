@@ -16,7 +16,7 @@ class tagihanaturController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         #WAJIB
         $pages='tagihanatur';
@@ -26,12 +26,39 @@ class tagihanaturController extends Controller
 
         $tapel=tapel::all();
         $kelas=kelas::all();
-        $datas=DB::table('tagihanatur')->orderBy('tapel_nama','asc')->get();
+        $datas=DB::table('tagihanatur')->orderBy('tapel_nama','asc')
+        ->paginate($this->paginationjml());
         // // $tagihanatur=tagihanatur::all();
         // $tagihanatur = DB::table('tagihanatur')->where('prefix','tagihanatur')->get();
         $jmldata = DB::table('tagihanatur')->count();
 
-        return view('admin.tagihanatur.index',compact('pages','jmldata','datas','tapel','kelas'));
+        return view('admin.tagihanatur.index',compact('pages','jmldata','datas','tapel','kelas','request'));
+    }
+    public function cari(Request $request)
+    {
+        // dd($request);
+        $cari=$request->cari;
+        $tapel_nama=$request->tapel_nama;
+        $kelas_nama=$request->kelas_nama;
+
+        #WAJIB
+        $pages='tagihanatur';
+        $jmldata='0';
+        $datas='0';
+
+
+    $datas=DB::table('tagihanatur')
+    ->where('tapel_nama','like',"%".$tapel_nama."%")
+    ->where('kelas_nama','like',"%".$kelas_nama."%")
+    ->paginate($this->paginationjml());
+
+        // $kategori=kategori::all();
+        $tapel=tapel::all();
+        $kelas=kelas::all();
+        $jmldata = DB::table('tagihanatur')->count();
+
+
+        return view('admin.tagihanatur.index',compact('pages','jmldata','datas','tapel','kelas','request'));
     }
 
     /**
@@ -94,7 +121,7 @@ class tagihanaturController extends Controller
      * @param  \App\Models\tagihanatur  $tagihanatur
      * @return \Illuminate\Http\Response
      */
-    public function show(tagihanatur $tagihanatur)
+    public function show(Request $request,tagihanatur $tagihanatur)
     {
         #WAJIB
         $pages='tagihanatur';
@@ -102,11 +129,12 @@ class tagihanaturController extends Controller
         $datas='0';
 
 
-        $datas=tagihanatur::all();
+        $datas=DB::table('tagihanatur')->orderBy('tapel_nama','asc')
+        ->paginate($this->paginationjml());
         $tapel=tapel::all();
         $kelas=kelas::all();
         $jmldata = DB::table('tagihanatur')->count();
-        return view('admin.tagihanatur.edit',compact('tagihanatur','pages','jmldata','datas','tapel','kelas'));
+        return view('admin.tagihanatur.edit',compact('tagihanatur','pages','jmldata','datas','tapel','kelas','request'));
     }
 
     /**

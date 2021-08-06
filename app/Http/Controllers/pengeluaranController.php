@@ -14,7 +14,7 @@ class pengeluaranController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         #WAJIB
         $pages='pengeluaran';
@@ -22,13 +22,54 @@ class pengeluaranController extends Controller
         $datas='0';
 
 
-        $datas=pengeluaran::all();
+        $datas=DB::table('pengeluaran')->paginate($this->paginationjml());
         // $kategori=kategori::all();
         $kategori = DB::table('kategori')->where('prefix','pengeluaran')->get();
         $jmldata = DB::table('pengeluaran')->count();
 
-        return view('admin.pengeluaran.index',compact('pages','jmldata','datas','kategori'));
+        return view('admin.pengeluaran.index',compact('pages','jmldata','datas','kategori','request'));
     }
+    public function cari(Request $request)
+    {
+        // dd($request);
+        $cari=$request->cari;
+        $yearmonth=$request->yearmonth;
+        $kategori_nama=$request->kategori_nama;
+
+        $year = date("Y",strtotime($yearmonth));
+        $month = date("m",strtotime($yearmonth));
+        // $year = date_format($yearmonth, "Y");
+        // $month = date_format($yearmonth, "m");
+        // dd($year);
+        #WAJIB
+        $pages='pengeluaran';
+        $jmldata='0';
+        $datas='0';
+
+if($yearmonth!==null){
+
+    $datas=DB::table('pengeluaran')
+    ->where('nama','like',"%".$cari."%")
+    ->where('kategori_nama','like',"%".$kategori_nama."%")
+    ->whereMonth('created_at', '=', $month)
+    ->whereYear('created_at', '=', $year)
+    ->paginate($this->paginationjml());
+}else{
+
+    $datas=DB::table('pengeluaran')
+    ->where('nama','like',"%".$cari."%")
+    ->where('kategori_nama','like',"%".$kategori_nama."%")
+    ->paginate($this->paginationjml());
+}
+
+        // $kategori=kategori::all();
+        $kategori = DB::table('kategori')->where('prefix','pengeluaran')->get();
+        $jmldata = DB::table('pengeluaran')->count();
+
+
+        return view('admin.pengeluaran.index',compact('pages','jmldata','datas','kategori','request'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -70,7 +111,7 @@ class pengeluaranController extends Controller
      * @param  \App\Models\pengeluaran  $pengeluaran
      * @return \Illuminate\Http\Response
      */
-    public function show(pengeluaran $pengeluaran)
+    public function show(Request $request,pengeluaran $pengeluaran)
     {
         #WAJIB
         $pages='pengeluaran';
@@ -78,10 +119,10 @@ class pengeluaranController extends Controller
         $datas='0';
 
 
-        $datas=pengeluaran::all();
+        $datas=DB::table('pengeluaran')->paginate($this->paginationjml());
         $jmldata = DB::table('pengeluaran')->count();
         $kategori = DB::table('kategori')->where('prefix','pengeluaran')->get();
-        return view('admin.pengeluaran.edit',compact('pengeluaran','pages','jmldata','datas','kategori'));
+        return view('admin.pengeluaran.edit',compact('pengeluaran','pages','jmldata','datas','kategori','request'));
     }
 
     /**

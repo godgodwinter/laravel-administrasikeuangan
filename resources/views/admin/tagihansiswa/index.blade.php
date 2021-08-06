@@ -50,12 +50,66 @@
 
 @section('container')
 
-  <div class="section-body">
-    <p class="section-lead">
-     Menu untuk Melakukan Pembayaran Tagihan siswa.
-    </p>
 
-    <div class="row mt-sm-4">
+<div class="row ">
+  <div class="col-12 col-md-12 col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <form action="{{ route('tagihansiswa.cari') }}" method="GET">
+          <div class="row">
+              <div class="form-group col-md-2 col-2 mt-1 text-right">
+                <input type="text" name="cari" id="cari" class="form-control form-control-sm @error('cari') is-invalid @enderror" value="{{$request->cari}}"  placeholder="Cari...">
+                @error('cari')<div class="invalid-feedback"> {{$message}}</div>
+                @enderror
+              </div>
+
+              <div class="form-group col-md-2 col-2 text-right">
+            
+                <select class="form-control form-control-sm" name="tapel_nama">  
+                  <option>{{$request->tapel_nama}}</option>
+               
+              @foreach ($tapel as $t)
+                  <option>{{ $t->nama }}</option>
+              @endforeach
+            </select>
+              </div>
+              <div class="form-group  col-md-2 col-2 text-right">
+         
+              <select class="form-control form-control-sm" name="kelas_nama">  
+                <option>{{$request->kelas_nama}}</option>
+             
+            @foreach ($kelas as $t)
+                <option>{{ $t->nama }}</option>
+            @endforeach
+          </select>
+              </div>
+          <div class="form-group   text-right">
+     
+          <button type="submit" value="CARI" class="btn btn-icon btn-info btn-sm mt-1" ><span
+          class="pcoded-micon"> <i class="fas fa-search"></i> Pecarian</span></button>
+
+              </div>
+           
+         
+        </form>
+        <div class="form-group col-md-4 col-4 mt-1 text-right">
+          {{-- <a href="/admin/{{  $pages }}/#add" type="submit" value="CARI" class="btn btn-icon btn-primary btn-sm"><span
+            class="pcoded-micon"> <i class="far fa-plus-square"></i> Tambah @yield('title')</span></a href="$add"> --}}
+
+
+
+
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+   
+  <div class="section-body">
+   
+
+    <div class="row ">
       <div class="col-12 col-md-12 col-lg-12">
         <div class="card profile-widget">
           <div class="profile-widget-header">
@@ -147,6 +201,16 @@
                           @endforeach
                         
                         </table>
+                      </div>
+                      <div class="card-footer text-right">
+                        {{ $datas->links() }}
+                      <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><i class="far fa-file"></i> Halaman ke-{{ $datas->currentPage() }}</li>
+                          <li class="breadcrumb-item"><i class="fas fa-paste"></i> {{ $datas->total() }} Total Data</li>
+                          <li class="breadcrumb-item active" aria-current="page"><i class="far fa-copy"></i> {{ $datas->perPage() }} Data Perhalaman</li>
+                        </ol>
+                      </nav>
                       </div>
                     </div>
             

@@ -88,14 +88,14 @@
              
             </form>
             <div class="form-group col-md-4 col-4 mt-1 text-right">
-              <button type="submit" value="CARI" class="btn btn-icon btn-success btn-sm"><span
+              {{-- <button type="submit" value="CARI" class="btn btn-icon btn-success btn-sm"><span
                 class="pcoded-micon"> <i class="far fa-file-pdf"></i> Cetak PDF</span></button>
 
               <button type="submit" value="CARI" class="btn btn-icon btn-success btn-sm"><span
                 class="pcoded-micon"> <i class="fas fa-upload"></i> Import</span></button>
 
               <button type="submit" value="CARI" class="btn btn-icon btn-success btn-sm"><span
-                class="pcoded-micon"> <i class="fas fa-download"></i> Export </span></button>
+                class="pcoded-micon"> <i class="fas fa-download"></i> Export </span></button> --}}
 
 
 
@@ -154,9 +154,17 @@
                           @endforeach
                        
                         </table>
-                        {{ $datas->links() }} <br>
-                        Halaman ke-{{ $datas->currentPage() }} || {{ $datas->total() }} Total Data || {{ $datas->perPage() }} Data Perhalaman
-                      </div>
+                       </div>
+                       <div class="card-footer text-right">
+                         {{ $datas->links() }}
+                       <nav aria-label="breadcrumb">
+                         <ol class="breadcrumb">
+                           <li class="breadcrumb-item"><i class="far fa-file"></i> Halaman ke-{{ $datas->currentPage() }}</li>
+                           <li class="breadcrumb-item"><i class="fas fa-paste"></i> {{ $datas->total() }} Total Data</li>
+                           <li class="breadcrumb-item active" aria-current="page"><i class="far fa-copy"></i> {{ $datas->perPage() }} Data Perhalaman</li>
+                         </ol>
+                       </nav>
+                       </div>
                     </div>
             
        

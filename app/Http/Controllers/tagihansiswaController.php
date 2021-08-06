@@ -17,7 +17,7 @@ class tagihansiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         #WAJIB
         $pages='tagihansiswa';
@@ -27,14 +27,46 @@ class tagihansiswaController extends Controller
 
         $tapel=tapel::all();
         $kelas=kelas::all();
-        $datas=DB::table('tagihansiswa')->orderBy('siswa_nis','asc')->get();
+        $datas=DB::table('tagihansiswa')->orderBy('siswa_nis','asc')
+        ->paginate($this->paginationjml());
         // // $tagihansiswa=tagihansiswa::all();
         // $tagihansiswa = DB::table('tagihansiswa')->where('prefix','tagihansiswa')->get();
         $jmldata = DB::table('tagihansiswa')->count();
 
-        return view('admin.tagihansiswa.index',compact('pages','jmldata','datas','tapel','kelas'));
+        return view('admin.tagihansiswa.index',compact('pages','jmldata','datas','tapel','kelas','request'));
     }
 
+    public function cari(Request $request)
+    {
+        // dd($request);
+        $cari=$request->cari;
+        $tapel_nama=$request->tapel_nama;
+        $kelas_nama=$request->kelas_nama;
+
+        #WAJIB
+        $pages='tagihansiswa';
+        $jmldata='0';
+        $datas='0';
+
+
+    $datas=DB::table('tagihansiswa')
+    // ->where('nis','like',"%".$cari."%")
+    ->where('siswa_nama','like',"%".$cari."%")
+    ->where('tapel_nama','like',"%".$tapel_nama."%")
+    ->where('kelas_nama','like',"%".$kelas_nama."%")
+    ->orWhere('siswa_nis','like',"%".$cari."%")
+    ->where('tapel_nama','like',"%".$tapel_nama."%")
+    ->where('kelas_nama','like',"%".$kelas_nama."%")
+    ->paginate($this->paginationjml());
+
+        // $kategori=kategori::all();
+        $tapel=tapel::all();
+        $kelas=kelas::all();
+        $jmldata = DB::table('tagihansiswa')->count();
+
+
+        return view('admin.tagihansiswa.index',compact('pages','jmldata','datas','tapel','kelas','request'));
+    }
     public function sync()
     {
         $tapel=tapel::all();

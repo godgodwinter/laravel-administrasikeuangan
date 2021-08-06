@@ -18,7 +18,7 @@ class siswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         #WAJIB
         $pages='siswa';
@@ -26,13 +26,47 @@ class siswaController extends Controller
         $datas='0';
 
 
-        $datas=siswa::all();
+        $datas=DB::table('siswa')
+        ->paginate($this->paginationjml());
+    
         $tapel=tapel::all();
         $kelas=kelas::all();
         $jmldata = DB::table('siswa')->count();
 
-        return view('admin.siswa.index',compact('pages','jmldata','datas','tapel','kelas'));
+        return view('admin.siswa.index',compact('pages','jmldata','datas','tapel','kelas','request'));
         // return view('admin.beranda');
+    }
+
+    public function cari(Request $request)
+    {
+        // dd($request);
+        $cari=$request->cari;
+        $tapel_nama=$request->tapel_nama;
+        $kelas_nama=$request->kelas_nama;
+
+        #WAJIB
+        $pages='siswa';
+        $jmldata='0';
+        $datas='0';
+
+
+    $datas=DB::table('siswa')
+    // ->where('nis','like',"%".$cari."%")
+    ->where('nama','like',"%".$cari."%")
+    ->where('tapel_nama','like',"%".$tapel_nama."%")
+    ->where('kelas_nama','like',"%".$kelas_nama."%")
+    ->orWhere('nis','like',"%".$cari."%")
+    ->where('tapel_nama','like',"%".$tapel_nama."%")
+    ->where('kelas_nama','like',"%".$kelas_nama."%")
+    ->paginate($this->paginationjml());
+
+        // $kategori=kategori::all();
+        $tapel=tapel::all();
+        $kelas=kelas::all();
+        $jmldata = DB::table('siswa')->count();
+
+
+        return view('admin.siswa.index',compact('pages','jmldata','datas','tapel','kelas','request'));
     }
 
     /**
@@ -109,7 +143,7 @@ class siswaController extends Controller
      * @param  \App\Models\siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function show(siswa $siswa)
+    public function show(Request $request,siswa $siswa)
     {
         #WAJIB
         $pages='siswa';
@@ -123,7 +157,7 @@ class siswaController extends Controller
         $jmldata = DB::table('siswa')->count();
         $datausers = DB::table('users')->where('nomerinduk',$siswa->nis)->get();
 
-        return view('admin.siswa.edit',compact('pages','jmldata','datas','tapel','kelas','siswa','datausers'));
+        return view('admin.siswa.edit',compact('pages','jmldata','datas','tapel','kelas','siswa','datausers','request'));
     }
 
     /**

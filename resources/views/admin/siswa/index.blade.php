@@ -51,9 +51,65 @@
 @section('container')
 
   <div class="section-body">
+    
 
-    <div class="row mt-sm-4">
-      <div class="col-12 col-md-12 col-lg-5">
+    <div class="row ">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <form action="{{ route('siswa.cari') }}" method="GET">
+              <div class="row">
+                  <div class="form-group col-md-2 col-2 mt-1 text-right">
+                    <input type="text" name="cari" id="cari" class="form-control form-control-sm @error('cari') is-invalid @enderror" value="{{$request->cari}}"  placeholder="Cari...">
+                    @error('cari')<div class="invalid-feedback"> {{$message}}</div>
+                    @enderror
+                  </div>
+
+                  <div class="form-group col-md-2 col-2 mt-1 text-right">
+                
+                    <select class="form-control form-control-sm" name="tapel_nama">  
+                      <option>{{$request->tapel_nama}}</option>
+                   
+                  @foreach ($tapel as $t)
+                      <option>{{ $t->nama }}</option>
+                  @endforeach
+                </select>
+                  </div>
+                  <div class="form-group  col-md-2 col-2 text-right">
+             
+                  <select class="form-control form-control-sm" name="kelas_nama">  
+                    <option>{{$request->kelas_nama}}</option>
+                 
+                @foreach ($kelas as $t)
+                    <option>{{ $t->nama }}</option>
+                @endforeach
+              </select>
+                  </div>
+              <div class="form-group   text-right">
+         
+              <button type="submit" value="CARI" class="btn btn-icon btn-info btn-sm mt-1" ><span
+              class="pcoded-micon"> <i class="fas fa-search"></i> Pecarian</span></button>
+
+                  </div>
+               
+             
+            </form>
+            <div class="form-group col-md-4 col-4 mt-1 text-right">
+              <a href="/admin/{{  $pages }}/#add" type="submit" value="CARI" class="btn btn-icon btn-primary btn-sm"><span
+                class="pcoded-micon"> <i class="far fa-plus-square"></i> Tambah @yield('title')</span></a href="$add">
+
+
+
+
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+              
+
+    <div class="row mt-sm-0">
+      <div class="col-12 col-md-12 col-lg-12">
         <div class="card profile-widget">
           <div class="profile-widget-header">
             <img alt="image" src="{{ asset("assets/") }}/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
@@ -63,10 +119,7 @@
                 <div class="profile-widget-item-value">@yield('title')</div>
                 {{-- <h4>Simple Table</h4> --}}
               </div>
-              <div class="profile-widget-item">
-                <div class="profile-widget-item-label">Jumlah Data</div>
-                <div class="profile-widget-item-value">{{ $jmldata }} Data</div>
-              </div>
+             
             </div>
           </div>
 
@@ -79,13 +132,28 @@
                           <tr>
                             <th width="5%" class="text-center">#</th>
                             <th>Nama</th>
+                            <th>Kelas</th>
+                            <th>Email</th>
                             <th width="100px" class="text-center">Aksi</th>
                           </tr>
 
                         @foreach ($datas as $data)
                           <tr>
                             <td>{{ ($loop->index)+1 }}</td>
-                            <td>{{ $data->nama }}</td>
+                            <td>{{ $data->nis }} - {{ $data->nama }}</td>
+                            <td>{{ $data->tapel_nama }} - {{ $data->kelas_nama }}</td>
+
+@php
+$ambilemail = DB::table('users')
+  ->where('nomerinduk', '=', $data->nis)
+  ->get();
+@endphp
+@foreach ($ambilemail as $ae)
+  @php
+    $email=$ae->email;
+  @endphp
+@endforeach
+                            <td> {{ $email }} </td>
                           
                             <td class="text-center">
                                 <a href="/admin/{{ $pages }}/{{$data->id}}" class="btn btn-icon btn-warning btn-sm"><i class="fas fa-edit"></i></a>
@@ -103,6 +171,16 @@
                         
                         </table>
                       </div>
+                      <div class="card-footer text-right">
+                        {{ $datas->links() }}
+                      <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><i class="far fa-file"></i> Halaman ke-{{ $datas->currentPage() }}</li>
+                          <li class="breadcrumb-item"><i class="fas fa-paste"></i> {{ $datas->total() }} Total Data</li>
+                          <li class="breadcrumb-item active" aria-current="page"><i class="far fa-copy"></i> {{ $datas->perPage() }} Data Perhalaman</li>
+                        </ol>
+                      </nav>
+                      </div>
                     </div>
             
        
@@ -112,7 +190,7 @@
 
      
       </div>
-      <div class="col-12 col-md-12 col-lg-7">
+      <div class="col-12 col-md-12 col-lg-7" id="add">
         <div class="card">
             <form action="/admin/{{ $pages }}" method="post">
                 @csrf
