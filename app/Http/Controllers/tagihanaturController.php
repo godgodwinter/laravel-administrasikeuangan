@@ -7,6 +7,7 @@ use App\Models\tagihanatur;
 use App\Models\tapel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class tagihanaturController extends Controller
 {
@@ -139,6 +140,8 @@ class tagihanaturController extends Controller
      */
     public function destroy(tagihanatur $tagihanatur)
     {
-        //
+        tagihanatur::destroy($tagihanatur->id);
+        return redirect(URL::to('/').'/admin/tagihanatur')->with('status','Data berhasil dihapus!')->with('tipe','danger')->with('icon','fas fa-trash');
+    
     }
 }
