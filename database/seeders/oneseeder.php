@@ -137,6 +137,14 @@ class oneseeder extends Seeder
             'updated_at' => Carbon::now()
          ]);
 
+         //settings SEEDER
+        DB::table('settings')->insert([
+            'paginationjml' => '10',
+            'tapelaktif' => '2021/2022',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
+
 
     }
 }
