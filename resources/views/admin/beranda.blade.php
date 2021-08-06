@@ -8,12 +8,44 @@
 
 @section('jshere')
 @endsection
-{{-- 
-@section('headernav')
-@endsection
-
 @section('notif')
-@endsection --}}
+
+
+@if (session('tipe'))
+        @php
+        $tipe=session('tipe');    
+        @endphp
+@else
+        @php
+            $tipe='light';
+        @endphp
+@endif
+
+@if (session('icon'))
+        @php
+        $icon=session('icon');    
+        @endphp
+@else
+        @php
+            $icon='far fa-lightbulb';
+        @endphp
+@endif
+
+@if (session('status'))
+
+  <div class="alert alert-{{ $tipe }} alert-has-icon alert-dismissible show fade">
+    <div class="alert-icon"><i class="{{ $icon }}"></i></div>
+                      <div class="alert-body">
+                        <div class="alert-title">{{ Str::ucfirst($tipe) }}</div>
+                        <button class="close" data-dismiss="alert">
+                          <span>&times;</span>
+                        </button>
+                        {{ session('status') }}
+                      </div>
+                    </div>
+@endif
+@endsection 
+
 
 @section('container')
 
@@ -105,6 +137,56 @@
           <div class="profile-widget-header">
             <img alt="image" src="../assets/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
             <div class="profile-widget-items">
+              <h3 class="ml-5 mt-4">Pengaturan Web</h3>
+            </div>
+
+            <div class="card">
+              <form action="/admin/settings/1" method="post">
+                  @csrf
+
+                  <div class="row">
+                  <div class="form-group col-md-5 col-5 mt-3 ml-5">
+                    <label for="paginationjml">Pagination <code>*)</code></label>
+                    <input type="number" name="paginationjml" id="paginationjml" class="form-control @error('paginationjml') is-invalid @enderror" value="{{$paginationjml}}" required>
+                    @error('paginationjml')<div class="invalid-feedback"> {{$message}}</div>
+                    @enderror
+                  </div>
+
+            <div class="form-group col-md-5 col-5  mt-3">
+              <label>Tahun Pelajaran Aktif<code>*)</code></label>
+              <select class="form-control form-control-lg @error('tapelaktif') is-invalid @enderror" required name="tapelaktif">  
+                    @if ($tapelaktif)
+                    <option>{{$tapelaktif}}</option>                        
+                    @endif
+                @foreach ($tapel as $t)
+                    <option>{{ $t->nama }}</option>
+                @endforeach
+              </select>
+              @error('tapelaktif')<div class="invalid-feedback"> {{$message}}</div>
+              @enderror
+            </div>
+            </div>
+            <div class="card-footer text-right">
+              <button class="btn btn-primary">Simpan</button>
+            </div>
+          
+          
+            </form>
+          </div>
+             
+              
+              
+          </div>
+
+       
+      
+        </div>
+        
+
+        <div class="card profile-widget mt-5">
+          <div class="profile-widget-header">
+            <img alt="image" src="../assets/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
+            <div class="profile-widget-items">
               <h3 class="ml-5 mt-4">Menu Mastering</h3>
             </div>
              
@@ -148,7 +230,6 @@
        
       
         </div>
-        
 
 
     </div>

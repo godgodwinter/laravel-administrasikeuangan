@@ -31,5 +31,20 @@ class Controller extends BaseController
         return $hasil_rupiah;
      
     }
+
+    public function paginationjml(){
+	
+        $settings = DB::table('settings')->first();
+        $data=$settings->paginationjml;
+        return $data;
+     
+    }
+    public function tapelaktif(){
+	
+        $settings = DB::table('settings')->first();
+        $data=$settings->tapelaktif;
+        return $data;
+     
+    }
     //gunakan  return $this->errorResponse('Validation Error',$validator->errors());
 }

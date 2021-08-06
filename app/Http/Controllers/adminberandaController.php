@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\settings;
+use App\Models\tapel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -49,17 +51,43 @@ class adminberandaController extends Controller
             ->sum('nominal');
 
             $saldo=$ttlpemasukan-$ttlpengeluaran;
+            $paginationjml=$this->paginationjml();
+            $tapelaktif=$this->tapelaktif();
+            $tapel=tapel::all();
 
 
         return view('admin.beranda',compact('pages'
         ,'pemasukan'
         ,'kelas'
-        ,'siswa','lunas','belumlunas','ttlpemasukan','ttlpengeluaran','saldo'));
+        ,'tapel'
+        ,'siswa','lunas','belumlunas','ttlpemasukan','ttlpengeluaran','saldo','paginationjml','tapelaktif'));
         // return view('admin.beranda');
 
 
             // $sumdetailbayar = DB::table('tagihansiswadetail')
             // ->where('tagihansiswa_id', '=', $tagihansiswa->id)
             // ->sum('nominal');
+    }
+    public function settingsstore(Request $request,settings $settings)
+    {
+        // dd($settings);
+
+        $request->validate([
+            'paginationjml'=>'required|numeric|min:3',
+            'tapelaktif'=>'required'
+
+        ],
+        [
+            'paginationjml.required'=>'Nama harus diisi',
+
+        ]);
+
+        settings::where('id',$settings->id)
+            ->update([
+                'paginationjml'=>$request->paginationjml,
+                'tapelaktif'=>$request->tapelaktif,
+            ]);
+            return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
+
     }
 }

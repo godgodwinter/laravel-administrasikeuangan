@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth:web', 'verified']], function() {
 //DASHBOARD-MENU
 Route::get('/home', 'App\Http\Controllers\adminberandaController@index');
 Route::get('/dashboard', 'App\Http\Controllers\adminberandaController@index')->name('dashboard');
+Route::post('admin/settings/{settings}', 'App\Http\Controllers\adminberandaController@settingsstore')->name('settings.store');
 
 
 //kategori-MENU

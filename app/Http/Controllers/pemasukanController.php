@@ -22,7 +22,7 @@ class pemasukanController extends Controller
         $datas='0';
 
 
-        $datas=DB::table('pemasukan')->paginate(3);
+        $datas=DB::table('pemasukan')->paginate($this->paginationjml());
         // $kategori=kategori::all();
         $kategori = DB::table('kategori')->where('prefix','pemasukan')->get();
         $jmldata = DB::table('pemasukan')->count();
@@ -42,7 +42,7 @@ class pemasukanController extends Controller
 
         $datas=DB::table('pemasukan')
         ->where('nama','like',"%".$cari."%")
-        ->paginate(3);
+        ->paginate($this->paginationjml());
 
         // $kategori=kategori::all();
         $kategori = DB::table('kategori')->where('prefix','pemasukan')->get();
