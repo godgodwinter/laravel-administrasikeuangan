@@ -48,10 +48,12 @@ Route::get('admin/kelas', 'App\Http\Controllers\kelasController@index')->name('k
 //siswa-MENU
 Route::resource('admin/siswa','App\Http\Controllers\siswaController')->except(['index']);
 Route::get('admin/siswa', 'App\Http\Controllers\siswaController@index')->name('siswa');
+Route::get('admin/carisiswa', 'App\Http\Controllers\siswaController@cari')->name('siswa.cari');
 
 //pegawai-MENU
 Route::resource('admin/pegawai','App\Http\Controllers\pegawaiController')->except(['index']);
 Route::get('admin/pegawai', 'App\Http\Controllers\pegawaiController@index')->name('pegawai');
+Route::get('admin/caripegawai', 'App\Http\Controllers\pegawaiController@cari')->name('pegawai.cari');
 
 //pemasukan-MENU
 Route::resource('admin/pemasukan','App\Http\Controllers\pemasukanController')->except(['index']);
@@ -61,16 +63,19 @@ Route::get('admin/caripemasukan', 'App\Http\Controllers\pemasukanController@cari
 //pengeluaran-MENU
 Route::resource('admin/pengeluaran','App\Http\Controllers\pengeluaranController')->except(['index']);
 Route::get('admin/pengeluaran', 'App\Http\Controllers\pengeluaranController@index')->name('pengeluaran');
+Route::get('admin/caripengeluaran', 'App\Http\Controllers\pengeluaranController@cari')->name('pengeluaran.cari');
 
 
 //tagihanatur-MENU
 Route::resource('admin/tagihanatur','App\Http\Controllers\tagihanaturController')->except(['index']);
 Route::get('admin/tagihanatur', 'App\Http\Controllers\tagihanaturController@index')->name('tagihanatur');
+Route::get('admin/caritagihanatur', 'App\Http\Controllers\tagihanaturController@cari')->name('tagihanatur.cari');
 
 
 //tagihansiswa-MENU
 Route::resource('admin/tagihansiswa','App\Http\Controllers\tagihansiswaController')->except(['index']);
 Route::get('admin/tagihansiswa', 'App\Http\Controllers\tagihansiswaController@index')->name('tagihansiswa');
+Route::get('admin/caritagihansiswa', 'App\Http\Controllers\tagihansiswaController@cari')->name('tagihansiswa.cari');
 
 Route::post('admin/tagihansiswa/sync', 'App\Http\Controllers\tagihansiswaController@sync')->name('tagihansiswa.sync');
 Route::post('admin/tagihansiswa/bayartagihan/{tagihansiswa}', 'App\Http\Controllers\tagihansiswaController@bayartagihan')->name('tagihansiswa.bayartagihan');
