@@ -83,8 +83,9 @@ Route::delete('admin/tagihansiswa/bayartagihan/{tagihansiswadetail}/hapus', 'App
 
 
 //laporan-MENU
-Route::resource('admin/laporan','App\Http\Controllers\laporanController')->except(['index']);
+// Route::resource('admin/laporan','App\Http\Controllers\laporanController')->except(['index']);
 Route::get('admin/laporan', 'App\Http\Controllers\laporanController@index')->name('laporan');
+Route::get('admin/laporan/cetak', 'App\Http\Controllers\laporanController@cetak')->name('laporan.cetak');
 
 
 // Route::post('/checkemail',['uses'=>'PagesController@checkEmail']);

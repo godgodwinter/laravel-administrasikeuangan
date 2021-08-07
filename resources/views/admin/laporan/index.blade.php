@@ -114,6 +114,7 @@ $sisasaldo=$sumpemasukan+$sumtagihansiswa-$sumpengeluaran;
   <td></td>
   <td>@currency($sisasaldo)</td>
   <td class="text-center">
+    <a href="{{ route('laporan.cetak') }}" class="btn btn-icon icon-left btn-info btn-sm"><i class="fas fa-print"></i>Cetak</a>
   
   </td>
 </tr>
