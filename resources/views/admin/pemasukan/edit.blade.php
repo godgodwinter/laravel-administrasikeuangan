@@ -66,7 +66,8 @@
 
                   <div class="form-group col-md-2 col-2 mt-1 text-right">
                 
-                  <input type="month" class="form-control form-control-sm" name="yearmonth"  value="{{$request->yearmonth}}">
+                  {{-- <input type="month" class="form-control form-control-sm" name="yearmonth"  value="{{$request->yearmonth}}"> --}}
+                  <input placeholder="Pilih Bulan" type="text" onfocus="(this.type='month')" id="date" class="form-control form-control-sm" name="yearmonth"  value="{{$request->yearmonth}}">
                   </div>
                   <div class="form-group  col-md-2 col-2 text-right">
              
