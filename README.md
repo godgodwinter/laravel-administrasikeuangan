@@ -124,6 +124,14 @@ This is an example of how to list things you need to use the software and how to
    composer install
    ```
 3. Buat file .env atau copy dan edit file .env_copy kemudian sesuaikan dengan database anda
+   ```sh
+   cp .env_example .env 
+   ```
+   Gunakan editor kesukaan anda. Jika mengedit menggunakan nano lakukan langkah berikut:
+
+   ```sh
+   nano .env //ubah database user dan password database di perangkat anda
+   ```
 
 4. jalankan server Laravel
    ```sh
