@@ -24,7 +24,8 @@ class tapelController extends Controller
         $datas='0';
 
 
-        $datas=tapel::all();
+        $datas=DB::table('tapel')
+        ->paginate($this->paginationjml());
         $jmldata = DB::table('tapel')->count();
 
         return view('admin.tapel.index',compact('pages','jmldata','datas'));
@@ -79,7 +80,8 @@ class tapelController extends Controller
         $datas='0';
 
 
-        $datas=tapel::all();
+        $datas=DB::table('tapel')
+        ->paginate($this->paginationjml());
         $jmldata = DB::table('tapel')->count();
         return view('admin.tapel.edit',compact('tapel','pages','jmldata','datas'));
     }
