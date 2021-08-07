@@ -22,7 +22,8 @@ class kelasController extends Controller
         $datas='0';
 
 
-        $datas=kelas::all();
+        $datas=DB::table('kelas')
+        ->paginate($this->paginationjml());
 
         $jmldata = DB::table('kelas')->count();
 
@@ -79,7 +80,8 @@ class kelasController extends Controller
         $datas='0';
 
 
-        $datas=kelas::all();
+        $datas=DB::table('kelas')
+        ->paginate($this->paginationjml());
         $jmldata = DB::table('kelas')->count();
         return view('admin.kelas.edit',compact('kelas','pages','jmldata','datas'));
     }

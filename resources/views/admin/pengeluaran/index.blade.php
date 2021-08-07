@@ -42,6 +42,42 @@
 @endif
 @endsection 
 
+
+{{-- DATATABLE --}}
+@section('headtable')
+  <th width="5%" class="text-center">#</th>
+  <th>Nama</th>
+  <th>Nominal</th>
+  <th width="100px" class="text-center">Aksi</th>
+@endsection
+
+@section('bodytable')
+@foreach ($datas as $data)
+  <tr>
+    <td>{{ ((($loop->index)+1)+(($datas->currentPage()-1)*$datas->perPage())) }}</td>
+    <td>{{ $data->nama }}</td>
+    <td>@currency($data->nominal)</td>
+    <td class="text-center">
+        <x-button-edit link="/admin/{{ $pages }}/{{$data->id}}" />
+        <x-button-delete link="/admin/{{ $pages }}/{{$data->id}}" />
+    </td>
+  </tr>
+@endforeach
+@endsection
+
+@section('foottable') 
+  {{ $datas->links() }}
+  <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><i class="far fa-file"></i> Halaman ke-{{ $datas->currentPage() }}</li>
+      <li class="breadcrumb-item"><i class="fas fa-paste"></i> {{ $datas->total() }} Total Data</li>
+      <li class="breadcrumb-item active" aria-current="page"><i class="far fa-copy"></i> {{ $datas->perPage() }} Data Perhalaman</li>
+  </ol>
+  </nav>
+@endsection
+
+{{-- DATATABLE-END --}}
+
 @section('container')
 
 <div class="row ">
@@ -107,72 +143,8 @@
 
     <div class="row mt-sm-4">
       <div class="col-12 col-md-12 col-lg-5">
-        <div class="card profile-widget">
-          <div class="profile-widget-header">
-            <img alt="image" src="{{ asset("assets/") }}/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
-            <div class="profile-widget-items">
-              <div class="profile-widget-item">
-                <div class="profile-widget-item-label">Tabel </div>
-                <div class="profile-widget-item-value">@yield('title')</div>
-                {{-- <h4>Simple Table</h4> --}}
-              </div>
-            </div>
-          </div>
-
-           
-        
-                  
-                    <div class="card-body -mt-5">
-                      <div class="table-responsive">
-                        <table class="table table-bordered table-md">
-                          <tr>
-                            <th width="5%" class="text-center">#</th>
-                            <th>Nama</th>
-                            <th>Nominal</th>
-                            <th width="100px" class="text-center">Aksi</th>
-                          </tr>
-
-                        @foreach ($datas as $data)
-                          <tr>
-                            <td>{{ ($loop->index)+1 }}</td>
-                            <td>{{ $data->nama }}</td>
-                            <td>@currency($data->nominal)</td>
-                          
-                            <td class="text-center">
-                                <a href="/admin/{{ $pages }}/{{$data->id}}" class="btn btn-icon btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                                {{-- <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a> --}}
-                                <form action="/admin/{{ $pages }}/{{$data->id}}" method="post" class="d-inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button class="btn btn-icon btn-danger btn-sm"
-                                        onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
-                                            class="pcoded-micon"> <i class="fas fa-trash"></i></span></button>
-                                </form>
-                            </td>
-                          </tr>
-                          @endforeach
-                        
-                        </table>
-                      </div>
-                      <div class="card-footer text-right">
-                        {{ $datas->links() }}
-                      <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                          <li class="breadcrumb-item"><i class="far fa-file"></i> Halaman ke-{{ $datas->currentPage() }}</li>
-                          <li class="breadcrumb-item"><i class="fas fa-paste"></i> {{ $datas->total() }} Total Data</li>
-                          <li class="breadcrumb-item active" aria-current="page"><i class="far fa-copy"></i> {{ $datas->perPage() }} Data Perhalaman</li>
-                        </ol>
-                      </nav>
-                      </div>
-                    </div>
-            
-       
-      
-        </div>
-
-
-     
-      </div>
+        <x-layout-table pages="{{ $pages }}" pagination="{{ $datas->perPage() }}"/>
+       </div> 
       <div class="col-12 col-md-12 col-lg-7">
         <div class="card">
             <form action="/admin/{{ $pages }}" method="post">

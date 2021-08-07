@@ -42,6 +42,7 @@
 @endif
 @endsection 
 
+
 @section('container')
 @foreach ($datausers as $du)
   
@@ -53,7 +54,7 @@
       <div class="col-12 col-md-12 col-lg-12">
         <div class="card">
           <div class="card-body">
-            <form action="{{ route('siswa.cari') }}" method="GET">
+            <form action="{{ route($pages.'.cari') }}" method="GET">
               <div class="row">
                   <div class="form-group col-md-2 col-2 mt-1 text-right">
                     <input type="text" name="cari" id="cari" class="form-control form-control-sm @error('cari') is-invalid @enderror" value="{{$request->cari}}"  placeholder="Cari...">

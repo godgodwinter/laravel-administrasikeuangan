@@ -42,6 +42,78 @@
 @endif
 @endsection 
 
+
+{{-- DATATABLE --}}
+@section('headtable')
+  <th width="5%" class="text-center">#</th>
+  <th width="5%" >Bayar</th>
+  <th>Nama</th>
+  <th>Tahun</th>
+  <th>Kelas</th>
+  <th>Nominal Tagihan</th>
+  <th>Terbayar</th>
+  <th>Kurang</th>
+  <th width="10%"  class="text-center">%</th>
+@endsection
+
+@section('bodytable')
+@foreach ($datas as $data)@php
+    $sumdetailbayar = DB::table('tagihansiswadetail')
+      ->where('tagihansiswa_id', '=', $data->id)
+      ->sum('nominal');
+      $kurang=$data->nominaltagihan-$sumdetailbayar;
+      $persen=number_format(($sumdetailbayar/$data->nominaltagihan*100),2);
+        $warna='light';
+        $icon='fas fa-times';
+      if($persen>='100'){
+        $warna='success';
+        $icon='fas fa-check';
+      }
+    @endphp
+    <tr>
+      <td  class="text-center">{{ ($loop->index)+1 }}</td>
+      <td class="text-center">
+        <button class="btn btn-icon btn-{{ $warna }}" data-toggle="modal" data-target="#modalbayar{{ $data->id }}" ><i class="far fa-money-bill-alt"></i></button>
+      </td>
+      <td class="text-left">{{ $data->siswa_nis }} - {{ $data->siswa_nama }}</td>
+      <td class="text-left">{{ $data->tapel_nama }}</td>
+      <td class="text-left">{{ $data->kelas_nama }}</td>
+      <td class="text-left">@currency($data->nominaltagihan)</td>
+      <td class="text-left">@currency($sumdetailbayar)</td>
+      <td>@currency($kurang)</td>
+      <td class="text-center">
+
+    <span class="btn btn-icon icon-left btn-{{ $warna }}"><i class="{{ $icon }}"></i> {{ $persen }} %</span>
+      
+      </td>
+
+      {{-- <td class="text-center">
+          <a href="/admin/{{ $pages }}/{{$data->id}}"  class="btn btn-icon icon-left btn-info"><i class="fas fa-edit"></i> Detail</a>
+        <form action="/admin/{{ $pages }}/{{$data->id}}" method="post" class="d-inline">
+              @method('delete')
+              @csrf
+              <button class="btn btn-icon btn-danger"
+                  onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
+                      class="pcoded-micon"> <i class="fas fa-trash"></i></span></button>
+          </form>
+      </td> --}}
+    </tr>
+@endforeach
+@endsection
+
+@section('foottable') 
+  {{ $datas->links() }}
+  <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><i class="far fa-file"></i> Halaman ke-{{ $datas->currentPage() }}</li>
+      <li class="breadcrumb-item"><i class="fas fa-paste"></i> {{ $datas->total() }} Total Data</li>
+      <li class="breadcrumb-item active" aria-current="page"><i class="far fa-copy"></i> {{ $datas->perPage() }} Data Perhalaman</li>
+  </ol>
+  </nav>
+@endsection
+
+{{-- DATATABLE-END --}}
+
 @section('container')
 
 
@@ -89,6 +161,12 @@
           <button type="submit" value="CARI" class="btn btn-icon btn-info btn-sm mt-1" ><span
           class="pcoded-micon"> <i class="fas fa-search"></i> Pecarian</span></button>
 
+          <form action="/admin/{{ $pages }}/sync" method="post" class="d-inline">
+            @csrf
+            <button 
+                onclick="return  confirm('Anda yakin melakukan sinkronisasi data ? Y/N')" class="btn btn-icon icon-left btn-primary btn-sm mt-1" data-toggle="tooltip" data-placement="top" title="Akan mengambil data siswa dan tagihan atur yang belum dimasukkan kedalam tagihan siswa!"><i class="fas fa-retweet"></i> Sinkronisasi Data</button>
+        </form>
+
               </div>
            
          
@@ -111,117 +189,10 @@
    
 
     <div class="row ">
-      <div class="col-12 col-md-12 col-lg-12">
-        <div class="card profile-widget">
-          <div class="profile-widget-header">
-            <img alt="image" src="{{ asset("assets/") }}/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
-            <div class="profile-widget-items">
-              <div class="profile-widget-item">
-                <div class="profile-widget-item-label">Tabel </div>
-                <div class="profile-widget-item-value">@yield('title')</div>
-                {{-- <h4>Simple Table</h4> --}}
-              </div>
-              <div class="profile-widget-item">
-                <div class="profile-widget-item-label">Jumlah Data</div>
-                <div class="profile-widget-item-value">{{ $jmldata }} Data</div>
-              </div>
-              <div class="profile-widget-item">
-                <form action="/admin/{{ $pages }}/sync" method="post" class="d-inline">
-                  @csrf
-                  <button 
-                      onclick="return  confirm('Anda yakin melakukan sinkronisasi data ? Y/N')" class="btn btn-icon icon-left btn-primary" data-toggle="tooltip" data-placement="top" title="Akan mengambil data siswa dan tagihan atur yang belum dimasukkan kedalam tagihan siswa!"><i class="fas fa-retweet"></i> Sinkronisasi Data</button>
-              </form>
-{{--                
-                <div class="profile-widget-item-label">Jumlah Data</div>
-                <div class="profile-widget-item-value">{{ $jmldata }} Data</div> --}}
-              </div>
-            </div>
-          </div>
-
-           
-        
-                  
-                    <div class="card-body -mt-5">
-                      <div class="table-responsive">
-                        <table class="table table-bordered table-md">
-                          <tr>
-                            <th width="5%" class="text-center">#</th>
-                            <th width="5%" >Bayar</th>
-                            <th>Nama</th>
-                            <th>Tahun</th>
-                            <th>Kelas</th>
-                            <th>Nominal Tagihan</th>
-                            <th>Terbayar</th>
-                            <th>Kurang</th>
-                            <th width="10%"  class="text-center">%</th>
-                            {{-- <th width="15%" class="text-center">Aksi</th> --}}
-                          </tr>
-
-                        @foreach ($datas as $data)
-                        @php
-                          $sumdetailbayar = DB::table('tagihansiswadetail')
-                            ->where('tagihansiswa_id', '=', $data->id)
-                            ->sum('nominal');
-                            $kurang=$data->nominaltagihan-$sumdetailbayar;
-                            $persen=number_format(($sumdetailbayar/$data->nominaltagihan*100),2);
-                              $warna='light';
-                              $icon='fas fa-times';
-                            if($persen>='100'){
-                              $warna='success';
-                              $icon='fas fa-check';
-                            }
-                       @endphp
-                          <tr>
-                            <td  class="text-center">{{ ($loop->index)+1 }}</td>
-                            <td class="text-center">
-                              <button class="btn btn-icon btn-{{ $warna }}" data-toggle="modal" data-target="#modalbayar{{ $data->id }}" ><i class="far fa-money-bill-alt"></i></button>
-                            </td>
-                            <td class="text-left">{{ $data->siswa_nis }} - {{ $data->siswa_nama }}</td>
-                            <td class="text-left">{{ $data->tapel_nama }}</td>
-                            <td class="text-left">{{ $data->kelas_nama }}</td>
-                            <td class="text-left">@currency($data->nominaltagihan)</td>
-                            <td class="text-left">@currency($sumdetailbayar)</td>
-                            <td>@currency($kurang)</td>
-                            <td class="text-center">
-
-                      <span class="btn btn-icon icon-left btn-{{ $warna }}"><i class="{{ $icon }}"></i> {{ $persen }} %</span>
-                             
-                            </td>
-                          
-                            {{-- <td class="text-center">
-                                <a href="/admin/{{ $pages }}/{{$data->id}}"  class="btn btn-icon icon-left btn-info"><i class="fas fa-edit"></i> Detail</a>
-                              <form action="/admin/{{ $pages }}/{{$data->id}}" method="post" class="d-inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button class="btn btn-icon btn-danger"
-                                        onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
-                                            class="pcoded-micon"> <i class="fas fa-trash"></i></span></button>
-                                </form>
-                            </td> --}}
-                          </tr>
-                          @endforeach
-                        
-                        </table>
-                      </div>
-                      <div class="card-footer text-right">
-                        {{ $datas->links() }}
-                      <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                          <li class="breadcrumb-item"><i class="far fa-file"></i> Halaman ke-{{ $datas->currentPage() }}</li>
-                          <li class="breadcrumb-item"><i class="fas fa-paste"></i> {{ $datas->total() }} Total Data</li>
-                          <li class="breadcrumb-item active" aria-current="page"><i class="far fa-copy"></i> {{ $datas->perPage() }} Data Perhalaman</li>
-                        </ol>
-                      </nav>
-                      </div>
-                    </div>
-            
-       
-      
-        </div>
-
-
      
-      </div>
+      <div class="col-12 col-md-12 col-lg-12">
+        <x-layout-table pages="{{ $pages }}" pagination="{{ $datas->perPage() }}"/>
+       </div> 
 
     </div>
   </div>

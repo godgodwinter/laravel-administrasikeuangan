@@ -61,9 +61,6 @@
     <td class="text-center">
         <x-button-edit link="/admin/{{ $pages }}/{{$data->id}}" />
         <x-button-delete link="/admin/{{ $pages }}/{{$data->id}}" />
-        {{-- <a href="/admin/{{ $pages }}/{{$data->id}}" class="btn btn-icon btn-warning btn-sm"><i class="fas fa-edit"></i></a> --}}
-        {{-- <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a> --}}
-        
     </td>
   </tr>
 @endforeach
