@@ -86,6 +86,15 @@ class oneseeder extends Seeder
             'updated_at' => Carbon::now()
          ]);
 
+
+         //pengeluaran
+        DB::table('kategori')->insert([
+            'nama' => 'Dana Bulanan',
+            'prefix' => 'pengeluaran',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
+
          //pengeluaran
         DB::table('kategori')->insert([
             'nama' => 'Lain-lain',
@@ -104,7 +113,7 @@ class oneseeder extends Seeder
 
          //KELAS SEEDER
         DB::table('kelas')->insert([
-            'nama' => 'X IPA 1',
+            'nama' => 'XII A',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
          ]);
@@ -112,7 +121,21 @@ class oneseeder extends Seeder
 
          //KELAS SEEDER
         DB::table('kelas')->insert([
-            'nama' => 'X IPA 2',
+            'nama' => 'XII B',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
+
+         //KELAS SEEDER
+        DB::table('kelas')->insert([
+            'nama' => 'XIII A',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
+
+         //KELAS SEEDER
+        DB::table('kelas')->insert([
+            'nama' => 'XIII B',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
          ]);

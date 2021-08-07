@@ -200,7 +200,7 @@
                   <div class="form-group col-md-6 col-6">
                     <label for="nominaltagihan">Nominal <code>*)</code> </label>
                     <input type="text" name="labelrupiah" min="0" id="labelrupiah" class="form-control-plaintext" readonly="" value="@currency($nominaltagihan)" >
-                    <input type="text" name="nominaltagihan" min="0" id="rupiah" class="form-control @error('nominaltagihan') is-invalid @enderror" value="{{ $nominaltagihan }}" required>
+                    <input type="number" name="nominaltagihan" min="0" id="rupiah" class="form-control @error('nominaltagihan') is-invalid @enderror" value="{{ $nominaltagihan }}" required>
                     @error('nominaltagihan')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>
