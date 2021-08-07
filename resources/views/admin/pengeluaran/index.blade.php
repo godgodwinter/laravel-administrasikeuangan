@@ -33,18 +33,12 @@
         @endphp
 @endif
 
+@php
+  $message=session('status');
+@endphp
 @if (session('status'))
+<x-alert tipe="{{ $tipe }}" message="{{ $message }}" icon="{{ $icon }}"/>
 
-  <div class="alert alert-{{ $tipe }} alert-has-icon alert-dismissible show fade">
-    <div class="alert-icon"><i class="{{ $icon }}"></i></div>
-                      <div class="alert-body">
-                        <div class="alert-title">{{ Str::ucfirst($tipe) }}</div>
-                        <button class="close" data-dismiss="alert">
-                          <span>&times;</span>
-                        </button>
-                        {{ session('status') }}
-                      </div>
-                    </div>
 @endif
 @endsection 
 

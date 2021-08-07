@@ -8,12 +8,37 @@
 
 @section('jshere')
 @endsection
-{{-- 
-@section('headernav')
-@endsection
-
 @section('notif')
-@endsection --}}
+
+
+@if (session('tipe'))
+        @php
+        $tipe=session('tipe');    
+        @endphp
+@else
+        @php
+            $tipe='light';
+        @endphp
+@endif
+
+@if (session('icon'))
+        @php
+        $icon=session('icon');    
+        @endphp
+@else
+        @php
+            $icon='far fa-lightbulb';
+        @endphp
+@endif
+
+@php
+  $message=session('status');
+@endphp
+@if (session('status'))
+<x-alert tipe="{{ $tipe }}" message="{{ $message }}" icon="{{ $icon }}"/>
+
+@endif
+@endsection 
 
 @section('container')
 
