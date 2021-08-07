@@ -62,19 +62,25 @@
 
               <div class="form-group col-md-2 col-2 text-right">
             
-              
-              <select class="form-control form-control-sm" name="tapel_nama">  
-                <option>{{$request->tapel_nama}}</option>
-             
-            @foreach ($tapel as $t)
-                <option>{{ $t->nama }}</option>
-            @endforeach
-          </select>
+                <select class="form-control form-control-sm" name="tapel_nama" >   
+                @if($request->tapel_nama)
+                  <option>{{$request->tapel_nama}}</option>
+                @else
+                 <option value="" disabled selected>Pilih Tahun Pelajaran</option>
+                @endif
+              @foreach ($tapel as $t)
+                  <option>{{ $t->nama }}</option>
+              @endforeach
+            </select>
               </div>
               <div class="form-group  col-md-2 col-2 text-right">
          
-              <select class="form-control form-control-sm" name="kelas_nama">  
-                <option>{{$request->kelas_nama}}</option>
+              <select class="form-control form-control-sm" name="kelas_nama">    
+                @if($request->kelas_nama)
+                  <option>{{$request->kelas_nama}}</option>
+                @else
+                 <option value="" disabled selected>Pilih Kelas</option>
+                @endif
              
             @foreach ($kelas as $t)
                 <option>{{ $t->nama }}</option>

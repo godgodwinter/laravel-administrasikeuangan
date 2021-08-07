@@ -71,7 +71,11 @@
                   <div class="form-group  col-md-2 col-2 text-right">
              
                   <select class="form-control form-control-sm" name="kategori_nama">  
-                    <option>{{$request->kategori_nama}}</option>
+                    @if($request->kategori_nama)
+                      <option>{{$request->kategori_nama}}</option>
+                    @else
+                     <option value="" disabled selected>Pilih Kategori</option>
+                    @endif
                  
                 @foreach ($kategori as $t)
                     <option>{{ $t->nama }}</option>
