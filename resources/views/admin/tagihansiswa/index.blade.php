@@ -161,6 +161,7 @@
           <button type="submit" value="CARI" class="btn btn-icon btn-info btn-sm mt-1" ><span
           class="pcoded-micon"> <i class="fas fa-search"></i> Pecarian</span></button>
 
+        </form>
           <form action="/admin/{{ $pages }}/sync" method="post" class="d-inline">
             @csrf
             <button 
@@ -170,7 +171,6 @@
               </div>
            
          
-        </form>
         <div class="form-group col-md-4 col-4 mt-1 text-right">
           {{-- <a href="/admin/{{  $pages }}/#add" type="submit" value="CARI" class="btn btn-icon btn-primary btn-sm"><span
             class="pcoded-micon"> <i class="far fa-plus-square"></i> Tambah @yield('title')</span></a href="$add"> --}}

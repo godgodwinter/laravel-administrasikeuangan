@@ -11,16 +11,16 @@ class laporanController extends Controller
     public function index()
     {
         #WAJIB
-        $pages='kelas';
+        $pages='laporan';
         $jmldata='0';
         $datas='0';
 
 
-        $datas=kelas::all();
+        $datas=DB::table('kelas')
+        ->paginate($this->paginationjml());
 
         $jmldata = DB::table('kelas')->count();
 
-        return view('admin.kelas.index',compact('pages','jmldata','datas'));
-        // return view('admin.beranda');
+        return view('admin.laporan.index',compact('pages','jmldata','datas'));
     }
 }
