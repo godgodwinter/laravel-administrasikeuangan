@@ -2,13 +2,19 @@
     if(empty($pages)){
         $pages='kosong';
     }
+
+    $ambilsettings = DB::table('settings')
+      ->where('id', '=', '1')
+      ->get();
+      foreach ($ambilsettings as $settings) {
+      }
 @endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>@yield('title') - {{ ucfirst(config('app.name'))}} </title>
+  <title>@yield('title') - {{ $settings->aplikasijudul }} </title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -66,10 +72,10 @@
       <div class="main-sidebar">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="{{ route('dashboard') }}">SISTEM ADMINISTRASI</a>
+            <a href="{{ route('dashboard') }}">{{ $settings->aplikasijudul }}</a>
           </div>
           <div class="sidebar-brand sidebar-brand-sm">
-            <a href="{{ route('dashboard') }}">SA</a>
+            <a href="{{ route('dashboard') }}">{{ $settings->aplikasijudulsingkat }}</a>
           </div>
           <ul class="sidebar-menu">
               <li class="menu-header">Dashboard</li>

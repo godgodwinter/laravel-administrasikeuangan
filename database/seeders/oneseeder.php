@@ -141,6 +141,11 @@ class oneseeder extends Seeder
         DB::table('settings')->insert([
             'paginationjml' => '10',
             'tapelaktif' => '2021/2022',
+            'sekolahnama' => 'SMP ABCD 01 Malang',
+            'sekolahalamat' => 'Jl. Abcd Desa Qwerty Kecamatan Zxcvb',
+            'sekolahtelp' => '0341-123456',
+            'aplikasijudul' => 'Sistem Keuangan',
+            'aplikasijudulsingkat' => 'SK',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
          ]);

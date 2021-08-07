@@ -52,6 +52,11 @@ class adminberandaController extends Controller
 
             $saldo=$ttlpemasukan-$ttlpengeluaran;
             $paginationjml=$this->paginationjml();
+            $sekolahnama=$this->sekolahnama();
+            $sekolahalamat=$this->sekolahalamat();
+            $sekolahtelp=$this->sekolahtelp();
+            $aplikasijudul=$this->aplikasijudul();
+            $aplikasijudulsingkat=$this->aplikasijudulsingkat();
             $tapelaktif=$this->tapelaktif();
             $tapel=tapel::all();
 
@@ -60,7 +65,20 @@ class adminberandaController extends Controller
         ,'pemasukan'
         ,'kelas'
         ,'tapel'
-        ,'siswa','lunas','belumlunas','ttlpemasukan','ttlpengeluaran','saldo','paginationjml','tapelaktif'));
+        ,'siswa',
+        'lunas'
+        ,'belumlunas'
+        ,'ttlpemasukan'
+        ,'ttlpengeluaran'
+        ,'saldo'
+        ,'paginationjml'
+        ,'tapelaktif'
+        ,'sekolahnama'
+        ,'sekolahalamat'
+        ,'sekolahtelp'
+        ,'aplikasijudul'
+        ,'aplikasijudulsingkat'
+    ));
         // return view('admin.beranda');
 
 
@@ -74,7 +92,12 @@ class adminberandaController extends Controller
 
         $request->validate([
             'paginationjml'=>'required|numeric|min:3',
-            'tapelaktif'=>'required'
+            'tapelaktif'=>'required',
+            'sekolahnama'=>'required',
+            'sekolahalamat'=>'required',
+            'sekolahtelp'=>'required',
+            'aplikasijudul'=>'required',
+            'aplikasijudulsingkat'=>'required',
 
         ],
         [
@@ -86,6 +109,11 @@ class adminberandaController extends Controller
             ->update([
                 'paginationjml'=>$request->paginationjml,
                 'tapelaktif'=>$request->tapelaktif,
+                'sekolahnama'=>$request->sekolahnama,
+                'sekolahalamat'=>$request->sekolahalamat,
+                'sekolahtelp'=>$request->sekolahtelp,
+                'aplikasijudul'=>$request->aplikasijudul,
+                'aplikasijudulsingkat'=>$request->aplikasijudulsingkat,
             ]);
             return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
 

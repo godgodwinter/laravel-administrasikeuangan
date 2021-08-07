@@ -61,7 +61,7 @@
 
 
   <div class="section-body">
-    <h2 class="section-title">Hi, {{ Auth::user()->name }}!</h2>
+    <h2 class="section-title">Hi, {{ Auth::user()->name }} dari {{ $sekolahnama }} !</h2>
     <p class="section-lead">
      Berikut beberapa Informasi tetang data dan menu di Sistem Ini.
     </p>
@@ -131,6 +131,60 @@
               </div>
         
           </div>
+
+
+
+      <div class="card profile-widget mt-5">
+        <div class="profile-widget-header">
+          <img alt="image" src="../assets/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
+          <div class="profile-widget-items">
+            <h3 class="ml-5 mt-4">Menu Mastering</h3>
+          </div>
+           
+            
+            <div class="card-body">
+              <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
+                <a  href="{{ route('kategori') }}" type="button" class="btn btn-warning"><i class="fab fa-korvue"></i> Kategori</a>
+              </div>
+              <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
+                <a  href="{{ route('tapel') }}" type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i> Tahun Pelajaran</a>
+                <a  href="{{ route('kelas') }}" type="button" class="btn btn-primary"><i class="fas fa-school"></i> Kelas</a>   
+              </div>
+                <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
+                <a  href="{{ route('siswa') }}" type="button" class="btn btn-info"><i class="fas fa-user-graduate"></i> Siswa</a>
+                <a  href="{{ route('pegawai') }}" type="button" class="btn btn-info"><i class="fas fa-building"></i> Pegawai</a>
+              </div>
+              <div class="profile-widget-items">
+                <h3 class="ml-5 mt-4">Menu Transaksi / Proses</h3>
+              </div>
+              <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+                <a  href="{{ route('pemasukan') }}" type="button" class="btn btn-light"><i class="fas fa-hand-holding-usd"></i> Pemasukan</a>
+                <a  href="{{ route('pengeluaran') }}" type="button" class="btn btn-light"><i class="fas fa-file-invoice-dollar"></i> Pengeluaran</a>
+              </div>
+              <div class="clearfix"></div>
+              <div class="btn-group btn-group-lg mt-3" role="group" aria-label="Basic example">
+                
+                <a  href="{{ route('tagihanatur') }}" type="button" class="btn btn-danger"><i class="fas fa-fire"></i> Tagihan Atur </a>
+                <a  href="{{ route('tagihansiswa') }}" type="button" class="btn btn-danger"><i class="fas fa-graduation-cap"></i> Tagihan Siswa </a>
+              </div>
+
+              <div class="profile-widget-items">
+                <h3 class="ml-5 mt-4">Menu Reporting</h3>
+              </div>
+                <div class="btn-group btn-group-lg mt-3" role="group" aria-label="Basic example">
+                  <a  href="{{ route('laporan') }}" type="button" class="btn btn-success"> <i class="fab fa-resolving"></i> Laporan </a>
+                </div>
+              </div>
+            
+        </div>
+
+     
+    
+      </div>
+
+
+
+
       </div>
       <div class="col-12 col-md-12 col-lg-6">
         <div class="card profile-widget">
@@ -145,6 +199,36 @@
                   @csrf
 
                   <div class="row">
+                    <div class="form-group col-md-5 col-5 mt-3 ml-5">
+                      <label for="aplikasijudul">Nama Aplikasi <code>*)</code></label>
+                      <input type="text" name="aplikasijudul" id="aplikasijudul" class="form-control @error('aplikasijudul') is-invalid @enderror" value="{{$aplikasijudul}}" required>
+                      @error('aplikasijudul')<div class="invalid-feedback"> {{$message}}</div>
+                      @enderror
+                    </div>
+                    <div class="form-group col-md-5 col-5 mt-3 ml-5">
+                      <label for="aplikasijudulsingkat">Nama Aplikasi (Singkat) <code>*) 2/3 Huruf</code></label>
+                      <input type="text" name="aplikasijudulsingkat" id="aplikasijudulsingkat" class="form-control @error('aplikasijudulsingkat') is-invalid @enderror" value="{{$aplikasijudulsingkat}}" required>
+                      @error('aplikasijudulsingkat')<div class="invalid-feedback"> {{$message}}</div>
+                      @enderror
+                    </div>
+                    <div class="form-group col-md-5 col-5 mt-3 ml-5">
+                      <label for="sekolahnama">Nama Sekolah <code>*)</code></label>
+                      <input type="text" name="sekolahnama" id="sekolahnama" class="form-control @error('sekolahnama') is-invalid @enderror" value="{{$sekolahnama}}" required>
+                      @error('sekolahnama')<div class="invalid-feedback"> {{$message}}</div>
+                      @enderror
+                    </div>
+                    <div class="form-group col-md-5 col-5 mt-3 ml-5">
+                      <label for="sekolahalamat">Alamat Sekolah <code>*)</code></label>
+                      <input type="text" name="sekolahalamat" id="sekolahalamat" class="form-control @error('sekolahalamat') is-invalid @enderror" value="{{$sekolahalamat}}" required>
+                      @error('sekolahalamat')<div class="invalid-feedback"> {{$message}}</div>
+                      @enderror
+                    </div>
+                    <div class="form-group col-md-5 col-5 mt-3 ml-5">
+                      <label for="sekolahtelp">Telp Sekolah <code>*)</code></label>
+                      <input type="text" name="sekolahtelp" id="sekolahtelp" class="form-control @error('sekolahtelp') is-invalid @enderror" value="{{$sekolahtelp}}" required>
+                      @error('sekolahtelp')<div class="invalid-feedback"> {{$message}}</div>
+                      @enderror
+                    </div>
                   <div class="form-group col-md-5 col-5 mt-3 ml-5">
                     <label for="paginationjml">Pagination <code>*)</code></label>
                     <input type="number" name="paginationjml" id="paginationjml" class="form-control @error('paginationjml') is-invalid @enderror" value="{{$paginationjml}}" required>
@@ -152,7 +236,7 @@
                     @enderror
                   </div>
 
-            <div class="form-group col-md-5 col-5  mt-3">
+            <div class="form-group col-md-5 col-5  mt-3 ml-5">
               <label>Tahun Pelajaran Aktif<code>*)</code></label>
               <select class="form-control form-control-lg @error('tapelaktif') is-invalid @enderror" required name="tapelaktif">  
                     @if ($tapelaktif)
@@ -183,55 +267,14 @@
         </div>
         
 
-        <div class="card profile-widget mt-5">
-          <div class="profile-widget-header">
-            <img alt="image" src="../assets/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
-            <div class="profile-widget-items">
-              <h3 class="ml-5 mt-4">Menu Mastering</h3>
-            </div>
-             
-              
-              <div class="card-body">
-                <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
-                  <a  href="{{ route('kategori') }}" type="button" class="btn btn-warning"><i class="fab fa-korvue"></i> Kategori</a>
-                </div>
-                <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
-                  <a  href="{{ route('tapel') }}" type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i> Tahun Pelajaran</a>
-                  <a  href="{{ route('kelas') }}" type="button" class="btn btn-primary"><i class="fas fa-school"></i> Kelas</a>   
-                </div>
-                  <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
-                  <a  href="{{ route('siswa') }}" type="button" class="btn btn-info"><i class="fas fa-user-graduate"></i> Siswa</a>
-                  <a  href="{{ route('pegawai') }}" type="button" class="btn btn-info"><i class="fas fa-building"></i> Pegawai</a>
-                </div>
-                <div class="profile-widget-items">
-                  <h3 class="ml-5 mt-4">Menu Transaksi / Proses</h3>
-                </div>
-                <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
-                  <a  href="{{ route('pemasukan') }}" type="button" class="btn btn-light"><i class="fas fa-hand-holding-usd"></i> Pemasukan</a>
-                  <a  href="{{ route('pengeluaran') }}" type="button" class="btn btn-light"><i class="fas fa-file-invoice-dollar"></i> Pengeluaran</a>
-                </div>
-                <div class="clearfix"></div>
-                <div class="btn-group btn-group-lg mt-3" role="group" aria-label="Basic example">
-                  
-                  <a  href="{{ route('tagihanatur') }}" type="button" class="btn btn-danger"><i class="fas fa-fire"></i> Tagihan Atur </a>
-                  <a  href="{{ route('tagihansiswa') }}" type="button" class="btn btn-danger"><i class="fas fa-graduation-cap"></i> Tagihan Siswa </a>
-                </div>
-
-                <div class="profile-widget-items">
-                  <h3 class="ml-5 mt-4">Menu Reporting</h3>
-                </div>
-                  <div class="btn-group btn-group-lg mt-3" role="group" aria-label="Basic example">
-                    <a  href="{{ route('laporan') }}" type="button" class="btn btn-success"> <i class="fab fa-resolving"></i> Laporan </a>
-                  </div>
-                </div>
-              
-          </div>
-
-       
-      
-        </div>
 
 
     </div>
+
+    <div class="col-12 col-md-12 col-lg-6">
+
+  </div>
+
+
   </div>
 @endsection

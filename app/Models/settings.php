@@ -14,5 +14,10 @@ class settings extends Model
     protected $fillable = [
         'paginationjml',
         'tapelaktif',
+        'sekolahnama',
+        'sekolahalamat',
+        'sekolahtelp',
+        'aplikasijudul',
+        'aplikasijudulsingkat',
     ];
 }

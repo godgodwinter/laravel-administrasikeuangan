@@ -39,10 +39,51 @@ class Controller extends BaseController
         return $data;
      
     }
+
+    public function sekolahnama(){
+	
+        $settings = DB::table('settings')->first();
+        $data=$settings->sekolahnama;
+        return $data;
+     
+    }
+
+    public function sekolahalamat(){
+	
+        $settings = DB::table('settings')->first();
+        $data=$settings->sekolahalamat;
+        return $data;
+     
+    }
+
+    public function sekolahtelp(){
+	
+        $settings = DB::table('settings')->first();
+        $data=$settings->sekolahtelp;
+        return $data;
+     
+    }
+
+    public function aplikasijudul(){
+	
+        $settings = DB::table('settings')->first();
+        $data=$settings->aplikasijudul;
+        return $data;
+     
+    }
+
     public function tapelaktif(){
 	
         $settings = DB::table('settings')->first();
         $data=$settings->tapelaktif;
+        return $data;
+     
+    }
+
+    public function aplikasijudulsingkat(){
+	
+        $settings = DB::table('settings')->first();
+        $data=$settings->aplikasijudulsingkat;
         return $data;
      
     }
