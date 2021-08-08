@@ -86,11 +86,6 @@
                 <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-home"></i><span>Beranda</span></a>
               </li>
 
-              <li @if ($pages==='kategori')
-                class="active"
-                @endif >
-                <a href="{{ route('kategori') }}" class="nav-link"><i class="fab fa-korvue"></i><span>Kategori</span></a>
-              </li>
 
               <li @if ($pages==='profil')
                 class="active"
@@ -103,6 +98,13 @@ if((Auth::user()->tipeuser)=='admin'){
     @endphp
 
               <li class="menu-header">Mastering</li>
+
+              <li @if ($pages==='kategori')
+                class="active"
+                @endif >
+                <a href="{{ route('kategori') }}" class="nav-link"><i class="fab fa-korvue"></i><span>Kategori</span></a>
+              </li>
+
               <li @if ($pages==='tapel')
                 class="active"
                 @endif >
@@ -164,10 +166,28 @@ if((Auth::user()->tipeuser)=='admin'){
             @php
     }elseif((Auth::user()->tipeuser)=='kepsek'){
         @endphp
+              <li class="menu-header">Menu Kepala Sekolah</li>
+              <li @if ($pages==='laporan')
+                class="active"
+                @endif >
+                <a href="{{ route('laporan') }}" class="nav-link"><i class="fab fa-korvue"></i><span>Laporan Keuangan</span></a>
+              </li>
+
+              <li @if ($pages==='tagihansiswa')
+                class="active"
+                @endif >
+                <a href="{{ route('kepsek.tagihansiswa') }}" class="nav-link"><i class="fab fa-korvue"></i><span>Pembayaran Siswa</span></a>
+              </li>
 
         @php
     }elseif((Auth::user()->tipeuser)=='siswa'){
         @endphp
+              <li class="menu-header">Menu Siswa</li>
+              <li @if ($pages==='tagihansiswa')
+                class="active"
+                @endif >
+                <a href="{{ route('siswa.tagihansiswa') }}" class="nav-link"><i class="fab fa-korvue"></i><span>Tagihanku</span></a>
+              </li>
 
         @php
     }

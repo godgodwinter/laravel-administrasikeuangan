@@ -7,6 +7,7 @@ use App\Models\tagihansiswa;
 use App\Models\tagihansiswadetail;
 use App\Models\tapel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
@@ -35,6 +36,46 @@ class tagihansiswaController extends Controller
 
         return view('admin.tagihansiswa.index',compact('pages','jmldata','datas','tapel','kelas','request'));
     }
+
+    public function kepsekindex(Request $request)
+    {
+        #WAJIB
+        $pages='tagihansiswa';
+        $jmldata='0';
+        $datas='0';
+
+
+        $tapel=tapel::all();
+        $kelas=kelas::all();
+        $datas=DB::table('tagihansiswa')->orderBy('siswa_nis','asc')
+        ->paginate($this->paginationjml());
+        // // $tagihansiswa=tagihansiswa::all();
+        // $tagihansiswa = DB::table('tagihansiswa')->where('prefix','tagihansiswa')->get();
+        $jmldata = DB::table('tagihansiswa')->count();
+
+        return view('kepsek.tagihansiswa.index',compact('pages','jmldata','datas','tapel','kelas','request'));
+    }
+
+    public function siswaindex(Request $request)
+    {
+        #WAJIB
+        $pages='tagihansiswa';
+        $jmldata='0';
+        $datas='0';
+
+        $nis=(Auth::user()->nomerinduk);
+
+        $tapel=tapel::all();
+        $kelas=kelas::all();
+        $datas=DB::table('tagihansiswa')->orderBy('siswa_nis','asc')->where('siswa_nis',$nis)
+        ->paginate($this->paginationjml());
+        // // $tagihansiswa=tagihansiswa::all();
+        // $tagihansiswa = DB::table('tagihansiswa')->where('prefix','tagihansiswa')->get();
+        $jmldata = DB::table('tagihansiswa')->count();
+
+        return view('siswa.tagihansiswa.index',compact('pages','jmldata','datas','tapel','kelas','request'));
+    }
+    
 
     public function cari(Request $request)
     {
@@ -66,6 +107,38 @@ class tagihansiswaController extends Controller
 
 
         return view('admin.tagihansiswa.index',compact('pages','jmldata','datas','tapel','kelas','request'));
+    }
+
+    public function kepsekcari(Request $request)
+    {
+        // dd($request);
+        $cari=$request->cari;
+        $tapel_nama=$request->tapel_nama;
+        $kelas_nama=$request->kelas_nama;
+
+        #WAJIB
+        $pages='tagihansiswa';
+        $jmldata='0';
+        $datas='0';
+
+
+    $datas=DB::table('tagihansiswa')
+    // ->where('nis','like',"%".$cari."%")
+    ->where('siswa_nama','like',"%".$cari."%")
+    ->where('tapel_nama','like',"%".$tapel_nama."%")
+    ->where('kelas_nama','like',"%".$kelas_nama."%")
+    ->orWhere('siswa_nis','like',"%".$cari."%")
+    ->where('tapel_nama','like',"%".$tapel_nama."%")
+    ->where('kelas_nama','like',"%".$kelas_nama."%")
+    ->paginate($this->paginationjml());
+
+        // $kategori=kategori::all();
+        $tapel=tapel::all();
+        $kelas=kelas::all();
+        $jmldata = DB::table('tagihansiswa')->count();
+
+
+        return view('kepsek.tagihansiswa.index',compact('pages','jmldata','datas','tapel','kelas','request'));
     }
     public function sync()
     {

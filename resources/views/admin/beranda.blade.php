@@ -46,6 +46,23 @@
 @endif
 @endsection 
 
+@php
+$tipeuser=(Auth::user()->tipeuser);
+@endphp
+
+@if(($tipeuser)==='kepsek')
+  @php
+      $hakakses='Kepala Sekolah';
+  @endphp
+@elseif(($tipeuser)==='admin')
+@php
+    $hakakses='Administrator';
+@endphp
+@elseif(($tipeuser)==='siswa')
+@php
+    $hakakses='Siswa';
+@endphp
+@endif
 
 @section('container')
 
@@ -61,7 +78,7 @@
 
 
   <div class="section-body">
-    <h2 class="section-title">Hi, {{ Auth::user()->name }} dari {{ $sekolahnama }} !</h2>
+    <h2 class="section-title">Hi, {{ Auth::user()->name }} dari {{ $sekolahnama }} ! Anda Login sebagai {{ $hakakses }}</h2>
     <p class="section-lead">
      Berikut beberapa Informasi tetang data dan menu di Sistem Ini.
     </p>
@@ -133,7 +150,8 @@
           </div>
 
 
-
+          @if($tipeuser==='admin')
+            
       <div class="card profile-widget mt-5">
         <div class="profile-widget-header">
           <img alt="image" src="../assets/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
@@ -182,11 +200,16 @@
     
       </div>
 
+      @endif
+
 
 
 
       </div>
       <div class="col-12 col-md-12 col-lg-6">
+
+        @if($tipeuser!=='siswa')
+
         <div class="card profile-widget">
           <div class="profile-widget-header">
             <img alt="image" src="../assets/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
@@ -265,6 +288,32 @@
        
       
         </div>
+        @endif
+
+        @if($tipeuser==='siswa') 
+        <div class="card profile-widget mt-5">
+          <div class="profile-widget-header">
+            <img alt="image" src="../assets/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
+            <div class="profile-widget-items">
+              <h3 class="ml-5 mt-4">Menu Siswa</h3>
+            </div>
+             
+              
+              <div class="card-body">
+                <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
+                  <a  href="{{ url('user/profile') }}" type="button" class="btn btn-warning"><i class="fab fa-korvue"></i> Profile</a>
+                </div>
+                <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
+                  <a  href="{{ route('tapel') }}" type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i> Tagihanku</a>
+                </div>
+              
+          </div>
+  
+       
+      
+        </div>
+          
+        @endif
         
 
 
