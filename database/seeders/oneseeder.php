@@ -53,6 +53,20 @@ class oneseeder extends Seeder
          ]);
 
 
+        //Siswa SEEDER
+        DB::table('siswa')->insert([
+            'nama' => 'Paijo',
+            'tapel_nama' => '2021/2022',
+            'kelas_nama' => 'XIII A',
+            'tempatlahir' => 'Malang',
+            'tgllahir' => '2003-05-20',
+            'alamat' => 'Desa Sumbersari Kecamatan Losari Kabupaten Trenggalek',
+            'nis' => '1',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
+
+
 
         //KATEGORI SEEDER
         //pegawai

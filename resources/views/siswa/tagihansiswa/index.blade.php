@@ -178,13 +178,7 @@ $sumdetailbayar = DB::table('tagihansiswadetail')
             </div>  
              <input type="text" class="form-control-plaintext" readonly="" value="@currency($kurang)" >
           </div>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <div class="input-group-text">Nominal Bayar:
-              </div>
-            </div>  
-             <input type="text" name="labelrupiah" min="0" id="labelrupiah{{ $data->id }}" class="form-control-plaintext" readonly="" value="@currency($nominal)" >
-          </div>
+       
 
             </div>
 

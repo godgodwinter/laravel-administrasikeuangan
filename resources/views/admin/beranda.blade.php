@@ -108,13 +108,13 @@ $tipeuser=(Auth::user()->tipeuser);
             </div>
           </div>
 
-          <div class="card-footer text-center">
+          {{-- <div class="card-footer text-center">
             <div class="font-weight-bold mb-2">Lihat Selengkapnya</div>
             <a href="#" class="btn btn-info mr-1">
               <i class="fas fa-angle-double-right"></i>
             </a>
             
-          </div>
+          </div> --}}
        
       
         </div>
@@ -139,13 +139,13 @@ $tipeuser=(Auth::user()->tipeuser);
                 </div>
               </div>
             </div>
-            <div class="card-footer text-center">
+            {{-- <div class="card-footer text-center">
                 <div class="font-weight-bold mb-2">Lihat Selengkapnya</div>
                 <a href="#" class="btn btn-info mr-1">
                   <i class="fas fa-angle-double-right"></i>
                 </a>
                 
-              </div>
+              </div> --}}
         
           </div>
 
@@ -304,7 +304,7 @@ $tipeuser=(Auth::user()->tipeuser);
                   <a  href="{{ url('user/profile') }}" type="button" class="btn btn-warning"><i class="fab fa-korvue"></i> Profile</a>
                 </div>
                 <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
-                  <a  href="{{ route('tapel') }}" type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i> Tagihanku</a>
+                  <a  href="{{ route('siswa.tagihansiswa') }}" type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i> Tagihanku</a>
                 </div>
               
           </div>
