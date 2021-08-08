@@ -84,8 +84,8 @@ $ambilkepsek = DB::table('users')
             <td width="13%" align="right"><img src="assets/upload/logotutwuri.png" width="110" height="110"></td>
             <td width="80%" align="center"><p><b><font size="28px">{{ $settings->sekolahnama }}</font><br>
             </b>
-                                         <br>{{ $settings->sekolahalamat }}<BR>
-                                            Telp: {{ $settings->sekolahtelp }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://google.com
+            <br>{{ $settings->sekolahalamat }}
+            <BR>Telp: {{ $settings->sekolahtelp }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         </p>
     
                                         </td>
