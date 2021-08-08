@@ -87,7 +87,7 @@ $sisasaldo=$sumpemasukan+$sumtagihansiswa-$sumpengeluaran;
   <td>{{ $countpemasukan }}</td>
   <td>@currency($sumpemasukan)</td>
   <td class="text-center">
-    <button class="btn btn-icon icon-left btn-info btn-sm"><i class="fas fa-search"></i>Detail</button>
+    <a  href="{{ route('pemasukan') }}"  class="btn btn-icon icon-left btn-info btn-sm"><i class="fas fa-search"></i>Detail</a>
   </td>
 </tr>
 <tr>
@@ -96,7 +96,7 @@ $sisasaldo=$sumpemasukan+$sumtagihansiswa-$sumpengeluaran;
   <td>{{ $counttagihansiswa }}</td>
   <td>@currency($sumtagihansiswa)</td>
   <td class="text-center">
-    <button class="btn btn-icon icon-left btn-info btn-sm"><i class="fas fa-search"></i>Detail</button>
+    <a href="{{ route('tagihansiswa') }}"  class="btn btn-icon icon-left btn-info btn-sm"><i class="fas fa-search"></i>Detail</a>
   </td>
 </tr>
 <tr>
@@ -105,7 +105,7 @@ $sisasaldo=$sumpemasukan+$sumtagihansiswa-$sumpengeluaran;
   <td>{{ $countpengeluaran }}</td>
   <td>@currency($sumpengeluaran)</td>
   <td class="text-center">
-    <button class="btn btn-icon icon-left btn-info btn-sm"><i class="fas fa-search"></i>Detail</button>
+    <a href="{{ route('pengeluaran') }}"  class="btn btn-icon icon-left btn-info btn-sm"><i class="fas fa-search"></i>Detail</a>
   </td>
 </tr>
 <tr>
