@@ -30,10 +30,12 @@ class laporanController extends Controller
     {
         $tgl=date("YmdHis");
         // dd($tgl);
-        $datas=DB::table('kelas')
-        ->paginate($this->paginationjml());
+        $databos=DB::table('pemasukan')->where('kategori_nama','Dana Bos')->get();
+        $datapemasukan=DB::table('pemasukan')->whereNotIn('kategori_nama', ['Dana Bos'])->get();
+        $datapengeluaran=DB::table('pengeluaran')->get();
+        // dd($datapengeluaran);
 
-        $pdf = PDF::loadview('admin.laporan.cetak',compact('datas'))->setPaper('a4', 'potrait');
+        $pdf = PDF::loadview('admin.laporan.cetak',compact('databos','datapemasukan','datapengeluaran'))->setPaper('a4', 'potrait');
         return $pdf->download('laporansekolah_'.$tgl.'-pdf');
     }
 }
