@@ -101,8 +101,18 @@
 @endforeach
 @endsection
 
-@section('foottable') 
-  {{ $datas->links() }}
+@section('foottable')  
+@php
+  $cari=$request->cari;
+  $tapel_nama=$request->tapel_nama;
+  $kelas_nama=$request->kelas_nama;
+@endphp
+  {{-- {{ $datas->appends(['cari'=>$request->cari,'yearmonth'=>$request->yearmonth,'kategori_nama'=>$request->kategori_nama])->links() }} --}}
+  {{ $datas->onEachSide(1)
+    ->appends(['cari'=>$cari])
+    ->appends(['tapel_nama'=>$tapel_nama])
+    ->appends(['kelas_nama'=>$kelas_nama])
+    ->links() }}
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
       <li class="breadcrumb-item"><i class="far fa-file"></i> Halaman ke-{{ $datas->currentPage() }}</li>

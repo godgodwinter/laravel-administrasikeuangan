@@ -66,7 +66,17 @@
 @endsection
 
 @section('foottable') 
-  {{ $datas->links() }}
+@php
+  $cari=$request->cari;
+  $yearmonth=$request->yearmonth;
+  $kategori_nama=$request->kategori_nama;
+@endphp
+  {{-- {{ $datas->appends(['cari'=>$request->cari,'yearmonth'=>$request->yearmonth,'kategori_nama'=>$request->kategori_nama])->links() }} --}}
+  {{ $datas->onEachSide(1)
+    ->appends(['cari'=>$cari])
+    ->appends(['yearmonth'=>$yearmonth])
+    ->appends(['kategori_nama'=>$kategori_nama])
+    ->links() }}
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
       <li class="breadcrumb-item"><i class="far fa-file"></i> Halaman ke-{{ $datas->currentPage() }}</li>

@@ -71,10 +71,12 @@
   $kategori_nama=$request->kategori_nama;
 @endphp
   {{-- {{ $datas->appends(['cari'=>$request->cari,'yearmonth'=>$request->yearmonth,'kategori_nama'=>$request->kategori_nama])->links() }} --}}
-  {{ $datas->appends(['cari'=>$cari])
+  {{ $datas->onEachSide(1)
+      ->appends(['cari'=>$cari])
       ->appends(['yearmonth'=>$yearmonth])
       ->appends(['kategori_nama'=>$kategori_nama])
       ->links() }}
+
   {{-- {{ dd($datas->links()) }} --}}
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
