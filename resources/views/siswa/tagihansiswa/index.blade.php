@@ -118,6 +118,37 @@ $tipeuser=(Auth::user()->tipeuser);
 {{-- DATATABLE-END --}}
 
 @section('container')
+
+@php
+        
+$ambilsiswa = DB::table('siswa')
+  ->where('nis', '=', Auth::user()->nomerinduk)
+  ->get();
+  foreach ($ambilsiswa as $siswa) {
+    # code...
+  }
+
+    
+$ambilsiswausers = DB::table('users')
+  ->where('nomerinduk', '=', Auth::user()->nomerinduk)
+  ->get();
+  foreach ($ambilsiswausers as $du) {
+    # code...
+  }
+      @endphp
+
+
+<section class="section">
+  <div class="section-body">
+    <h2 class="section-title">Hi, {{ Auth::user()->name }}!</h2>
+    <p class="section-lead">
+      Berikut adalah informasi tentang pembayaran tagihan anda. Hubungi admin jika data anda belum muncul. Kemungkinan Belum di Sinkronisasi!
+    </p>
+
+    <div class="row mt-sm-4">
+
+      @if($caridatas>1)
+
 @foreach ($datas as $data)
 @php
 $warna='default';
@@ -131,32 +162,6 @@ $sumdetailbayar = DB::table('tagihansiswadetail')
   }
 @endphp
 @endforeach
-@php
-        
-$ambilsiswa = DB::table('siswa')
-  ->where('nis', '=', $data->siswa_nis)
-  ->get();
-  foreach ($ambilsiswa as $siswa) {
-    # code...
-  }
-
-    
-$ambilsiswausers = DB::table('users')
-  ->where('nomerinduk', '=', $data->siswa_nis)
-  ->get();
-  foreach ($ambilsiswausers as $du) {
-    # code...
-  }
-      @endphp
-
-<section class="section">
-  <div class="section-body">
-    <h2 class="section-title">Hi, {{ Auth::user()->name }}!</h2>
-    <p class="section-lead">
-      Berikut adalah informasi tentang pembayaran tagihan anda. Hubungi admin jika data anda belum muncul. Kemungkinan Belum di Sinkronisasi!
-    </p>
-
-    <div class="row mt-sm-4">
       <div class="col-12 col-md-12 col-lg-5">
         <div class="card profile-widget">
           <div class="profile-widget-header">
@@ -212,6 +217,7 @@ $ambilsiswausers = DB::table('users')
           </div>
         </div>
       </div>
+      @endif
 
 
       <div class="col-12 col-md-12 col-lg-7">
