@@ -65,20 +65,94 @@
 @endsection
 
 @section('foottable') 
-@php
-  $cari=$request->cari;
-  $yearmonth=$request->yearmonth;
-  $kategori_nama=$request->kategori_nama;
-@endphp
-  {{-- {{ $datas->appends(['cari'=>$request->cari,'yearmonth'=>$request->yearmonth,'kategori_nama'=>$request->kategori_nama])->links() }} --}}
-  {{ $datas->appends(['cari'=>$cari])
-      ->appends(['yearmonth'=>$yearmonth])
-      ->appends(['kategori_nama'=>$kategori_nama])
-      ->links() }}
-  {{-- {{ dd($datas->links()) }} --}}
+  {{-- {{ $datas->links() }} --}}
+   {{-- {{ dd($datas->links())}}; --}}
+  @php
+  $datasearch="&cari=".$request->cari."&yearmonth=".$request->yearmonth."&kategori_nama=".$request->kategori_nama;
+    $paginatedata=$datas->links()->elements[0];
+    $paginatedata4=$datas->links()->elements[4];
+
+    if(!empty($paginatedata4)){
+    $paginatedata3=$datas->links()->elements[3];
+    $paginatedata4=$datas->links()->elements[4];
+
+    }
+    // dd($paginatedata);
+    // dd($datas->links());
+    // dd(last($paginatedata));
+    // dd(head($paginatedata));
+    foreach ($paginatedata as $pd) {
+      // dd($loop->first);
+      $page=$pd.'&cari=';
+    }
+   $nomer=1;
+   $halaman=1;
+   if($request->page){
+     $halaman=$request->page;
+   }
+    // dd($page);
+  @endphp
+
+  {{-- {{ dd($datas->links()->elements[0]) }} --}}
+      {{-- <div class="card"> --}}
+        {{-- <div class="card-body"> --}}
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="{{ head($paginatedata).$datasearch }}">First</a></li>
+
+                {{-- {{ dd(count($paginatedata4)) }} --}}
+                
+                
+
+                  @if(!empty($paginatedata4))
+                       @foreach ($paginatedata4 as $pd)
+                       {{-- JIKA PAGINATE DATA DIATAS 8 --}}
+                             @if($nomer==$halaman)
+                                   <li class="page-item active"><a class="page-link" href="#">{{ $nomer }} </a></li>
+                             @else
+                                   <li class="page-item"><a class="page-link" href="{{ $pd.$datasearch }}">{{ $nomer }} </a></li>                    
+                             @endif
+                        
+                           @php
+                             $nomer++;
+                             
+                           @endphp
+                  
+                        @endforeach
+                   @else
+                      @foreach ($paginatedata as $pd)
+                    {{-- JIKA PAGINATE DIBAWAH 8 --}}
+                          @if($nomer==$halaman)
+                                <li class="page-item active"><a class="page-link" href="#">{{ $nomer }} </a></li>
+                          @else
+                                <li class="page-item"><a class="page-link" href="{{ $pd.$datasearch }}">{{ $nomer }} </a></li>                    
+                          @endif
+                    
+                        @php
+                          $nomer++;
+                          
+                        @endphp
+                      @endforeach
+                      
+                   @endif
+
+                   @if(!empty($paginatedata4))
+              <li class="page-item"><a class="page-link"  href="{{ last($paginatedata4).$datasearch }}">Last</a></li>   
+                @else
+
+              <li class="page-item"><a class="page-link"  href="{{ last($paginatedata).$datasearch }}">Last</a></li> 
+              @endif
+              {{-- <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">Last</a></li> --}}
+            </ul>
+          </nav>
+        {{-- </div> --}}
+      {{-- </div> --}}
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-      <li class="breadcrumb-item"><i class="far fa-file"></i> Halaman ke-{{ $datas->currentPage() }}</li>
+      <li class="breadcrumb-item"><i class="far fa-file"></i> Halaman ke-{{ $request->page }}</li>
       <li class="breadcrumb-item"><i class="fas fa-paste"></i> {{ $datas->total() }} Total Data</li>
       <li class="breadcrumb-item active" aria-current="page"><i class="far fa-copy"></i> {{ $datas->perPage() }}  Data Perhalaman</li>
   </ol>
