@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 
 class Controller extends BaseController
 {
@@ -25,6 +26,15 @@ class Controller extends BaseController
        return response()->json($response,200);
     }
 
+    public function checkauth($menu){
+	
+        if(Auth::user()->tipeuser===$menu){
+            return 'success';
+        }else{    
+            return '404';
+        }
+     
+    }
     public function rupiah($angka){
 	
         $hasil_rupiah = "Rp " . number_format($angka,2,',','.');

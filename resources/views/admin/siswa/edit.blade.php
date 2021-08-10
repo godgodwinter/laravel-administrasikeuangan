@@ -232,7 +232,6 @@
         </div>
 
 
-        @endsection
         <div class="card">
             <form action="/admin/{{ $pages }}" method="post">
                 @csrf

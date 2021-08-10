@@ -126,7 +126,7 @@ $sumdetailbayar = DB::table('tagihansiswadetail')
   ->sum('nominal');
   $kurang=$data->nominaltagihan-$sumdetailbayar;
   $persen=number_format(($sumdetailbayar/$data->nominaltagihan*100),2);
-  if($persen==='100'){
+  if($persen=='100'){
     $warna='success';
   }
 @endphp
@@ -170,9 +170,9 @@ $ambilsiswausers = DB::table('users')
                 <div class="profile-widget-item-label">Dibayarkan</div>
                 <div class="profile-widget-item-value">@currency($sumdetailbayar)</div>
               </div>
-              <div class="profile-widget-item btn-success">
-                <div class="profile-widget-item-label ">Persentase</div>
-                <div class="profile-widget-item-value ">{{ $persen }} %</div>
+              <div class="profile-widget-item ">
+                <div class="profile-widget-item-label">Persentase</div>
+                <div class="profile-widget-item-value text-{{ $warna }}">{{ $persen }} %</div>
               </div>
             </div>
           </div>

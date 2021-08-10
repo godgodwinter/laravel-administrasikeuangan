@@ -18,6 +18,9 @@ class tapelController extends Controller
     public function index()
     {   
       
+        if($this->checkauth('admin')==='404'){
+            return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
+        }
         #WAJIB
         $pages='tapel';
         $jmldata='0';

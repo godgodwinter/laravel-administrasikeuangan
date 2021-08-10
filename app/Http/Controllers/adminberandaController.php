@@ -118,4 +118,10 @@ class adminberandaController extends Controller
             return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
 
     }
+
+    public function notfound()
+    {
+
+        return view('404');
+    }
 }

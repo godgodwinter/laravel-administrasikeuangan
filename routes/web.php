@@ -94,6 +94,7 @@ Route::get('admin/laporan', 'App\Http\Controllers\laporanController@index')->nam
 Route::get('admin/laporan/cetak', 'App\Http\Controllers\laporanController@cetak')->name('laporan.cetak');
 
 
+Route::get('/404', 'App\Http\Controllers\adminberandaController@notfound');
 // Route::post('/checkemail',['uses'=>'PagesController@checkEmail']);
 // Route::post('/checkemail', 'App\Http\Controllers\PagesController@checkEmail')->name('checkEmail');
 // Route::get('/home', function () {

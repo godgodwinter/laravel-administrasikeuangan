@@ -18,6 +18,9 @@ class tagihanaturController extends Controller
      */
     public function index(Request $request)
     {
+        if($this->checkauth('admin')==='404'){
+            return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
+        }
         #WAJIB
         $pages='tagihanatur';
         $jmldata='0';

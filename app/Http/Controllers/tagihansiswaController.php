@@ -20,6 +20,12 @@ class tagihansiswaController extends Controller
      */
     public function index(Request $request)
     {
+
+        if($this->checkauth('admin')==='404'){
+            return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
+        }
+        // dd($this->checkauth());
+
         #WAJIB
         $pages='tagihansiswa';
         $jmldata='0';
@@ -39,6 +45,9 @@ class tagihansiswaController extends Controller
 
     public function kepsekindex(Request $request)
     {
+        if($this->checkauth('kepsek')==='404'){
+            return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
+        }
         #WAJIB
         $pages='tagihansiswa';
         $jmldata='0';
@@ -58,6 +67,10 @@ class tagihansiswaController extends Controller
 
     public function siswaindex(Request $request)
     {
+
+        if($this->checkauth('siswa')==='404'){
+            return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
+        }
         #WAJIB
         $pages='tagihansiswa';
         $jmldata='0';
@@ -79,6 +92,9 @@ class tagihansiswaController extends Controller
 
     public function cari(Request $request)
     {
+        if($this->checkauth('admin')==='404'){
+            return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
+        }
         // dd($request);
         $cari=$request->cari;
         $tapel_nama=$request->tapel_nama;
@@ -111,6 +127,9 @@ class tagihansiswaController extends Controller
 
     public function kepsekcari(Request $request)
     {
+        if($this->checkauth('kepsek')==='404'){
+            return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
+        }
         // dd($request);
         $cari=$request->cari;
         $tapel_nama=$request->tapel_nama;
@@ -142,6 +161,10 @@ class tagihansiswaController extends Controller
     }
     public function sync()
     {
+
+        if($this->checkauth('admin')==='404'){
+            return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
+        }
         $tapel=tapel::all();
         $kelas=kelas::all();
         // 1.ambil tagihanatur
@@ -207,6 +230,9 @@ class tagihansiswaController extends Controller
     public function bayartagihan(Request $request,tagihansiswa $tagihansiswa)
     {
 
+        if($this->checkauth('admin')==='404'){
+            return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
+        }
         $request->validate([
             'nominal'=>'required|numeric|min:10000'
 
