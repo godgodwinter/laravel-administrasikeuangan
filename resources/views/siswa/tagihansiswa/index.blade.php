@@ -118,19 +118,42 @@ $tipeuser=(Auth::user()->tipeuser);
 {{-- DATATABLE-END --}}
 
 @section('container')
+@foreach ($datas as $data)
+@php
+$warna='default';
+$sumdetailbayar = DB::table('tagihansiswadetail')
+  ->where('tagihansiswa_id', '=', $data->id)
+  ->sum('nominal');
+  $kurang=$data->nominaltagihan-$sumdetailbayar;
+  $persen=number_format(($sumdetailbayar/$data->nominaltagihan*100),2);
+  if($persen==='100'){
+    $warna='success';
+  }
+@endphp
+@endforeach
+@php
+        
+$ambilsiswa = DB::table('siswa')
+  ->where('nis', '=', $data->siswa_nis)
+  ->get();
+  foreach ($ambilsiswa as $siswa) {
+    # code...
+  }
+
+    
+$ambilsiswausers = DB::table('users')
+  ->where('nomerinduk', '=', $data->siswa_nis)
+  ->get();
+  foreach ($ambilsiswausers as $du) {
+    # code...
+  }
+      @endphp
 
 <section class="section">
-  <div class="section-header">
-    <h1>Profile</h1>
-    <div class="section-header-breadcrumb">
-      <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-      <div class="breadcrumb-item">Profile</div>
-    </div>
-  </div>
   <div class="section-body">
     <h2 class="section-title">Hi, {{ Auth::user()->name }}!</h2>
     <p class="section-lead">
-      Berikut adalah informasi tentang pembayaran tagihan anda.
+      Berikut adalah informasi tentang pembayaran tagihan anda. Hubungi admin jika data anda belum muncul. Kemungkinan Belum di Sinkronisasi!
     </p>
 
     <div class="row mt-sm-4">
@@ -141,228 +164,175 @@ $tipeuser=(Auth::user()->tipeuser);
             <div class="profile-widget-items">
               <div class="profile-widget-item">
                 <div class="profile-widget-item-label">Tagihan</div>
-                <div class="profile-widget-item-value">6,8K</div>
+                <div class="profile-widget-item-value">@currency($data->nominaltagihan)</div>
               </div>
               <div class="profile-widget-item">
-                <div class="profile-widget-item-label">Pembayaran</div>
-                <div class="profile-widget-item-value">2,1K</div>
+                <div class="profile-widget-item-label">Dibayarkan</div>
+                <div class="profile-widget-item-value">@currency($sumdetailbayar)</div>
               </div>
               <div class="profile-widget-item btn-success">
                 <div class="profile-widget-item-label ">Persentase</div>
-                <div class="profile-widget-item-value ">187</div>
+                <div class="profile-widget-item-value ">{{ $persen }} %</div>
               </div>
             </div>
           </div>
           <div class="profile-widget-description">
-            <div class="profile-widget-name">{{ Auth::user()->name }} <div class="text-muted d-inline font-weight-normal"><div class="slash"></div> Web Developer</div></div>
-            Ujang maman is a superhero name in <b>Indonesia</b>, especially in my family. He is not a fictional character but an original hero in my family, a hero for his children and for his wife. So, I use the name as a user in this template. Not a tribute, I'm just bored with <b>'John Doe'</b>.
-          </div>
-          <div class="card-footer text-center">
-            <div class="font-weight-bold mb-2">Follow Ujang On</div>
-            <a href="#" class="btn btn-social-icon btn-facebook mr-1">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" class="btn btn-social-icon btn-twitter mr-1">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="btn btn-social-icon btn-github mr-1">
-              <i class="fab fa-github"></i>
-            </a>
-            <a href="#" class="btn btn-social-icon btn-instagram">
-              <i class="fab fa-instagram"></i>
-            </a>
+            <div class="profile-widget-name">{{ Auth::user()->name }} <div class="text-muted d-inline font-weight-normal"><div class="slash"></div> NIS : {{ $data->siswa_nis }}</div></div>
+          
+            
+            <div class="table-responsive">
+              <table class="table table-striped" id="table-1">
+                <thead>
+                  <tr>
+                    <th class="text-center">Pembayaran ke-</th>
+                    <th>Nominal</th>
+                    <th>Tanggal Bayar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @php
+                  $detailbayar = DB::table('tagihansiswadetail')
+                    ->where('tagihansiswa_id', '=', $data->id)
+                    ->get();
+                  @endphp
+                  @foreach ($detailbayar as $db)
+                  <tr>
+                    <td  class="text-center">{{ ($loop->index)+1 }}</td>
+                    <td class="text-left">
+                      @currency($db->nominal)</td>
+                   
+                 
+                    <td>{{ date('d M Y',strtotime($db->created_at)) }}</td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+            
           </div>
         </div>
       </div>
+
+
       <div class="col-12 col-md-12 col-lg-7">
         <div class="card">
-          <form method="post" class="needs-validation" novalidate="">
-            <div class="card-header">
-              <h4>Edit Profile</h4>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                  <div class="form-group col-md-6 col-12">
-                    <label>First Name</label>
-                    <input type="text" class="form-control" value="Ujang" required="">
-                    <div class="invalid-feedback">
-                      Please fill in the first name
+          <div class="card">
+            <form action="/admin/siswa/{{ $siswa->id}}" method="post">
+                @method('put')
+                @csrf
+              <div class="card-header">
+                  <span class="btn btn-icon btn-light"><i class="fas fa-feather"></i> EDIT  Profile</span>
+              </div>
+              <div class="card-body">
+                  <div class="row">
+                    <div class="form-group col-md-6 col-6">
+                      <label for="nis">NIS <code>*)</code></label>
+                      <input type="number" name="nis" id="nis" class="form-control @error('nis') is-invalid @enderror" value="{{ $siswa->nis }}" required readonly>
+                      @error('nis')<div class="invalid-feedback"> {{$message}}</div>
+                      @enderror
                     </div>
-                  </div>
-                  <div class="form-group col-md-6 col-12">
-                    <label>Last Name</label>
-                    <input type="text" class="form-control" value="Maman" required="">
-                    <div class="invalid-feedback">
-                      Please fill in the last name
+                   
+                    <div class="form-group col-md-6 col-6">
+                      <label for="nama">Nama <code>*)</code></label>
+                      <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ $siswa->nama }}" required>
+                      @error('nama')<div class="invalid-feedback"> {{$message}}</div>
+                      @enderror
                     </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group col-md-7 col-12">
-                    <label>Email</label>
-                    <input type="email" class="form-control" value="ujang@maman.com" required="">
-                    <div class="invalid-feedback">
-                      Please fill in the email
+                   
+                    <div class="form-group col-md-6 col-6">
+                      <label for="tempatlahir">Tempat Lahir <code>*)</code></label>
+                      <input type="text" name="tempatlahir" id="tempatlahir" class="form-control @error('tempatlahir') is-invalid @enderror" value="{{ $siswa->tempatlahir }}" required>
+                      @error('tempatlahir')<div class="invalid-feedback"> {{$message}}</div>
+                      @enderror
                     </div>
-                  </div>
-                  <div class="form-group col-md-5 col-12">
-                    <label>Phone</label>
-                    <input type="tel" class="form-control" value="">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group col-12">
-                    <label>Bio</label>
-                    <textarea class="form-control summernote-simple">Ujang maman is a superhero name in <b>Indonesia</b>, especially in my family. He is not a fictional character but an original hero in my family, a hero for his children and for his wife. So, I use the name as a user in this template. Not a tribute, I'm just bored with <b>'John Doe'</b>.</textarea>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group mb-0 col-12">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="remember" class="custom-control-input" id="newsletter">
-                      <label class="custom-control-label" for="newsletter">Subscribe to newsletter</label>
-                      <div class="text-muted form-text">
-                        You will get new information about products, offers and promotions
-                      </div>
+  
+                    <div class="form-group col-md-6 col-6">
+                      <label>Tanggal Lahir</label>
+                      <input type="date" class="form-control" name="tgllahir" @error('tgllahir') is-invalid @enderror" value="{{ $siswa->tgllahir }}" >
+                      @error('tgllahir')<div class="invalid-feedback"> {{$message}}</div>
+                      @enderror
                     </div>
+  
+                    <div class="form-group col-md-6 col-6">
+                      <label>Agama <code>*)</code></label>
+                      <select class="form-control form-control-lg" required name="agama"> 
+                        @if ($siswa->agama)
+                        <option>{{ $siswa->agama }}</option>                        
+                        @endif
+                        <option>Islam</option>
+                        <option>Kristen</option>
+                        <option>Katholik</option>
+                        <option>Hindu</option>
+                        <option>Budha</option>
+                        <option>Konghucu</option>
+                        <option>Lain-lain</option>
+                      </select>
+                    </div>
+  
+                    <div class="form-group col-md-6 col-6">
+                      <label for="alamat">Alamat <code>*)</code></label>
+                      <input type="text" name="alamat" id="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ $siswa->alamat }}" required>
+                      @error('alamat')<div class="invalid-feedback"> {{$message}}</div>
+                      @enderror
+                    </div>
+  
+  
+                    <div class="form-group col-md-6 col-6">
+                      <label>Tahun Pelajaran <code>*)</code></label>
+                      <select class="form-control form-control-lg" required name="tapel_nama" readonly>  
+                            @if ($siswa->tapel_nama)
+                            <option>{{ $siswa->tapel_nama }}</option>                        
+                            @endif
+                   
+                      </select>
+                    </div>
+  
+                    <div class="form-group col-md-6 col-6">
+                      <label>Kelas <code>*)</code></label>
+                      <select class="form-control form-control-lg" required name="kelas_nama" readonly>
+                            @if ($siswa->kelas_nama)
+                            <option>{{ $siswa->kelas_nama }}</option>                        
+                            @endif
+                     
+                      </select>
+                    </div>
+                    
+                    <div class="form-group col-md-12 col-12">
+                      <label for="email">Email <code>*)</code></label>
+                      <input type="text" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ $du->email }}" onblur="duplicateEmail(this)"  required readonly>
+                      @error('email')<div class="invalid-feedback"> {{$message}}</div>
+                      @enderror
+                    </div>
+  
+                    <div class="form-group col-md-6 col-6">
+                      <label for="password">Password <code>*) Kosongkan Password jika tidak ingin mengubah</code></label>
+                      <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" value="">
+                      @error('password')<div class="invalid-feedback"> {{$message}}</div>
+                      @enderror
+                    </div>
+  
+                    <div class="form-group col-md-6 col-6">
+                      <label for="password2">Konfirmasi Password <code>*)</code></label>
+                      <input type="password" name="password2" id="password2" class="form-control @error('password2') is-invalid @enderror" value="">
+                      @error('password2')<div class="invalid-feedback"> {{$message}}</div>
+                      @enderror
+                    </div>
+                   
                   </div>
-                </div>
-            </div>
-            <div class="card-footer text-right">
-              <button class="btn btn-primary">Save Changes</button>
-            </div>
-          </form>
-        </div>
+               
+              </div>
+              <div class="card-footer text-right">
+                <button class="btn btn-primary">Simpan</button>
+              </div>
+            </form>
+          </div>
+  
       </div>
     </div>
   </div>
 </section>
 
-   
-  <div class="section-body">
-   <p>Hubungi admin jika data anda belum muncul. Kemungkinan Belum di Sinkronisasi!</p>
-
-    <div class="row ">
-     
-      <div class="col-12 col-md-12 col-lg-12">
-        <x-layout-table pages="{{ $pages }}" pagination="{{ $datas->perPage() }}"/>
-       </div> 
-
-    </div>
-  </div>
+  
 @endsection
 
 
-@section('container-modals')
-
-@foreach ($datas as $data)
-@php
-$sumdetailbayar = DB::table('tagihansiswadetail')
-  ->where('tagihansiswa_id', '=', $data->id)
-  ->sum('nominal');
-  $kurang=$data->nominaltagihan-$sumdetailbayar;
-  $persen=number_format(($sumdetailbayar/$data->nominaltagihan*100),2);
-@endphp
-    <div class="modal fade" tabindex="-1" role="dialog" id="modalbayar{{ $data->id }}">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Pembayaran "{{ $data->siswa_nis }} - {{ $data->siswa_nama }}"</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            {{-- <p>Modal body text goes here.</p> --}}
-
-            <form action="/admin/{{ $pages }}/bayartagihan/{{ $data->id }}" method="post">
-              @csrf
-            <div class="form-group">
-
-              @if (old('nominal'))
-              @php                    
-                $nominal=old('nominal');
-              @endphp
-          @else
-              @php
-              $nominal=0;
-              @endphp                    
-          @endif
-
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <div class="input-group-text">Sisa Tagihan :
-              </div>
-            </div>  
-             <input type="text" class="form-control-plaintext" readonly="" value="@currency($kurang)" >
-          </div>
-       
-
-            </div>
-
-
-          <script type="text/javascript">
-            
-            var rupiah{{ $data->id }} = document.getElementById('rupiah{{ $data->id }}');
-            var labelrupiah{{ $data->id }} = document.getElementById('labelrupiah{{ $data->id }}');
-            rupiah{{ $data->id }}.addEventListener('keyup', function(e){
-              // tambahkan 'Rp.' pada saat form di ketik
-              // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-              // rupiah.value = formatRupiah(this.value, 'Rp. ');
-              labelrupiah{{ $data->id }}.value = formatRupiah(this.value, 'Rp. ');
-            });
-        
-            /* Fungsi formatRupiah */
-            function formatRupiah(angka, prefix){
-              var number_string = angka.replace(/[^,\d]/g, '').toString(),
-              split   		= number_string.split(','),
-              sisa     		= split[0].length % 3,
-              rupiah     		= split[0].substr(0, sisa),
-              ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
-        
-              // tambahkan titik jika yang di input sudah menjadi angka ribuan
-              if(ribuan){
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-              }
-        
-              rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-              return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
-            }
-          </script>
-        
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            {{-- <button type="submit" class="btn btn-primary">Bayar</button> --}}
-            </form>
-          </div>
-          <div class="modal-body">
-            {{-- <p>Modal body text goes here.</p> --}}
-            <div class="table-responsive">
-              <table class="table table-bordered table-md">
-                <tr>
-                  <th width="5%" class="text-center">Pembayaran ke-</th>
-                  <th>Nominal</th>
-                </tr>
-                @php
-                    $detailbayar = DB::table('tagihansiswadetail')
-                      ->where('tagihansiswa_id', '=', $data->id)
-                      ->get();
-                @endphp
-                @foreach ($detailbayar as $db)
-                    
-                <tr>
-                  <td  class="text-center">{{ ($loop->index)+1 }}</td>
-                  <td class="text-left">
-                    @currency($db->nominal)</td>
-                  </tr>
-
-                @endforeach
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  @endforeach
-
-@endsection

@@ -1,0 +1,396 @@
+@extends('layouts.layoutadmin1')
+
+@section('title','Tagihan Ku')
+@section('halaman','tagihansiswa')
+
+@section('csshere')
+@endsection
+
+@section('jshere')
+@endsection
+
+
+@section('notif')
+
+
+@if (session('tipe'))
+        @php
+        $tipe=session('tipe');    
+        @endphp
+@else
+        @php
+            $tipe='light';
+        @endphp
+@endif
+
+@if (session('icon'))
+        @php
+        $icon=session('icon');    
+        @endphp
+@else
+        @php
+            $icon='far fa-lightbulb';
+        @endphp
+@endif
+
+@php
+  $message=session('status');
+@endphp
+@if (session('status'))
+<x-alert tipe="{{ $tipe }}" message="{{ $message }}" icon="{{ $icon }}"/>
+
+@endif
+@endsection 
+
+@php
+$tipeuser=(Auth::user()->tipeuser);
+@endphp
+
+{{-- DATATABLE --}}
+@section('headtable')
+  <th width="5%" class="text-center">#</th>
+  <th width="5%" >Bayar</th>
+  <th>Nama</th>
+  <th>Tahun</th>
+  <th>Kelas</th>
+  <th>Nominal Tagihan</th>
+  <th>Terbayar</th>
+  <th>Kurang</th>
+  <th width="10%"  class="text-center">%</th>
+@endsection
+
+@section('bodytable')
+@foreach ($datas as $data)@php
+    $sumdetailbayar = DB::table('tagihansiswadetail')
+      ->where('tagihansiswa_id', '=', $data->id)
+      ->sum('nominal');
+      $kurang=$data->nominaltagihan-$sumdetailbayar;
+      $persen=number_format(($sumdetailbayar/$data->nominaltagihan*100),2);
+        $warna='light';
+        $icon='fas fa-times';
+      if($persen>='100'){
+        $warna='success';
+        $icon='fas fa-check';
+      }
+    @endphp
+    <tr>
+      <td  class="text-center">{{ ($loop->index)+1 }}</td>
+      <td class="text-center">
+        <button class="btn btn-icon btn-{{ $warna }}" data-toggle="modal" data-target="#modalbayar{{ $data->id }}" ><i class="far fa-money-bill-alt"></i></button>
+      </td>
+      <td class="text-left">{{ $data->siswa_nis }} - {{ $data->siswa_nama }}</td>
+      <td class="text-left">{{ $data->tapel_nama }}</td>
+      <td class="text-left">{{ $data->kelas_nama }}</td>
+      <td class="text-left">@currency($data->nominaltagihan)</td>
+      <td class="text-left">@currency($sumdetailbayar)</td>
+      <td>@currency($kurang)</td>
+      <td class="text-center">
+
+    <span class="btn btn-icon icon-left btn-{{ $warna }}"><i class="{{ $icon }}"></i> {{ $persen }} %</span>
+      
+      </td>
+
+      {{-- <td class="text-center">
+          <a href="/admin/{{ $pages }}/{{$data->id}}"  class="btn btn-icon icon-left btn-info"><i class="fas fa-edit"></i> Detail</a>
+        <form action="/admin/{{ $pages }}/{{$data->id}}" method="post" class="d-inline">
+              @method('delete')
+              @csrf
+              <button class="btn btn-icon btn-danger"
+                  onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
+                      class="pcoded-micon"> <i class="fas fa-trash"></i></span></button>
+          </form>
+      </td> --}}
+    </tr>
+@endforeach
+@endsection
+
+@section('foottable') 
+  {{ $datas->links() }}
+  <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><i class="far fa-file"></i> Halaman ke-{{ $datas->currentPage() }}</li>
+      <li class="breadcrumb-item"><i class="fas fa-paste"></i> {{ $datas->total() }} Total Data</li>
+      <li class="breadcrumb-item active" aria-current="page"><i class="far fa-copy"></i> {{ $datas->perPage() }} Data Perhalaman</li>
+  </ol>
+  </nav>
+@endsection
+
+{{-- DATATABLE-END --}}
+
+@section('container')
+@foreach ($datas as $data)
+@php
+$warna='default';
+$sumdetailbayar = DB::table('tagihansiswadetail')
+  ->where('tagihansiswa_id', '=', $data->id)
+  ->sum('nominal');
+  $kurang=$data->nominaltagihan-$sumdetailbayar;
+  $persen=number_format(($sumdetailbayar/$data->nominaltagihan*100),2);
+  if($persen==='100'){
+    $warna='success';
+  }
+@endphp
+@endforeach
+
+<section class="section">
+  <div class="section-header">
+    <h1>Profile</h1>
+    <div class="section-header-breadcrumb">
+      <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+      <div class="breadcrumb-item">Profile</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <h2 class="section-title">Hi, {{ Auth::user()->name }}!</h2>
+    <p class="section-lead">
+      Berikut adalah informasi tentang pembayaran tagihan anda. Hubungi admin jika data anda belum muncul. Kemungkinan Belum di Sinkronisasi!
+    </p>
+
+    <div class="row mt-sm-4">
+      <div class="col-12 col-md-12 col-lg-5">
+        <div class="card profile-widget">
+          <div class="profile-widget-header">
+            <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle profile-widget-picture">
+            <div class="profile-widget-items">
+              <div class="profile-widget-item">
+                <div class="profile-widget-item-label">Tagihan</div>
+                <div class="profile-widget-item-value">@currency($data->nominaltagihan)</div>
+              </div>
+              <div class="profile-widget-item">
+                <div class="profile-widget-item-label">Dibayarkan</div>
+                <div class="profile-widget-item-value">@currency($sumdetailbayar)</div>
+              </div>
+              <div class="profile-widget-item btn-success">
+                <div class="profile-widget-item-label ">Persentase</div>
+                <div class="profile-widget-item-value ">{{ $persen }} %</div>
+              </div>
+            </div>
+          </div>
+          <div class="profile-widget-description">
+            <div class="profile-widget-name">{{ Auth::user()->name }} <div class="text-muted d-inline font-weight-normal"><div class="slash"></div> NIS : {{ $data->siswa_nis }}</div></div>
+          
+            
+            <div class="table-responsive">
+              <table class="table table-striped" id="table-1">
+                <thead>
+                  <tr>
+                    <th class="text-center">Pembayaran ke-</th>
+                    <th>Nominal</th>
+                    <th>Tanggal Bayar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @php
+                  $detailbayar = DB::table('tagihansiswadetail')
+                    ->where('tagihansiswa_id', '=', $data->id)
+                    ->get();
+                  @endphp
+                  @foreach ($detailbayar as $db)
+                  <tr>
+                    <td  class="text-center">{{ ($loop->index)+1 }}</td>
+                    <td class="text-left">
+                      @currency($db->nominal)</td>
+                   
+                 
+                    <td>{{ date('d M Y',strtotime($db->created_at)) }}</td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-12 col-lg-7">
+        <div class="card">
+          <form method="post" class="needs-validation" novalidate="">
+            <div class="card-header">
+              <h4>Edit Profile</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-md-6 col-12">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" value="Ujang" required="">
+                    <div class="invalid-feedback">
+                      Please fill in the first name
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6 col-12">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" value="Maman" required="">
+                    <div class="invalid-feedback">
+                      Please fill in the last name
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-7 col-12">
+                    <label>Email</label>
+                    <input type="email" class="form-control" value="ujang@maman.com" required="">
+                    <div class="invalid-feedback">
+                      Please fill in the email
+                    </div>
+                  </div>
+                  <div class="form-group col-md-5 col-12">
+                    <label>Phone</label>
+                    <input type="tel" class="form-control" value="">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-12">
+                    <label>Bio</label>
+                    <textarea class="form-control summernote-simple">Ujang maman is a superhero name in <b>Indonesia</b>, especially in my family. He is not a fictional character but an original hero in my family, a hero for his children and for his wife. So, I use the name as a user in this template. Not a tribute, I'm just bored with <b>'John Doe'</b>.</textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group mb-0 col-12">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="remember" class="custom-control-input" id="newsletter">
+                      <label class="custom-control-label" for="newsletter">Subscribe to newsletter</label>
+                      <div class="text-muted form-text">
+                        You will get new information about products, offers and promotions
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="card-footer text-right">
+              <button class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+   
+  <div class="section-body">
+   <p>Hubungi admin jika data anda belum muncul. Kemungkinan Belum di Sinkronisasi!</p>
+
+    <div class="row ">
+     
+      <div class="col-12 col-md-12 col-lg-12">
+        <x-layout-table pages="{{ $pages }}" pagination="{{ $datas->perPage() }}"/>
+       </div> 
+
+    </div>
+  </div>
+@endsection
+
+
+@section('container-modals')
+
+@foreach ($datas as $data)
+@php
+$sumdetailbayar = DB::table('tagihansiswadetail')
+  ->where('tagihansiswa_id', '=', $data->id)
+  ->sum('nominal');
+  $kurang=$data->nominaltagihan-$sumdetailbayar;
+  $persen=number_format(($sumdetailbayar/$data->nominaltagihan*100),2);
+@endphp
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalbayar{{ $data->id }}">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Pembayaran "{{ $data->siswa_nis }} - {{ $data->siswa_nama }}"</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{-- <p>Modal body text goes here.</p> --}}
+
+            <form action="/admin/{{ $pages }}/bayartagihan/{{ $data->id }}" method="post">
+              @csrf
+            <div class="form-group">
+
+              @if (old('nominal'))
+              @php                    
+                $nominal=old('nominal');
+              @endphp
+          @else
+              @php
+              $nominal=0;
+              @endphp                    
+          @endif
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Sisa Tagihan :
+              </div>
+            </div>  
+             <input type="text" class="form-control-plaintext" readonly="" value="@currency($kurang)" >
+          </div>
+       
+
+            </div>
+
+
+          <script type="text/javascript">
+            
+            var rupiah{{ $data->id }} = document.getElementById('rupiah{{ $data->id }}');
+            var labelrupiah{{ $data->id }} = document.getElementById('labelrupiah{{ $data->id }}');
+            rupiah{{ $data->id }}.addEventListener('keyup', function(e){
+              // tambahkan 'Rp.' pada saat form di ketik
+              // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+              // rupiah.value = formatRupiah(this.value, 'Rp. ');
+              labelrupiah{{ $data->id }}.value = formatRupiah(this.value, 'Rp. ');
+            });
+        
+            /* Fungsi formatRupiah */
+            function formatRupiah(angka, prefix){
+              var number_string = angka.replace(/[^,\d]/g, '').toString(),
+              split   		= number_string.split(','),
+              sisa     		= split[0].length % 3,
+              rupiah     		= split[0].substr(0, sisa),
+              ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+        
+              // tambahkan titik jika yang di input sudah menjadi angka ribuan
+              if(ribuan){
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+              }
+        
+              rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+              return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+            }
+          </script>
+        
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            {{-- <button type="submit" class="btn btn-primary">Bayar</button> --}}
+            </form>
+          </div>
+          <div class="modal-body">
+            {{-- <p>Modal body text goes here.</p> --}}
+            <div class="table-responsive">
+              <table class="table table-bordered table-md">
+                <tr>
+                  <th width="5%" class="text-center">Pembayaran ke-</th>
+                  <th>Nominal</th>
+                </tr>
+                @php
+                    $detailbayar = DB::table('tagihansiswadetail')
+                      ->where('tagihansiswa_id', '=', $data->id)
+                      ->get();
+                @endphp
+                @foreach ($detailbayar as $db)
+                    
+                <tr>
+                  <td  class="text-center">{{ ($loop->index)+1 }}</td>
+                  <td class="text-left">
+                    @currency($db->nominal)</td>
+                  </tr>
+
+                @endforeach
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  @endforeach
+
+@endsection
