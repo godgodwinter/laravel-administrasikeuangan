@@ -64,6 +64,47 @@ $tipeuser=(Auth::user()->tipeuser);
 @endphp
 @endif
 
+
+
+{{-- DATALAPORAN --}}
+@php
+$sumpemasukan = DB::table('pemasukan')->whereNotIn('kategori_nama', ['Dana Bos'])
+  ->sum('nominal');
+
+$countpemasukan = DB::table('pemasukan')->whereNotIn('kategori_nama', ['Dana Bos'])
+  ->count();
+
+$sumpemasukanbos = DB::table('pemasukan')->where('kategori_nama','Dana Bos')
+  ->sum('nominal');
+
+$countpemasukanbos = DB::table('pemasukan')->where('kategori_nama','Dana Bos')
+  ->count();
+
+$countpengeluaran = DB::table('pengeluaran')
+  ->count();
+
+
+$sumpengeluaran = DB::table('pengeluaran')
+  ->sum('nominal');
+
+$sumtagihansiswa = DB::table('tagihansiswadetail')
+  ->sum('nominal');
+
+$counttagihansiswa = DB::table('tagihansiswadetail')
+  ->count();
+
+$totalpemasukan=$sumpemasukan+$sumtagihansiswa+$sumpemasukanbos;
+$sisasaldo=$totalpemasukan-$sumpengeluaran;
+
+
+$ambilkepsek = DB::table('users')
+->where('tipeuser','kepsek')
+  ->get();
+  foreach ($ambilkepsek as $kepsek) {
+      # code...
+  }
+@endphp
+{{-- DATALAPORAN-END --}}
 @section('container')
 
 
@@ -126,16 +167,28 @@ $tipeuser=(Auth::user()->tipeuser);
               <div class="profile-widget-items">
              
                 <div class="profile-widget-item">
-                  <div class="profile-widget-item-label">Pemasukan</div>
-                  <div class="profile-widget-item-value">@currency($ttlpemasukan)</div>
+                  <div class="profile-widget-item-label">Dana BOS</div>
+                  <div class="profile-widget-item-value">@currency($sumpemasukanbos)</div>
                 </div>
                 <div class="profile-widget-item">
+                  <div class="profile-widget-item-label">Pemasukan Selain Dana BOS</div>
+                  <div class="profile-widget-item-value">@currency($sumpemasukan)</div>
+                </div>
+                <div class="profile-widget-item">
+                  <div class="profile-widget-item-label">Pembayaran Siswa</div>
+                  <div class="profile-widget-item-value">@currency($sumtagihansiswa)</div>
+                </div>
+              </div>
+
+              <div class="profile-widget-items mt-4">
+             
+                <div class="profile-widget-item">
                   <div class="profile-widget-item-label">Pengeluaran</div>
-                  <div class="profile-widget-item-value">@currency($ttlpengeluaran)</div>
+                  <div class="profile-widget-item-value">@currency($sumpengeluaran)</div>
                 </div>
                 <div class="profile-widget-item">
                   <div class="profile-widget-item-label">Saldo</div>
-                  <div class="profile-widget-item-value">@currency($saldo)</div>
+                  <div class="profile-widget-item-value">@currency($sisasaldo)</div>
                 </div>
               </div>
             </div>
