@@ -39,7 +39,7 @@ $commitDate->setTimezone(new \DateTimeZone('UTC'));
 
 // dd($commitDate);
 // dd($commitDate->format('Y-m-d H:i:s'));
-$versi=$commitDate->format('YmdHis');
+$versi=$commitDate->format('Ymd.H.i.s');
           @endphp
 
             <div class="card card-primary">
