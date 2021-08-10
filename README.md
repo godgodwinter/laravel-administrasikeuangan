@@ -76,6 +76,7 @@
 
 [![Product Name Screen Shot][product-screenshot-dashboardlm2]](https://github.com/godgodwinter/laravel-administrasikeuangan)
 [![Product Name Screen Shot][product-screenshot-dashboardlm3]](https://github.com/godgodwinter/laravel-administrasikeuangan)
+[![Product Name Screen Shot][product-class_diagram1]](https://github.com/godgodwinter/laravel-administrasikeuangan)
 
 Sistem administrasi keuangan sekolah
 
@@ -196,3 +197,4 @@ Project Link: [https://github.com/godgodwinter/laravel-administrasikeuangan](htt
 [linkedin-url]: https://www.instagram.com/kukuh.sn/
 [product-screenshot-dashboardlm2]: images/dashboardlm2.png
 [product-screenshot-dashboardlm3]: images/dashboardlm3.png
+[product-screenshot-class_diagram1]: images/class_diagram1.png
