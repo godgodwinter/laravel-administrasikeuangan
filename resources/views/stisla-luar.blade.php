@@ -98,7 +98,7 @@ $versi=$commitDate->format('Ymd.H.i.s');
             </div>
           
             <div class="simple-footer">
-              Copyright &copy; 2021  v {{ $versi }}
+              Copyright &copy; 2021  v0. {{ $versi }}
             </div>
           </div>
         </div>
