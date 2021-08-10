@@ -177,7 +177,6 @@ return [
         App\Providers\JetstreamServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-        Tremby\LaravelGitVersion\GitVersionServiceProvider::class,
 
     ],
 

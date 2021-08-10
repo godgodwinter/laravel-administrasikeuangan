@@ -27,9 +27,23 @@
               <img src="../assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
             </div>
 
+            @php
+            // exec('git rev-parse --verify HEAD 2> /dev/null', $output);
+            // $hash = $output[0];
+            // dd($hash)
+
+    $commitHash = trim(exec('git log --pretty="%h" -n1 HEAD'));
+
+$commitDate = new \DateTime(trim(exec('git log -n1 --pretty=%ci HEAD')));
+$commitDate->setTimezone(new \DateTimeZone('UTC'));
+
+// dd($commitDate);
+// dd($commitDate->format('Y-m-d H:i:s'));
+$versi=$commitDate->format('YmdHis');
+          @endphp
+
             <div class="card card-primary">
               <div class="card-header text-center"><h4>SISTEM ADMINISTRASI KEUANGAN SEKOLAH</h4>
-              <p>@include('git-version::version-comment')</p>
               </div>
 
               <div class="card-body">
@@ -84,7 +98,7 @@
             </div>
           
             <div class="simple-footer">
-              Copyright &copy; 2021
+              Copyright &copy; 2021  v {{ $versi }}
             </div>
           </div>
         </div>
