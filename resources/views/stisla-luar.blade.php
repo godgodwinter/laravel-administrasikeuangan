@@ -28,7 +28,9 @@
             </div>
 
             <div class="card card-primary">
-              <div class="card-header text-center"><h4>SISTEM ADMINISTRASI KEUANGAN SEKOLAH</h4></div>
+              <div class="card-header text-center"><h4>SISTEM ADMINISTRASI KEUANGAN SEKOLAH</h4>
+              <p>@include('git-version::version-comment')</p>
+              </div>
 
               <div class="card-body">
                 <form action="{{ route('login') }}" method="POST">
