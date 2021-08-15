@@ -97,5 +97,27 @@ class Controller extends BaseController
         return $data;
      
     }
+
+    public function semesteraktif(){
+	
+        $settings = DB::table('settings')->first();
+        $data=$settings->semesteraktif;
+        return $data;
+     
+    }
+    public function semester1bln(){
+	
+        $settings = DB::table('settings')->first();
+        $data=$settings->semester1bln;
+        return $data;
+     
+    }
+    public function semester2bln(){
+	
+        $settings = DB::table('settings')->first();
+        $data=$settings->semester2bln;
+        return $data;
+     
+    }
     //gunakan  return $this->errorResponse('Validation Error',$validator->errors());
 }

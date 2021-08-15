@@ -66,6 +66,18 @@ Route::get('admin/pengeluaran', 'App\Http\Controllers\pengeluaranController@inde
 Route::get('admin/caripengeluaran', 'App\Http\Controllers\pengeluaranController@cari')->name('pengeluaran.cari');
 
 
+//pembayaran-MENU
+Route::resource('admin/pembayaran','App\Http\Controllers\pembayaranController')->except(['index']);
+Route::get('admin/pembayaran', 'App\Http\Controllers\pembayaranController@index')->name('pembayaran');
+Route::get('admin/caripembayaran', 'App\Http\Controllers\pembayaranController@cari')->name('pembayaran.cari');
+
+
+//bayar-MENU
+Route::resource('admin/bayar','App\Http\Controllers\bayarController')->except(['index']);
+Route::get('admin/bayar', 'App\Http\Controllers\bayarController@index')->name('bayar');
+Route::get('admin/caribayar', 'App\Http\Controllers\bayarController@cari')->name('bayar.cari');
+
+
 //tagihanatur-MENU
 Route::resource('admin/tagihanatur','App\Http\Controllers\tagihanaturController')->except(['index']);
 Route::get('admin/tagihanatur', 'App\Http\Controllers\tagihanaturController@index')->name('tagihanatur');

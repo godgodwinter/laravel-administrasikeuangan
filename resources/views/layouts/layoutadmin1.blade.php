@@ -142,6 +142,19 @@ if((Auth::user()->tipeuser)=='admin'){
                 <a href="{{ route('pengeluaran') }}" class="nav-link"><i class="fas fa-file-invoice-dollar"></i><span>Pengeluaran</span></a>
               </li>
 
+              <li @if ($pages==='pembayaran')
+                class="active"
+                @endif >
+                <a href="{{ route('pembayaran') }}" class="nav-link"><i class="fas fa-fire"></i><span>Pembayaran</span></a>
+              </li>
+
+
+              <li @if ($pages==='bayar')
+                class="active"
+                @endif >
+                <a href="{{ route('bayar') }}" class="nav-link"><i class="fas fa-graduation-cap"></i><span>Bayar</span></a>
+              </li>
+              {{-- 
               <li @if ($pages==='tagihanatur')
                 class="active"
                 @endif >
@@ -152,7 +165,7 @@ if((Auth::user()->tipeuser)=='admin'){
                 class="active"
                 @endif >
                 <a href="{{ route('tagihansiswa') }}" class="nav-link"><i class="fas fa-graduation-cap"></i><span>Tagihan Siswa</span></a>
-              </li>
+              </li> --}}
 
               <li class="menu-header">Reporting</li>
               <li @if ($pages==='laporan')

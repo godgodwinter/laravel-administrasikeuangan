@@ -24,9 +24,14 @@ class pemasukanController extends Controller
         $pages='pemasukan';
         $jmldata='0';
         $datas='0';
+        $month=date('m');
+        $year=date('Y');
 
 
-        $datas=DB::table('pemasukan')->paginate($this->paginationjml());
+        $datas=DB::table('pemasukan')
+        ->whereMonth('tglbayar', '=', $month)
+        ->whereYear('tglbayar', '=', $year)
+        ->paginate($this->paginationjml());
         // $kategori=kategori::all();
         $kategori = DB::table('kategori')->where('prefix','pemasukan')->get();
         $jmldata = DB::table('pemasukan')->count();
@@ -57,8 +62,8 @@ if($yearmonth!==null){
     $datas=DB::table('pemasukan')
     ->where('nama','like',"%".$cari."%")
     ->where('kategori_nama','like',"%".$kategori_nama."%")
-    ->whereMonth('created_at', '=', $month)
-    ->whereYear('created_at', '=', $year)
+    ->whereMonth('tglbayar', '=', $month)
+    ->whereYear('tglbayar', '=', $year)
     ->paginate($this->paginationjml());
 }else{
 
@@ -99,6 +104,7 @@ if($yearmonth!==null){
             // 'catatan'=>'required',
             'kategori_nama'=>'required',
             'nominal'=>'required|numeric',
+            'tglbayar'=>'required',
 
         ],
         [
@@ -157,6 +163,7 @@ if($yearmonth!==null){
             'nominal'=>'required|numeric',
             // 'catatan'=>'required',
             'kategori_nama'=>'required',
+            'tglbayar'=>'required',
 
         ],
         [
@@ -171,6 +178,7 @@ if($yearmonth!==null){
                 'catatan'=>$request->catatan,
                 'nominal'=>$request->nominal,
                 'kategori_nama'=>$request->kategori_nama,
+                'tglbayar'=>$request->tglbayar,
             ]);
             return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
     }

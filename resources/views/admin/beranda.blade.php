@@ -312,6 +312,8 @@ $ambilkepsek = DB::table('users')
                     @enderror
                   </div>
 
+
+
             <div class="form-group col-md-5 col-5  mt-3 ml-5">
               <label>Tahun Pelajaran Aktif<code>*)</code></label>
               <select class="form-control form-control-lg @error('tapelaktif') is-invalid @enderror" required name="tapelaktif">  
@@ -325,6 +327,35 @@ $ambilkepsek = DB::table('users')
               @error('tapelaktif')<div class="invalid-feedback"> {{$message}}</div>
               @enderror
             </div>
+
+            <div class="form-group col-md-5 col-5  mt-3 ml-5">
+              <label>Semester Aktif<code>*)</code></label>
+              <select class="form-control form-control-lg @error('semesteraktif') is-invalid @enderror" required name="semesteraktif">  
+                    @if ($semesteraktif)
+                    <option>{{$semesteraktif}}</option>                        
+                    @endif
+                    <option>Semester 1</option>     
+                    <option>Semester 2</option>     
+             
+              </select>
+              @error('semesteraktif')<div class="invalid-feedback"> {{$message}}</div>
+              @enderror
+            </div>
+
+            <div class="form-group col-md-5 col-5  mt-3 ml-5">
+              <label>Bulan Dimulai Semester 1<code>*)</code></label>
+              <input placeholder="Pilih Bulan" type="month" id="date" class="form-control form-control-sm" name="semester1bln"  value="{{ $semester1bln }}" required>
+              @error('tapelaktif')<div class="invalid-feedback"> {{$message}}</div>
+              @enderror
+            </div>
+
+            <div class="form-group col-md-5 col-5  mt-3 ml-5">
+              <label>Bulan Dimulai Semester 2<code>*)</code></label>
+              <input placeholder="Pilih Bulan" type="month" id="date" class="form-control form-control-sm" name="semester2bln"  value="{{ $semester2bln }}" required>
+              @error('tapelaktif')<div class="invalid-feedback"> {{$message}}</div>
+              @enderror
+            </div>
+
             </div>
             <div class="card-footer text-right">
               <button class="btn btn-primary">Simpan</button>

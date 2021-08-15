@@ -23,9 +23,13 @@ class pengeluaranController extends Controller
         $pages='pengeluaran';
         $jmldata='0';
         $datas='0';
+        $month=date('m');
+        $year=date('Y');
 
 
-        $datas=DB::table('pengeluaran')->paginate($this->paginationjml());
+        $datas=DB::table('pengeluaran')
+        ->whereMonth('tglbayar', '=', $month)
+        ->whereYear('tglbayar', '=', $year)->paginate($this->paginationjml());
         // $kategori=kategori::all();
         $kategori = DB::table('kategori')->where('prefix','pengeluaran')->get();
         $jmldata = DB::table('pengeluaran')->count();
@@ -54,10 +58,13 @@ if($yearmonth!==null){
     $datas=DB::table('pengeluaran')
     ->where('nama','like',"%".$cari."%")
     ->where('kategori_nama','like',"%".$kategori_nama."%")
-    ->whereMonth('created_at', '=', $month)
-    ->whereYear('created_at', '=', $year)
+    ->whereMonth('tglbayar', '=', $month)
+    ->whereYear('tglbayar', '=', $year)
     ->paginate($this->paginationjml());
 }else{
+
+    $month=date('m');
+    $year=date('Y');
 
     $datas=DB::table('pengeluaran')
     ->where('nama','like',"%".$cari."%")
@@ -92,10 +99,12 @@ if($yearmonth!==null){
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'nama'=>'required',
             // 'catatan'=>'required',
             'kategori_nama'=>'required',
+            'tglbayar'=>'required',
             'nominal'=>'required|numeric',
 
         ],
@@ -153,6 +162,7 @@ if($yearmonth!==null){
             'nominal'=>'required|numeric',
             // 'catatan'=>'required',
             'kategori_nama'=>'required',
+            'tglbayar'=>'required',
 
         ],
         [
@@ -167,6 +177,7 @@ if($yearmonth!==null){
                 'catatan'=>$request->catatan,
                 'nominal'=>$request->nominal,
                 'kategori_nama'=>$request->kategori_nama,
+                'tglbayar'=>$request->tglbayar,
             ]);
             return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
     }

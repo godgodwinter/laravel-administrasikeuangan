@@ -233,9 +233,25 @@
                     </select>
                   </div>
 
+                  @if(!empty(old('tglbayar')))
+                    @php
+                      $tglbayar=old('tglbayar');
+                    @endphp
+                  @else
+                    @php                      
+                      $tglbayar=date("Y-m-d")."T".date("H:i"); //2020-04-02T22:55
+                    @endphp
+                  @endif
+                  <div class="form-group col-md-6 col-6">
+                    <label for="tglbayar">Tanggal Bayar <code>*)</code></label>
+                    <input type="datetime-local" name="tglbayar" id="tglbayar" class="form-control @error('tglbayar') is-invalid @enderror" value="{{ $tglbayar }}">
+                    @error('tglbayar')<div class="invalid-feedback"> {{$message}}</div>
+                    @enderror
+                  </div>
+
                   <div class="form-group col-md-6 col-6">
                     <label for="catatan">Catatan <code>*)</code></label>
-                    <input type="text" name="catatan" id="catatan" class="form-control @error('catatan') is-invalid @enderror" value="{{old('catatan')}}" required>
+                    <input type="text" name="catatan" id="catatan" class="form-control @error('catatan') is-invalid @enderror" value="{{old('catatan')}}">
                     @error('catatan')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>

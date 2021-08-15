@@ -58,6 +58,9 @@ class adminberandaController extends Controller
             $aplikasijudul=$this->aplikasijudul();
             $aplikasijudulsingkat=$this->aplikasijudulsingkat();
             $tapelaktif=$this->tapelaktif();
+            $semesteraktif=$this->semesteraktif();
+            $semester1bln=$this->semester1bln();
+            $semester2bln=$this->semester2bln();
             $tapel=tapel::all();
 
 
@@ -78,6 +81,9 @@ class adminberandaController extends Controller
         ,'sekolahtelp'
         ,'aplikasijudul'
         ,'aplikasijudulsingkat'
+        ,'semesteraktif'
+        ,'semester1bln'
+        ,'semester2bln'
     ));
         // return view('admin.beranda');
 
@@ -98,6 +104,9 @@ class adminberandaController extends Controller
             'sekolahtelp'=>'required',
             'aplikasijudul'=>'required',
             'aplikasijudulsingkat'=>'required',
+            'semesteraktif'=>'required',
+            'semester1bln'=>'required',
+            'semester2bln'=>'required',
 
         ],
         [
@@ -114,6 +123,9 @@ class adminberandaController extends Controller
                 'sekolahtelp'=>$request->sekolahtelp,
                 'aplikasijudul'=>$request->aplikasijudul,
                 'aplikasijudulsingkat'=>$request->aplikasijudulsingkat,
+                'semesteraktif'=>$request->semesteraktif,
+                'semester1bln'=>$request->semester1bln,
+                'semester2bln'=>$request->semester2bln,
             ]);
             return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
 

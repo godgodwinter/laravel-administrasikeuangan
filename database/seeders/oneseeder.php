@@ -183,10 +183,72 @@ class oneseeder extends Seeder
             'sekolahtelp' => '0341-123456',
             'aplikasijudul' => 'Sistem Keuangan',
             'aplikasijudulsingkat' => 'SK',
+            'semesteraktif' => 'Semester 1',
+            'semester1bln' => '2021-07',
+            'semester2bln' => '2022-02',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
+         //semesterseeder
+         DB::table('kategori')->insert([
+            'nama' => 'Semester 1',
+            'prefix' => 'semester',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
          ]);
 
+         DB::table('kategori')->insert([
+            'nama' => 'Semester 2',
+            'prefix' => 'semester',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
 
+        //tagianseeder
+         DB::table('kategori')->insert([
+            'nama' => 'HER',
+            'prefix' => 'tagihan',
+            'defaultvalue' => '1000000',
+            'tipe' => 'sekali',      //sekali //perbulan //persemester
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
+         
+
+         DB::table('kategori')->insert([
+            'nama' => 'Uang Gedung',
+            'prefix' => 'tagihan',
+            'defaultvalue' => '1000000',
+            'tipe' => 'sekali',      //sekali //perbulan //persemester
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
+
+         DB::table('kategori')->insert([
+            'nama' => 'SPP',
+            'prefix' => 'tagihan',
+            'defaultvalue' => '1000000',
+            'tipe' => 'perbulan',      //sekali //perbulan //persemester
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
+         
+         DB::table('kategori')->insert([
+            'nama' => 'UTS',
+            'prefix' => 'tagihan',
+            'defaultvalue' => '1000000',
+            'tipe' => 'persemester',      //sekali //perbulan //persemester
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
+
+         DB::table('kategori')->insert([
+            'nama' => 'UAS',
+            'prefix' => 'tagihan',
+            'defaultvalue' => '1000000',
+            'tipe' => 'persemester',      //sekali //perbulan //persemester
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
     }
 }
