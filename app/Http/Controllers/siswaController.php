@@ -29,7 +29,7 @@ class siswaController extends Controller
         $datas='0';
 
 
-        $datas=DB::table('siswa')
+        $datas=DB::table('siswa')->where('tapel_nama',$this->tapelaktif())
         ->paginate($this->paginationjml());
     
         $tapel=tapel::all();

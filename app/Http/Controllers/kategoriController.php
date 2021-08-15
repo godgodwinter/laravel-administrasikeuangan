@@ -25,7 +25,9 @@ class kategoriController extends Controller
         $datas='0';
 
 
-        $datas=DB::table('kategori')->orderBy('prefix','asc')->get();
+        $datas=DB::table('kategori')
+        ->where('prefix','!=','tagihan')
+        ->orderBy('prefix','asc')->get();
         // // $kategori=kategori::all();
         // $kategori = DB::table('kategori')->where('prefix','kategori')->get();
         $jmldata = DB::table('kategori')->count();
@@ -79,7 +81,9 @@ class kategoriController extends Controller
         $datas='0';
 
 
-        $datas=DB::table('kategori')->orderBy('prefix','asc')->get();
+        $datas=DB::table('kategori')
+        ->where('prefix','!=','tagihan')
+        ->orderBy('prefix','asc')->get();
         // // $kategori=kategori::all();
         // $kategori = DB::table('kategori')->where('prefix','kategori')->get();
         $jmldata = DB::table('kategori')->count();

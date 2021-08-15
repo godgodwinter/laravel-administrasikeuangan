@@ -14,5 +14,7 @@ class kategori extends Model
     protected $fillable = [
         'nama',
         'prefix',
+        'tipe',
+        'defaultvalue',
     ];
 }
