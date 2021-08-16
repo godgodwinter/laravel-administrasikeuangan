@@ -50,6 +50,9 @@ Route::resource('admin/siswa','App\Http\Controllers\siswaController')->except(['
 Route::get('admin/siswa', 'App\Http\Controllers\siswaController@index')->name('siswa');
 Route::get('admin/carisiswa', 'App\Http\Controllers\siswaController@cari')->name('siswa.cari');
 
+//datasiswa-MENU
+Route::get('admin/datasiswa/{siswa}', 'App\Http\Controllers\siswaController@datasiswaindex')->name('datasiswa');
+
 //pegawai-MENU
 Route::resource('admin/pegawai','App\Http\Controllers\pegawaiController')->except(['index']);
 Route::get('admin/pegawai', 'App\Http\Controllers\pegawaiController@index')->name('pegawai');

@@ -39,6 +39,30 @@ class siswaController extends Controller
         return view('admin.siswa.index',compact('pages','jmldata','datas','tapel','kelas','request'));
         // return view('admin.beranda');
     }
+    public function datasiswaindex(Request $request,siswa $siswa)
+    {
+        // dd($siswa);
+        if($this->checkauth('admin')==='404'){
+            return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
+        }
+        #WAJIB
+        $pages='siswa';
+        $jmldata='0';
+        $datas='0';
+
+
+        $datas=DB::table('pembayaran')->where('siswa_nis',$siswa->nis)
+        ->where('tapel_nama',$this->tapelaktif())
+        ->where('semester',$this->semesteraktif())
+        ->get();
+    
+        $tapel=tapel::all();
+        $kelas=kelas::all();
+        $jmldata = DB::table('siswa')->count();
+
+        return view('admin.siswa.datasiswa',compact('pages','jmldata','datas','tapel','kelas','request'));
+        // return view('admin.beranda');
+    }
 
     public function cari(Request $request)
     {

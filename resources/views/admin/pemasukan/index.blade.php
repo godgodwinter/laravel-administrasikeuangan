@@ -47,6 +47,7 @@
   <th width="5%" class="text-center">#</th>
   <th>Nama</th>
   <th>Nominal</th>
+  <th>Tanggal</th>
   <th width="100px" class="text-center">Aksi</th>
 @endsection
 
@@ -56,6 +57,12 @@
     <td>{{ ((($loop->index)+1)+(($datas->currentPage()-1)*$datas->perPage())) }}</td>
     <td>{{ $data->nama }}</td>
     <td>@currency($data->nominal)</td>
+    @php
+      $pecah = explode('T', $data->tglbayar);
+       $datetime = DateTime::createFromFormat('Y-m-d', $pecah[0]);
+      //  dd($datetime);
+    @endphp
+    <td>{{ $datetime->format('d M Y') }}</td>
     <td class="text-center">
         <x-button-edit link="/admin/{{ $pages }}/{{$data->id}}" />
         <x-button-delete link="/admin/{{ $pages }}/{{$data->id}}" />
@@ -155,7 +162,7 @@
 
           
     </div>
-
+    
     <div class="row mt-sm-4">
       <div class="col-12 col-md-12 col-lg-5">
         <x-layout-table pages="{{ $pages }}" pagination="{{ $datas->perPage() }}"/>

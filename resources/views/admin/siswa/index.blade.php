@@ -71,7 +71,7 @@
         @endforeach
     <td> {{ $email }} </td>
     <td class="text-center">
-        <button class="btn btn-info btn-sm"><i class="fas fa-search-plus"></i></button>
+        <a href="/admin/datasiswa/{{$data->id}}" class="btn btn-info btn-sm"><i class="fas fa-search-plus"></i></a>
         <x-button-edit link="/admin/{{ $pages }}/{{$data->id}}" />
         <x-button-delete link="/admin/{{ $pages }}/{{$data->id}}" />
     </td>
