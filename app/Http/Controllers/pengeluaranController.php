@@ -157,6 +157,7 @@ if($yearmonth!==null){
      */
     public function update(Request $request, pengeluaran $pengeluaran)
     {
+        // dd($request->catatan);
         $request->validate([
             'nama'=>'required',
             'nominal'=>'required|numeric',
@@ -178,6 +179,7 @@ if($yearmonth!==null){
                 'nominal'=>$request->nominal,
                 'kategori_nama'=>$request->kategori_nama,
                 'tglbayar'=>$request->tglbayar,
+                'catatan'=>$request->catatan,
             ]);
             return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
     }

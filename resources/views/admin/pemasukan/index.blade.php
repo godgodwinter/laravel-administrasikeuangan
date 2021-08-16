@@ -48,6 +48,7 @@
   <th>Nama</th>
   <th>Nominal</th>
   <th>Tanggal</th>
+  <th>Tanggung Jawab</th>
   <th width="100px" class="text-center">Aksi</th>
 @endsection
 
@@ -63,6 +64,7 @@
       //  dd($datetime);
     @endphp
     <td>{{ $datetime->format('d M Y') }}</td>
+    <td>{{ $data->catatan }}</td>
     <td class="text-center">
         <x-button-edit link="/admin/{{ $pages }}/{{$data->id}}" />
         <x-button-delete link="/admin/{{ $pages }}/{{$data->id}}" />
@@ -164,10 +166,10 @@
     </div>
     
     <div class="row mt-sm-4">
-      <div class="col-12 col-md-12 col-lg-5">
+      <div class="col-12 col-md-12 col-lg-12">
         <x-layout-table pages="{{ $pages }}" pagination="{{ $datas->perPage() }}"/>
        </div> 
-      <div class="col-12 col-md-12 col-lg-7">
+      <div class="col-12 col-md-12 col-lg-12">
         <div class="card">
             <form action="/admin/{{ $pages }}" method="post">
                 @csrf
@@ -260,7 +262,7 @@
                     @enderror
                   </div>
                   <div class="form-group col-md-6 col-6">
-                    <label for="catatan">Catatan <code>*)</code></label>
+                    <label for="catatan">Yang bertanggung jawab : <code>*)</code></label>
                     <input type="text" name="catatan" id="catatan" class="form-control @error('catatan') is-invalid @enderror" value="{{old('catatan')}}">
                     @error('catatan')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror

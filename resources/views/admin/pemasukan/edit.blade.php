@@ -143,9 +143,9 @@
 
     <div class="row mt-sm-4">
 
-      <div class="col-12 col-md-12 col-lg-5">
+      {{-- <div class="col-12 col-md-12 col-lg-5">
         <x-layout-table pages="{{ $pages }}" pagination="{{ $datas->perPage() }}"/>
-       </div> 
+       </div>  --}}
       <div class="col-12 col-md-12 col-lg-7">
         <div class="card">
           <form action="/admin/{{  $pages }}/{{ $pemasukan->id}}" method="post">
@@ -217,8 +217,24 @@
                     </select>
                   </div>
 
+                  @if(!empty($pemasukan->tglbayar))
+                    @php
+                      $tglbayar=$pemasukan->tglbayar;
+                    @endphp
+                  @else
+                    @php                      
+                      $tglbayar=date("Y-m-d")."T".date("H:i"); //2020-04-02T22:55
+                    @endphp
+                  @endif
                   <div class="form-group col-md-6 col-6">
-                    <label for="catatan">Catatan <code>*)</code></label>
+                    <label for="tglbayar">Tanggal Bayar <code>*)</code></label>
+                    <input type="datetime-local" name="tglbayar" id="tglbayar" class="form-control @error('tglbayar') is-invalid @enderror" value="{{ $tglbayar }}">
+                    @error('tglbayar')<div class="invalid-feedback"> {{$message}}</div>
+                    @enderror
+                  </div>
+
+                  <div class="form-group col-md-6 col-6">
+                    <label for="catatan">Tanggung Jawab <code>*)</code></label>
                     <input type="text" name="catatan" id="catatan" class="form-control @error('catatan') is-invalid @enderror" value="{{$pemasukan->catatan}}" required>
                     @error('catatan')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
