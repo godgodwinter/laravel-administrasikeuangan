@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\kelas;
+use App\Models\pembayaran;
 use App\Models\siswa;
 use App\Models\tapel;
 use App\Models\User;
@@ -60,7 +61,10 @@ class siswaController extends Controller
         $kelas=kelas::all();
         $jmldata = DB::table('siswa')->count();
 
-        return view('admin.siswa.datasiswa',compact('pages','jmldata','datas','tapel','kelas','request'));
+        $tapelaktif=$this->tapelaktif();
+        $semesteraktif=$this->semesteraktif();
+
+        return view('admin.siswa.datasiswa',compact('pages','jmldata','datas','tapel','kelas','request','siswa','tapelaktif','semesteraktif'));
         // return view('admin.beranda');
     }
 
@@ -164,6 +168,45 @@ class siswaController extends Controller
     
     }
 
+    public function datasiswastore(Request $request,siswa $siswa)
+    {
+        $request->validate([
+            'namatagihan'=>'required',
+            'tipe'=>'required',
+            'tapel_nama'=>'required',
+            'semester'=>'required',
+            'nominaltagihan'=>'required|numeric',
+
+        ],
+        [
+            'nama.required'=>'nama harus diisi',
+
+        ]);
+
+        if($request->semester==='Semester 1'){
+            $bln=$this->semester1bln();
+        }else{
+            $bln=$this->semester2bln();
+        }
+        //inser siswa
+       DB::table('pembayaran')->insert(
+        array(
+               'siswa_nis'     =>   $siswa->nis,
+               'siswa_nama'     =>   $siswa->nama,
+               'namatagihan'     =>   $request->namatagihan,
+               'nominaltagihan'     =>   $request->nominaltagihan,
+               'tipe'     =>   $request->tipe,
+               'semester'     =>   $request->semester,
+               'tapel_nama'     =>   $request->tapel_nama,
+               'bln'     =>   $bln,
+               'created_at'=>date("Y-m-d H:i:s"),
+               'updated_at'=>date("Y-m-d H:i:s")
+        ));
+        
+        return redirect()->back()->with('status','Data berhasil di tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
+    
+    }
+
     /**
      * Display the specified resource.
      *
@@ -185,6 +228,25 @@ class siswaController extends Controller
         $datausers = DB::table('users')->where('nomerinduk',$siswa->nis)->get();
 
         return view('admin.siswa.edit',compact('pages','jmldata','datas','tapel','kelas','siswa','datausers','request'));
+    }
+
+    public function datasiswashow(Request $request,pembayaran $pembayaran)
+    {
+        #WAJIB
+        $pages='siswa';
+        $jmldata='0';
+        $datas='0';
+
+
+        $datas=siswa::all();
+        $tapel=tapel::all();
+        $kelas=kelas::all();
+        $jmldata = DB::table('siswa')->count();
+
+        $tapelaktif=$this->tapelaktif();
+        $semesteraktif=$this->semesteraktif();
+
+        return view('admin.siswa.datasiswaedit',compact('pages','jmldata','datas','tapel','kelas','pembayaran','request','tapelaktif','semesteraktif'));
     }
 
     /**
@@ -283,6 +345,51 @@ class siswaController extends Controller
         return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
     }
 
+
+    public function datasiswaupdate(Request $request, pembayaran $pembayaran)
+    { 
+
+        $datasiswa = DB::table('siswa')->where('nis',$pembayaran->siswa_nis)->get();
+        foreach($datasiswa as $d){
+            $siswaid=$d->id;
+        }
+        $request->validate([
+            'namatagihan'=>'required',
+            'tipe'=>'required',
+            'tapel_nama'=>'required',
+            'semester'=>'required',
+            'nominaltagihan'=>'required|numeric',
+        ],
+        [
+            'namatagihan.required'=>'Nama harus diisi',
+
+        ]);
+
+
+        if($request->semester==='Semester 1'){
+            $bln=$this->semester1bln();
+        }else{
+            $bln=$this->semester2bln();
+        }
+         //aksi update
+
+        pembayaran::where('id',$pembayaran->id)
+            ->update([
+               'namatagihan'     =>   $request->namatagihan,
+               'tipe'     =>   $request->tipe,
+               'tapel_nama'     =>   $request->tapel_nama,
+               'semester'     =>   $request->semester,
+               'bln'     =>   $bln,
+               'nominaltagihan'     =>   $request->nominaltagihan,
+               'updated_at'=>date("Y-m-d H:i:s")
+            ]);
+
+
+
+        return redirect(URL::to('/').'/admin/datasiswa/'.$siswaid)->with('status','Data berhasil diubah!')->with('tipe','success')->with('icon','fas fa-edit');
+        // return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -296,5 +403,20 @@ class siswaController extends Controller
         DB::table('users')->where('nomerinduk', $siswa->nis)->delete();
         return redirect(URL::to('/').'/admin/siswa')->with('status','Data berhasil dihapus!')->with('tipe','danger')->with('icon','fas fa-trash');
   
+    }
+
+    public function datasiswadestroy(pembayaran $pembayaran)
+    {
+        $datasiswa = DB::table('siswa')->where('nis',$pembayaran->siswa_nis)->get();
+        foreach($datasiswa as $d){
+            $siswaid=$d->id;
+        }
+        pembayaran::destroy($pembayaran->id);
+       
+        // DB::table('users')->where('nomerinduk', $siswa->nis)->delete();
+
+        return redirect(URL::to('/').'/admin/datasiswa/'.$siswaid)->with('status','Data berhasil hapus!')->with('tipe','danger')->with('icon','fas fa-trash');
+     
+     
     }
 }

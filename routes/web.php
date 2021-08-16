@@ -52,6 +52,10 @@ Route::get('admin/carisiswa', 'App\Http\Controllers\siswaController@cari')->name
 
 //datasiswa-MENU
 Route::get('admin/datasiswa/{siswa}', 'App\Http\Controllers\siswaController@datasiswaindex')->name('datasiswa');
+Route::post('admin/datasiswa/{siswa}', 'App\Http\Controllers\siswaController@datasiswastore')->name('datasiswa.store');
+Route::get('admin/datasiswa/{pembayaran}/edit', 'App\Http\Controllers\siswaController@datasiswashow')->name('datasiswa.edit');
+Route::put('admin/datasiswa/{pembayaran}/edit', 'App\Http\Controllers\siswaController@datasiswaupdate')->name('datasiswa.update');
+Route::delete('admin/datasiswa/{pembayaran}/delete', 'App\Http\Controllers\siswaController@datasiswadestroy')->name('datasiswa.destroy');
 
 //pegawai-MENU
 Route::resource('admin/pegawai','App\Http\Controllers\pegawaiController')->except(['index']);

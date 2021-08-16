@@ -1,7 +1,7 @@
 @extends('layouts.layoutadmin1')
 
 @section('title')
-Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
+Pembayaran Siswa , NIS : {{ $pembayaran->siswa_nis }} - Nama :  {{ $pembayaran->siswa_nama }}
 @endsection
 @section('halaman','siswa')
 
@@ -49,10 +49,9 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
 @section('headtable')
   <th width="5%" class="text-center">#</th>
   <th>Nama Tagihan</th>
-  <th>Nominal Tagihan</th>
+  <th>Nominal</th>
   <th>Terbayar</th>
-  <th>Kurang</th>
-  {{-- <th>Tipe</th> --}}
+  <th>Tipe</th>
   <th>Tahun dan Semester</th>
   <th width="150px" class="text-center">Aksi</th>
 @endsection
@@ -67,12 +66,9 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
         <button class="btn btn-icon btn-{{ $warna }}" data-toggle="modal" data-target="#modalbayar{{ $data->id }}" ><i class="far fa-money-bill-alt"></i></button>
     </td>
     <td>{{ $data->namatagihan }} </td>
-    <td>@currency($data->nominaltagihan) @if($data->tipe==='perbulan')
-        / Perbulan
-    @endif </td>
+    <td>@currency($data->nominaltagihan) </td>
     <td>@currency(0) </td>
-    <td>@currency(0) </td>
-    {{-- <td>{{ $data->tipe }} </td> --}}
+    <td>{{ $data->tipe }} </td>
     @if($data->tipe==='sekali')
     <td> - </td>
     @else
@@ -86,30 +82,9 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
    
   </tr>
   @if($data->tipe==='perbulan')
-
-  @for ($i=0;$i<6;$i++)
-
-  <tr>
-    <td colspan="2">
-        @php
-
-        $no=$i;
-            $blndsni=date('Y-m', strtotime('+'.$no.' month', strtotime( $data->bln ))); 
-
-       $datetime = DateTime::createFromFormat('Y-m-d', $blndsni.'-01');
-            // echo $blndsni;
-        @endphp
-        {{ $datetime->format('M Y') }}
-    </td>
-    <td>@currency($data->nominaltagihan)</td>
-    <td>@currency(0)</td>
-    <td>@currency(0)</td>
-    {{-- <td>{{ $data->tipe }}</td> --}}
-    <td>{{ $data->tapel_nama }} - {{ $data->semester }}</td>
-    <td>-</td>
-</tr>
-                    
-  @endfor
+      <tr>
+          <td>bulan</td>
+      </tr>
   @endif
 @endforeach
 @endsection
@@ -126,54 +101,22 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
               
 
     <div class="row mt-sm-0"> 
-      <div class="col-12 col-md-12 col-lg-12">
 
-        <div class="card profile-widget">
-            <div class="profile-widget-header">
-                <img alt="image" src="{{ asset("assets/") }}/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
-                <div class="profile-widget-items">
-                <div class="profile-widget-item">
-                    <div class="profile-widget-item-label">Tabel </div>
-                    <div class="profile-widget-item-value">Pembayaran</div>
-                    {{-- <h4>Simple Table</h4> --}}
-                </div>
-                </div>
-            </div>
-        {{-- @yield('datatable') --}}
-        {{-- {{ dd($datas) }} --}}      
-        
-            <div class="card-body -mt-5">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-md">
-                    <tr>
-                        @yield('headtable')
-                    </tr>
-                        @yield('bodytable')
-                    
-                    </table>
-                </div>
-                <div class="card-footer text-right">
-                        @yield('foottable')
-                </div>
-            </div>   
-        
-        </div>
-          
-       </div> 
 
       <div class="col-12 col-md-12 col-lg-7" id="add">
         <div class="card">
-            <form action="/admin/datasiswa/{{ $siswa->id }}" method="post">
-                @csrf
+          <form action="/admin/datasiswa/{{ $pembayaran->id}}/edit" method="post">
+              @method('put')
+              @csrf
             <div class="card-header">
-                <span class="btn btn-icon btn-light"><i class="fas fa-feather"></i> TAMBAH TAGIHAN</span>
+                <span class="btn btn-icon btn-light"><i class="fas fa-feather"></i> EDIT</span>
             </div>
             <div class="card-body">
                 <div class="row">
                  
                   <div class="form-group col-md-6 col-6">
                     <label for="namatagihan">Nama Tagihan<code>*)</code></label>
-                    <input type="text" name="namatagihan" id="namatagihan" class="form-control @error('namatagihan') is-invalid @enderror" value="{{old('namatagihan')}}" required>
+                    <input type="text" name="namatagihan" id="namatagihan" class="form-control @error('namatagihan') is-invalid @enderror" value="{{$pembayaran->namatagihan}}" required>
                     @error('namatagihan')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>
@@ -182,10 +125,9 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
                   <div class="form-group col-md-6 col-6">
                     <label>Tipe Bayar <code>*)</code></label>
                     <select class="form-control form-control-lg" required name="tipe">  
-                          @if (old('tipe'))
-                          <option>{{old('tipe')}}</option>                        
-                          @endif
+                         
                     
+                          <option value="{{$pembayaran->tipe}}">{{ucfirst($pembayaran->tipe)}}</option>
                           <option value="perbulan">Perbulan</option>
                           <option value="persemester">Persemester</option>
                           <option value="sekali">Sekali</option>
@@ -195,12 +137,9 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
                   <div class="form-group col-md-6 col-6">
                     <label>Tahun Pelajaran <code>*)</code></label>
                     <select class="form-control form-control-lg" required name="tapel_nama">  
-                          @if (old('tapel_nama'))
-                          <option>{{old('tapel_nama')}}</option> 
-                          @else
-                          <option>{{$tapelaktif}}</option>  
+                         
 
-                          @endif
+                          <option>{{$pembayaran->tapel_nama}}</option>  
                           
                       @foreach ($tapel as $t)
                           <option>{{ $t->nama }}</option>
@@ -211,12 +150,8 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
                   <div class="form-group col-md-6 col-6">
                     <label>Semester <code>*)</code></label>
                     <select class="form-control form-control-lg" required name="semester">  
-                          @if (old('semester'))
-                          <option>{{old('semester')}}</option>   
-                          @else
-                          
-                          <option>{{$semesteraktif}}</option>                       
-                          @endif
+                        
+                      <option>{{$pembayaran->semester}}</option> 
 
                           <option>Semester 1</option>   
                           <option>Semester 2</option>   
@@ -224,9 +159,9 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
                   </div>
 
 
-                  @if (old('nominaltagihan'))
+                  @if ($pembayaran->nominaltagihan)
                       @php                    
-                        $nominaltagihan=old('nominaltagihan');
+                        $nominaltagihan=$pembayaran->nominaltagihan;
                       @endphp
                   @else
                       @php
@@ -235,7 +170,7 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
                   @endif
                   <div class="form-group col-md-6 col-6">
                     <label for="nominaltagihan">Nominal <code>*)</code> </label>
-                    <input type="text" name="labelrupiah" min="0" id="labelrupiah" class="form-control-plaintext" readonly="" value="Rp 0,00" >
+                    <input type="text" name="labelrupiah" min="0" id="labelrupiah" class="form-control-plaintext" readonly="" value="@currency($nominaltagihan)" >
                     <input type="number" name="nominaltagihan" min="0" id="rupiah" class="form-control @error('nominaltagihan') is-invalid @enderror" value="{{ $nominaltagihan }}" required>
                     @error('nominaltagihan')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror

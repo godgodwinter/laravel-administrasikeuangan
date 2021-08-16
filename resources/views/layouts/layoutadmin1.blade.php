@@ -141,7 +141,7 @@ if((Auth::user()->tipeuser)=='admin'){
                 @endif >
                 <a href="{{ route('pengeluaran') }}" class="nav-link"><i class="fas fa-file-invoice-dollar"></i><span>Pengeluaran</span></a>
               </li>
-
+              {{--
               <li @if ($pages==='pembayaran')
                 class="active"
                 @endif >
@@ -153,7 +153,8 @@ if((Auth::user()->tipeuser)=='admin'){
                 class="active"
                 @endif >
                 <a href="{{ route('bayar') }}" class="nav-link"><i class="fas fa-graduation-cap"></i><span>Pembayar</span></a>
-              </li>
+              </li> --}}
+
               {{-- 
               <li @if ($pages==='tagihanatur')
                 class="active"
