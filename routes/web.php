@@ -100,6 +100,9 @@ Route::get('admin/caritagihansiswa', 'App\Http\Controllers\tagihansiswaControlle
 //kepsek-menu
 Route::get('kepsek/tagihansiswa', 'App\Http\Controllers\tagihansiswaController@kepsekindex')->name('kepsek.tagihansiswa');
 Route::get('kepsek/caritagihansiswa', 'App\Http\Controllers\tagihansiswaController@kepsekcari')->name('kepsek.tagihansiswa.cari');
+
+Route::get('kepsek/datasiswa/{siswa}', 'App\Http\Controllers\tagihansiswaController@kepsekdatasiswaindex')->name('kepsek.datasiswa');
+
 //siswa-menu
 Route::get('siswa/tagihansiswa', 'App\Http\Controllers\tagihansiswaController@siswaindex')->name('siswa.tagihansiswa');
 

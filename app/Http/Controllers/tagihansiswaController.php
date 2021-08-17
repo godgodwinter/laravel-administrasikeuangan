@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\kelas;
+use App\Models\siswa;
 use App\Models\tagihansiswa;
 use App\Models\tagihansiswadetail;
 use App\Models\tapel;
@@ -48,21 +49,22 @@ class tagihansiswaController extends Controller
         if($this->checkauth('kepsek')==='404'){
             return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
         }
+        
         #WAJIB
-        $pages='tagihansiswa';
+        $pages='siswa';
         $jmldata='0';
         $datas='0';
 
 
+        $datas=DB::table('siswa')->where('tapel_nama',$this->tapelaktif())
+        ->paginate($this->paginationjml());
+    
         $tapel=tapel::all();
         $kelas=kelas::all();
-        $datas=DB::table('tagihansiswa')->orderBy('siswa_nis','asc')
-        ->paginate($this->paginationjml());
-        // // $tagihansiswa=tagihansiswa::all();
-        // $tagihansiswa = DB::table('tagihansiswa')->where('prefix','tagihansiswa')->get();
-        $jmldata = DB::table('tagihansiswa')->count();
+        $jmldata = DB::table('siswa')->count();
 
         return view('kepsek.tagihansiswa.index',compact('pages','jmldata','datas','tapel','kelas','request'));
+        // return view('admin.beranda');
     }
 
     public function siswaindex(Request $request)
@@ -104,6 +106,7 @@ class tagihansiswaController extends Controller
         if($this->checkauth('admin')==='404'){
             return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
         }
+
         // dd($request);
         $cari=$request->cari;
         $tapel_nama=$request->tapel_nama;
@@ -145,17 +148,17 @@ class tagihansiswaController extends Controller
         $kelas_nama=$request->kelas_nama;
 
         #WAJIB
-        $pages='tagihansiswa';
+        $pages='siswa';
         $jmldata='0';
         $datas='0';
 
 
-    $datas=DB::table('tagihansiswa')
+    $datas=DB::table('siswa')
     // ->where('nis','like',"%".$cari."%")
-    ->where('siswa_nama','like',"%".$cari."%")
+    ->where('nama','like',"%".$cari."%")
     ->where('tapel_nama','like',"%".$tapel_nama."%")
     ->where('kelas_nama','like',"%".$kelas_nama."%")
-    ->orWhere('siswa_nis','like',"%".$cari."%")
+    ->orWhere('nis','like',"%".$cari."%")
     ->where('tapel_nama','like',"%".$tapel_nama."%")
     ->where('kelas_nama','like',"%".$kelas_nama."%")
     ->paginate($this->paginationjml());
@@ -163,10 +166,38 @@ class tagihansiswaController extends Controller
         // $kategori=kategori::all();
         $tapel=tapel::all();
         $kelas=kelas::all();
-        $jmldata = DB::table('tagihansiswa')->count();
+        $jmldata = DB::table('siswa')->count();
 
 
         return view('kepsek.tagihansiswa.index',compact('pages','jmldata','datas','tapel','kelas','request'));
+    }
+
+    public function kepsekdatasiswaindex(Request $request,siswa $siswa)
+    {
+        // dd($siswa);
+        if($this->checkauth('kepsek')==='404'){
+            return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
+        }
+        #WAJIB
+        $pages='siswa';
+        $jmldata='0';
+        $datas='0';
+
+
+        $datas=DB::table('pembayaran')->where('siswa_nis',$siswa->nis)
+        ->where('tapel_nama',$this->tapelaktif())
+        ->where('semester',$this->semesteraktif())
+        ->get();
+    
+        $tapel=tapel::all();
+        $kelas=kelas::all();
+        $jmldata = DB::table('siswa')->count();
+
+        $tapelaktif=$this->tapelaktif();
+        $semesteraktif=$this->semesteraktif();
+
+        return view('kepsek.tagihansiswa.datasiswa',compact('pages','jmldata','datas','tapel','kelas','request','siswa','tapelaktif','semesteraktif'));
+        // return view('admin.beranda');
     }
     public function sync()
     {
