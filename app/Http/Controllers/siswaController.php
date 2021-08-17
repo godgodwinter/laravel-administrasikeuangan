@@ -176,7 +176,7 @@ class siswaController extends Controller
             'tipe'=>'required',
             'tapel_nama'=>'required',
             'semester'=>'required',
-            'nominaltagihan'=>'required|numeric|min:100000',
+            'nominaltagihan'=>'required|numeric|min:1000',
 
         ],
         [
