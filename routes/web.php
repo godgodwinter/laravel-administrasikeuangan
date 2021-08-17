@@ -88,15 +88,15 @@ Route::get('admin/caribayar', 'App\Http\Controllers\bayarController@cari')->name
 
 
 //tagihanatur-MENU
-Route::resource('admin/tagihanatur','App\Http\Controllers\tagihanaturController')->except(['index']);
-Route::get('admin/tagihanatur', 'App\Http\Controllers\tagihanaturController@index')->name('tagihanatur');
-Route::get('admin/caritagihanatur', 'App\Http\Controllers\tagihanaturController@cari')->name('tagihanatur.cari');
+// Route::resource('admin/tagihanatur','App\Http\Controllers\tagihanaturController')->except(['index']);
+// Route::get('admin/tagihanatur', 'App\Http\Controllers\tagihanaturController@index')->name('tagihanatur');
+// Route::get('admin/caritagihanatur', 'App\Http\Controllers\tagihanaturController@cari')->name('tagihanatur.cari');
 
 
 //tagihansiswa-MENU
-Route::resource('admin/tagihansiswa','App\Http\Controllers\tagihansiswaController')->except(['index']);
-Route::get('admin/tagihansiswa', 'App\Http\Controllers\tagihansiswaController@index')->name('tagihansiswa');
-Route::get('admin/caritagihansiswa', 'App\Http\Controllers\tagihansiswaController@cari')->name('tagihansiswa.cari');
+// Route::resource('admin/tagihansiswa','App\Http\Controllers\tagihansiswaController')->except(['index']);
+// Route::get('admin/tagihansiswa', 'App\Http\Controllers\tagihansiswaController@index')->name('tagihansiswa');
+// Route::get('admin/caritagihansiswa', 'App\Http\Controllers\tagihansiswaController@cari')->name('tagihansiswa.cari');
 //kepsek-menu
 Route::get('kepsek/tagihansiswa', 'App\Http\Controllers\tagihansiswaController@kepsekindex')->name('kepsek.tagihansiswa');
 Route::get('kepsek/caritagihansiswa', 'App\Http\Controllers\tagihansiswaController@kepsekcari')->name('kepsek.tagihansiswa.cari');

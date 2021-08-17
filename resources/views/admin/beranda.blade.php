@@ -249,8 +249,8 @@ $ambilkepsek = DB::table('users')
               <div class="clearfix"></div>
               <div class="btn-group btn-group-lg mt-3" role="group" aria-label="Basic example">
                 
-                <a  href="{{ route('tagihanatur') }}" type="button" class="btn btn-danger"><i class="fas fa-fire"></i> Tagihan Atur </a>
-                <a  href="{{ route('tagihansiswa') }}" type="button" class="btn btn-danger"><i class="fas fa-graduation-cap"></i> Tagihan Siswa </a>
+                {{-- <a  href="{{ route('tagihanatur') }}" type="button" class="btn btn-danger"><i class="fas fa-fire"></i> Tagihan Atur </a>
+                <a  href="{{ route('tagihansiswa') }}" type="button" class="btn btn-danger"><i class="fas fa-graduation-cap"></i> Tagihan Siswa </a> --}}
               </div>
 
               <div class="profile-widget-items">
