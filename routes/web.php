@@ -56,6 +56,8 @@ Route::post('admin/datasiswa/{siswa}', 'App\Http\Controllers\siswaController@dat
 Route::get('admin/datasiswa/{pembayaran}/edit', 'App\Http\Controllers\siswaController@datasiswashow')->name('datasiswa.edit');
 Route::put('admin/datasiswa/{pembayaran}/edit', 'App\Http\Controllers\siswaController@datasiswaupdate')->name('datasiswa.update');
 Route::delete('admin/datasiswa/{pembayaran}/delete', 'App\Http\Controllers\siswaController@datasiswadestroy')->name('datasiswa.destroy');
+Route::post('admin/datasiswa/{pembayaran}/bayar', 'App\Http\Controllers\siswaController@datasiswabayar')->name('datasiswa.store');
+Route::delete('admin/datasiswa/bayar/{pembayarandetail}/hapus', 'App\Http\Controllers\siswaController@datasiswabayardestroy')->name('datasiswa.bayardestroy');
 
 //pegawai-MENU
 Route::resource('admin/pegawai','App\Http\Controllers\pegawaiController')->except(['index']);

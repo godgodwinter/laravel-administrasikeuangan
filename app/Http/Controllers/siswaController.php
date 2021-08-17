@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\kelas;
 use App\Models\pembayaran;
+use App\Models\pembayarandetail;
 use App\Models\siswa;
 use App\Models\tapel;
 use App\Models\User;
@@ -198,6 +199,39 @@ class siswaController extends Controller
                'tipe'     =>   $request->tipe,
                'semester'     =>   $request->semester,
                'tapel_nama'     =>   $request->tapel_nama,
+               'bln'     =>   $bln,
+               'created_at'=>date("Y-m-d H:i:s"),
+               'updated_at'=>date("Y-m-d H:i:s")
+        ));
+        
+        return redirect()->back()->with('status','Data berhasil di tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
+    
+    }
+
+    public function datasiswabayar(Request $request,pembayaran $pembayaran)
+    {
+        // dd($request->bln);
+        
+        $request->validate([
+            'nominal'=>'required|numeric',
+
+        ],
+        [
+            'nominal.required'=>'nominal harus diisi',
+
+        ]);
+
+        if($pembayaran->tipe==='perbulan'){
+            $bln=$request->bln;
+        }else{
+            $bln='';
+        }
+        //inser siswa
+       DB::table('pembayarandetail')->insert(
+        array(
+               'pembayaran_id'     =>   $pembayaran->id,
+               'nominal'     =>   $request->nominal,
+               'tglbayar'     =>   date("Y-m-d H:i:s"),
                'bln'     =>   $bln,
                'created_at'=>date("Y-m-d H:i:s"),
                'updated_at'=>date("Y-m-d H:i:s")
@@ -412,6 +446,27 @@ class siswaController extends Controller
             $siswaid=$d->id;
         }
         pembayaran::destroy($pembayaran->id);
+       
+        // DB::table('users')->where('nomerinduk', $siswa->nis)->delete();
+
+        return redirect(URL::to('/').'/admin/datasiswa/'.$siswaid)->with('status','Data berhasil hapus!')->with('tipe','danger')->with('icon','fas fa-trash');
+     
+     
+    }
+
+    public function datasiswabayardestroy(pembayarandetail $pembayarandetail)
+    {
+
+        $ambilnis = DB::table('pembayaran')->where('id',$pembayarandetail->pembayaran_id)->get();
+        foreach($ambilnis as $an){
+            $siswanis=$an->siswa_nis;
+        }
+
+        $datasiswa = DB::table('siswa')->where('nis',$siswanis)->get();
+        foreach($datasiswa as $d){
+            $siswaid=$d->id;
+        }
+        pembayarandetail::destroy($pembayarandetail->id);
        
         // DB::table('users')->where('nomerinduk', $siswa->nis)->delete();
 

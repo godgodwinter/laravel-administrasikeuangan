@@ -102,6 +102,13 @@ class oneseeder extends Seeder
 
 
          //pengeluaran
+         DB::table('kategori')->insert([
+            'nama' => 'Dana Bos',
+            'prefix' => 'pengeluaran',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
+         //pengeluaran
         DB::table('kategori')->insert([
             'nama' => 'Dana Bulanan',
             'prefix' => 'pengeluaran',

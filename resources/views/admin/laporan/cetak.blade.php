@@ -33,10 +33,10 @@ $countpengeluaran = DB::table('pengeluaran')
 $sumpengeluaran = DB::table('pengeluaran')
   ->sum('nominal');
 
-$sumtagihansiswa = DB::table('tagihansiswadetail')
+$sumtagihansiswa = DB::table('pembayarandetail')
   ->sum('nominal');
 
-$counttagihansiswa = DB::table('tagihansiswadetail')
+$counttagihansiswa = DB::table('pembayarandetail')
   ->count();
 
 $totalpemasukan=$sumpemasukan+$sumtagihansiswa+$sumpemasukanbos;

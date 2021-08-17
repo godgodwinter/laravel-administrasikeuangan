@@ -61,10 +61,10 @@ $countpengeluaran = DB::table('pengeluaran')
   ->count();
 
 
-$sumtagihansiswa = DB::table('tagihansiswadetail')
+$sumtagihansiswa = DB::table('pembayarandetail')
   ->sum('nominal');
 
-$counttagihansiswa = DB::table('tagihansiswadetail')
+$counttagihansiswa = DB::table('pembayarandetail')
   ->count();
 
 $sisasaldo=$sumpemasukan+$sumtagihansiswa-$sumpengeluaran;

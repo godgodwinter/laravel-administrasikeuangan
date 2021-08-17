@@ -54,13 +54,35 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
   <th>Kurang</th>
   {{-- <th>Tipe</th> --}}
   <th>Tahun dan Semester</th>
+  <th width="150px" class="text-center">%</th>
   <th width="150px" class="text-center">Aksi</th>
 @endsection
 
 @section('bodytable')
 @foreach ($datas as $data)
 @php
-    $warna='success';
+
+$sumdetailbayar = DB::table('pembayarandetail')
+      ->where('pembayaran_id', '=', $data->id)
+      ->sum('nominal');
+
+if($data->tipe==='perbulan'){
+
+  $kurang=($data->nominaltagihan*6)-$sumdetailbayar;
+  $persen=number_format((($sumdetailbayar/($data->nominaltagihan*6))*100),2);
+}else{
+
+$kurang=$data->nominaltagihan-$sumdetailbayar;
+$persen=number_format((($sumdetailbayar/$data->nominaltagihan)*100),2);
+}
+
+if($persen=='100'){
+
+  $warna='success';
+}else{
+
+  $warna='secondary';
+}
 @endphp
   <tr>
     <td class="text-center">
@@ -68,10 +90,10 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
     </td>
     <td>{{ $data->namatagihan }} </td>
     <td>@currency($data->nominaltagihan) @if($data->tipe==='perbulan')
-        / Perbulan
+        / Perbulan = @currency($data->nominaltagihan*6)  (6 Bulan)
     @endif </td>
-    <td>@currency(0) </td>
-    <td>@currency(0) </td>
+    <td>@currency($sumdetailbayar) </td>
+    <td>@currency($kurang) </td>
     {{-- <td>{{ $data->tipe }} </td> --}}
     @if($data->tipe==='sekali')
     <td> - </td>
@@ -80,6 +102,8 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
     <td>{{ $data->tapel_nama }} - {{ $data->semester }}</td>
         
     @endif
+
+    <td class="text-center">{{ $persen }} %</td>
     <td class="text-center">
         <x-button-edit link="/admin/datasiswa/{{$data->id}}/edit" />
         <x-button-delete link="/admin/datasiswa/{{$data->id}}/delete" /> </td>
@@ -97,16 +121,26 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
             $blndsni=date('Y-m', strtotime('+'.$no.' month', strtotime( $data->bln ))); 
 
        $datetime = DateTime::createFromFormat('Y-m-d', $blndsni.'-01');
+
+       $maxbln=$datetime->format('Y-m');
             // echo $blndsni;
+
+$sumdetailbayarbln = DB::table('pembayarandetail')
+      ->where('pembayaran_id', '=', $data->id)
+      ->where('bln', '=', $datetime->format('Y-m'))
+      ->sum('nominal');
+
+$kurangbln=$data->nominaltagihan-$sumdetailbayarbln;
         @endphp
         {{ $datetime->format('M Y') }}
     </td>
     <td>@currency($data->nominaltagihan)</td>
-    <td>@currency(0)</td>
-    <td>@currency(0)</td>
+    <td>@currency($sumdetailbayarbln)</td>
+    <td>@currency($kurangbln)</td>
     {{-- <td>{{ $data->tipe }}</td> --}}
     <td>{{ $data->tapel_nama }} - {{ $data->semester }}</td>
-    <td>-</td>
+    <td class="text-center">-</td>
+    <td class="text-center">-</td>
 </tr>
                     
   @endfor
@@ -287,4 +321,169 @@ Pembayaran Siswa , NIS : {{ $siswa->nis }} - Nama :  {{ $siswa->nama }}
       </div>
     </div>
   </div>
+@endsection
+
+@section('container-modals')
+
+@foreach ($datas as $data)
+@php
+  
+$sumdetailbayar = DB::table('pembayarandetail')
+      ->where('pembayaran_id', '=', $data->id)
+      ->sum('nominal');
+
+if($data->tipe==='perbulan'){
+
+  $kurang=($data->nominaltagihan*6)-$sumdetailbayar;
+  $persen=number_format((($sumdetailbayar/($data->nominaltagihan*6))*100),2);
+}else{
+
+$kurang=$data->nominaltagihan-$sumdetailbayar;
+$persen=number_format((($sumdetailbayar/$data->nominaltagihan)*100),2);
+}
+
+if($persen=='100'){
+
+  $warna='success';
+}else{
+
+  $warna='secondary';
+}
+@endphp
+<div class="modal fade" tabindex="-1" role="dialog" id="modalbayar{{ $data->id }}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Pembayaran "{{ $data->namatagihan }}"</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form action="/admin/datasiswa/{{ $data->id }}/bayar" method="post">
+          @csrf
+        <div class="form-group">
+
+          @if (old('nominal'))
+          @php                    
+            $nominal=old('nominal');
+          @endphp
+      @else
+          @php
+          $nominal=0;
+          @endphp                    
+      @endif
+
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Sisa Tagihan :
+          </div>
+        </div>  
+         <input type="text" class="form-control-plaintext" readonly="" value="@currency($kurang)" >
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Nominal Bayar:
+          </div>
+        </div>  
+         <input type="text" name="labelrupiah" min="0" id="labelrupiah{{ $data->id }}" class="form-control-plaintext" readonly="" value="@currency($nominal)" >
+      </div>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="far fa-money-bill-alt""></i>
+              </div>
+            </div>
+            <input type="number" class="form-control  @error('nominal') is-invalid @enderror" name="nominal" max="{{ $kurang }}" id="rupiah{{ $data->id }}" value="{{ $nominal }}"  required>
+
+              @error('nominal')<div class="invalid-feedback"> {{$message}}</div>
+              @enderror
+          </div>
+
+        </div>
+
+
+      <script type="text/javascript">
+        
+        var rupiah{{ $data->id }} = document.getElementById('rupiah{{ $data->id }}');
+        var labelrupiah{{ $data->id }} = document.getElementById('labelrupiah{{ $data->id }}');
+        rupiah{{ $data->id }}.addEventListener('keyup', function(e){
+          // tambahkan 'Rp.' pada saat form di ketik
+          // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+          // rupiah.value = formatRupiah(this.value, 'Rp. ');
+          labelrupiah{{ $data->id }}.value = formatRupiah(this.value, 'Rp. ');
+        });
+    
+        /* Fungsi formatRupiah */
+        function formatRupiah(angka, prefix){
+          var number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split   		= number_string.split(','),
+          sisa     		= split[0].length % 3,
+          rupiah     		= split[0].substr(0, sisa),
+          ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+    
+          // tambahkan titik jika yang di input sudah menjadi angka ribuan
+          if(ribuan){
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+          }
+    
+          rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+          return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+      </script>
+
+@if($data->tipe==='perbulan')
+  <label>Pilih Bulan<code>*)</code></label>
+  <input placeholder="Pilih Bulan" type="month" id="date" class="form-control form-control-sm mb-3" name="bln" min="{{ $data->bln }}" max={{ $maxbln }} value="{{ $data->bln }}" required>
+@endif 
+    
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Bayar</button>
+        </form>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-md">
+            <tr>
+              <th width="5%" class="text-center">Pembayaran ke-</th>
+              <th>Nominal</th>
+              <th width="5%" class="text-center">Aksi</th>
+            </tr>
+            @php
+            $detailbayar = DB::table('pembayarandetail')
+              ->where('pembayaran_id', '=', $data->id)
+              ->get();
+            @endphp
+            @foreach ($detailbayar as $db)
+         
+            <tr>
+              <td  class="text-center">{{ ($loop->index)+1 }}</td>
+              <td class="text-left">
+                @currency($db->nominal)</td>
+              <td class="text-center"> 
+                <form action="/admin/datasiswa/bayar/{{$db->id}}/hapus  " method="post" class="d-inline">
+                    @method('delete')
+                    @csrf
+                    <button class="btn btn-icon btn-danger"
+                        onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
+                            class="pcoded-micon"> <i class="fas fa-trash"></i></span></button>
+              </form>
+                </td>
+              </tr>
+
+            @endforeach
+
+
+          </table>
+      </div>
+
+  </div>
+</div>
+</div>
+</div>
+</div>
+@endforeach
+
 @endsection
