@@ -55,7 +55,7 @@ class siswaController extends Controller
 
         $datas=DB::table('pembayaran')->where('siswa_nis',$siswa->nis)
         ->where('tapel_nama',$this->tapelaktif())
-        ->where('semester',$this->semesteraktif())
+        // ->where('semester',$this->semesteraktif())
         ->get();
     
         $tapel=tapel::all();
