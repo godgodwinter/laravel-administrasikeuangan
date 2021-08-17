@@ -81,10 +81,10 @@ $countpemasukanbos = DB::table('pemasukan')->where('kategori_nama','Dana Bos')
   ->count();
 
 
-$sumpemasukan = DB::table('pemasukan')->whereNotIn('kategori_nama', ['Dana Bos'])
+$sumpengeluaran = DB::table('pengeluaran')->whereNotIn('kategori_nama', ['Dana Bos'])
   ->sum('nominal');
 
-$sumpengeluaran = DB::table('pemasukan')->whereNotIn('kategori_nama', ['Dana Bos'])
+$countpengeluaran = DB::table('pengeluaran')->whereNotIn('kategori_nama', ['Dana Bos'])
   ->count();
 
 $sumpengeluaranbos = DB::table('pengeluaran')->where('kategori_nama','Dana Bos')
