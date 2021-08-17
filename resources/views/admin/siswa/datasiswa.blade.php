@@ -195,7 +195,9 @@ $kurangbln=$data->nominaltagihan-$sumdetailbayarbln;
           
        </div> 
 
-      <div class="col-12 col-md-12 col-lg-7" id="add">
+  
+  
+       <div class="col-12 col-md-12 col-lg-7" id="add">
         <div class="card">
             <form action="/admin/datasiswa/{{ $siswa->id }}" method="post">
                 @csrf

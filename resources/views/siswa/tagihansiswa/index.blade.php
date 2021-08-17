@@ -48,71 +48,106 @@ $tipeuser=(Auth::user()->tipeuser);
 
 {{-- DATATABLE --}}
 @section('headtable')
-  <th width="5%" class="text-center">#</th>
-  <th width="5%" >Bayar</th>
-  <th>Nama</th>
-  <th>Tahun</th>
-  <th>Kelas</th>
-  <th>Nominal Tagihan</th>
-  <th>Terbayar</th>
-  <th>Kurang</th>
-  <th width="10%"  class="text-center">%</th>
+<th width="5%" class="text-center">#</th>
+<th>Nama Tagihan</th>
+<th>Nominal Tagihan</th>
+<th>Terbayar</th>
+<th>Kurang</th>
+{{-- <th>Tipe</th> --}}
+<th>Tahun dan Semester</th>
+<th width="150px" class="text-center">%</th>
 @endsection
 
 @section('bodytable')
-@foreach ($datas as $data)@php
-    $sumdetailbayar = DB::table('tagihansiswadetail')
-      ->where('tagihansiswa_id', '=', $data->id)
+@foreach ($datas as $data)
+@php
+
+$sumdetailbayar = DB::table('pembayarandetail')
+      ->where('pembayaran_id', '=', $data->id)
       ->sum('nominal');
-      $kurang=$data->nominaltagihan-$sumdetailbayar;
-      $persen=number_format(($sumdetailbayar/$data->nominaltagihan*100),2);
-        $warna='light';
-        $icon='fas fa-times';
-      if($persen>='100'){
-        $warna='success';
-        $icon='fas fa-check';
-      }
-    @endphp
-    <tr>
-      <td  class="text-center">{{ ($loop->index)+1 }}</td>
-      <td class="text-center">
+
+if($data->tipe==='perbulan'){
+
+  $kurang=($data->nominaltagihan*6)-$sumdetailbayar;
+  $persen=number_format((($sumdetailbayar/($data->nominaltagihan*6))*100),2);
+}else{
+
+$kurang=$data->nominaltagihan-$sumdetailbayar;
+$persen=number_format((($sumdetailbayar/$data->nominaltagihan)*100),2);
+}
+
+if($persen=='100'){
+
+  $warna='success';
+}else{
+
+  $warna='secondary';
+}
+@endphp
+  <tr>
+    <td class="text-center">
         <button class="btn btn-icon btn-{{ $warna }}" data-toggle="modal" data-target="#modalbayar{{ $data->id }}" ><i class="far fa-money-bill-alt"></i></button>
-      </td>
-      <td class="text-left">{{ $data->siswa_nis }} - {{ $data->siswa_nama }}</td>
-      <td class="text-left">{{ $data->tapel_nama }}</td>
-      <td class="text-left">{{ $data->kelas_nama }}</td>
-      <td class="text-left">@currency($data->nominaltagihan)</td>
-      <td class="text-left">@currency($sumdetailbayar)</td>
-      <td>@currency($kurang)</td>
-      <td class="text-center">
+    </td>
+    <td>{{ $data->namatagihan }} </td>
+    <td>@currency($data->nominaltagihan) @if($data->tipe==='perbulan')
+        / Perbulan = @currency($data->nominaltagihan*6)  (6 Bulan)
+    @endif </td>
+    <td>@currency($sumdetailbayar) </td>
+    <td>@currency($kurang) </td>
+    {{-- <td>{{ $data->tipe }} </td> --}}
+    @if($data->tipe==='sekali')
+    <td> - </td>
+    @else
 
-    <span class="btn btn-icon icon-left btn-{{ $warna }}"><i class="{{ $icon }}"></i> {{ $persen }} %</span>
-      
-      </td>
+    <td>{{ $data->tapel_nama }} - {{ $data->semester }}</td>
+        
+    @endif
 
-      {{-- <td class="text-center">
-          <a href="/admin/{{ $pages }}/{{$data->id}}"  class="btn btn-icon icon-left btn-info"><i class="fas fa-edit"></i> Detail</a>
-        <form action="/admin/{{ $pages }}/{{$data->id}}" method="post" class="d-inline">
-              @method('delete')
-              @csrf
-              <button class="btn btn-icon btn-danger"
-                  onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
-                      class="pcoded-micon"> <i class="fas fa-trash"></i></span></button>
-          </form>
-      </td> --}}
-    </tr>
+    <td class="text-center">{{ $persen }} %</td>
+  
+   
+  </tr>
+  @if($data->tipe==='perbulan')
+
+  @for ($i=0;$i<6;$i++)
+
+  <tr>
+    <td colspan="2">
+        @php
+
+        $no=$i;
+            $blndsni=date('Y-m', strtotime('+'.$no.' month', strtotime( $data->bln ))); 
+
+       $datetime = DateTime::createFromFormat('Y-m-d', $blndsni.'-01');
+
+       $maxbln=$datetime->format('Y-m');
+            // echo $blndsni;
+
+$sumdetailbayarbln = DB::table('pembayarandetail')
+      ->where('pembayaran_id', '=', $data->id)
+      ->where('bln', '=', $datetime->format('Y-m'))
+      ->sum('nominal');
+
+$kurangbln=$data->nominaltagihan-$sumdetailbayarbln;
+        @endphp
+        {{ $datetime->format('M Y') }}
+    </td>
+    <td>@currency($data->nominaltagihan)</td>
+    <td>@currency($sumdetailbayarbln)</td>
+    <td>@currency($kurangbln)</td>
+    {{-- <td>{{ $data->tipe }}</td> --}}
+    <td>{{ $data->tapel_nama }} - {{ $data->semester }}</td>
+    <td class="text-center">-</td>
+    <td class="text-center">-</td>
+</tr>
+                    
+  @endfor
+  @endif
 @endforeach
 @endsection
 
 @section('foottable') 
-  {{ $datas->links() }}
-  <nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-      <li class="breadcrumb-item"><i class="far fa-file"></i> Halaman ke-{{ $datas->currentPage() }}</li>
-      <li class="breadcrumb-item"><i class="fas fa-paste"></i> {{ $datas->total() }} Total Data</li>
-      <li class="breadcrumb-item active" aria-current="page"><i class="far fa-copy"></i> {{ $datas->perPage() }} Data Perhalaman</li>
-  </ol>
-  </nav>
+
 @endsection
 
 {{-- DATATABLE-END --}}
@@ -145,79 +180,43 @@ $ambilsiswausers = DB::table('users')
       Berikut adalah informasi tentang pembayaran tagihan anda. Hubungi admin jika data anda belum muncul. Kemungkinan Belum di Sinkronisasi!
     </p>
 
-    <div class="row mt-sm-4">
 
-      @if($caridatas>1)
+    <div class="col-12 col-md-12 col-lg-12">
 
-@foreach ($datas as $data)
-@php
-$warna='default';
-$sumdetailbayar = DB::table('tagihansiswadetail')
-  ->where('tagihansiswa_id', '=', $data->id)
-  ->sum('nominal');
-  $kurang=$data->nominaltagihan-$sumdetailbayar;
-  $persen=number_format(($sumdetailbayar/$data->nominaltagihan*100),2);
-  if($persen=='100'){
-    $warna='success';
-  }
-@endphp
-@endforeach
-      <div class="col-12 col-md-12 col-lg-5">
-        <div class="card profile-widget">
+      <div class="card profile-widget">
           <div class="profile-widget-header">
-            <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle profile-widget-picture">
-            <div class="profile-widget-items">
+              <img alt="image" src="{{ asset("assets/") }}/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
+              <div class="profile-widget-items">
               <div class="profile-widget-item">
-                <div class="profile-widget-item-label">Tagihan</div>
-                <div class="profile-widget-item-value">@currency($data->nominaltagihan)</div>
+                  <div class="profile-widget-item-label">Tabel </div>
+                  <div class="profile-widget-item-value">Pembayaran</div>
+                  {{-- <h4>Simple Table</h4> --}}
               </div>
-              <div class="profile-widget-item">
-                <div class="profile-widget-item-label">Dibayarkan</div>
-                <div class="profile-widget-item-value">@currency($sumdetailbayar)</div>
               </div>
-              <div class="profile-widget-item ">
-                <div class="profile-widget-item-label">Persentase</div>
-                <div class="profile-widget-item-value text-{{ $warna }}">{{ $persen }} %</div>
-              </div>
-            </div>
           </div>
-          <div class="profile-widget-description">
-            <div class="profile-widget-name">{{ Auth::user()->name }} <div class="text-muted d-inline font-weight-normal"><div class="slash"></div> NIS : {{ $data->siswa_nis }}</div></div>
-          
-            
-            <div class="table-responsive">
-              <table class="table table-striped" id="table-1">
-                <thead>
+      {{-- @yield('datatable') --}}
+      {{-- {{ dd($datas) }} --}}      
+      
+          <div class="card-body -mt-5">
+              <div class="table-responsive">
+                  <table class="table table-bordered table-md">
                   <tr>
-                    <th class="text-center">Pembayaran ke-</th>
-                    <th>Nominal</th>
-                    <th>Tanggal Bayar</th>
+                      @yield('headtable')
                   </tr>
-                </thead>
-                <tbody>
-                  @php
-                  $detailbayar = DB::table('tagihansiswadetail')
-                    ->where('tagihansiswa_id', '=', $data->id)
-                    ->get();
-                  @endphp
-                  @foreach ($detailbayar as $db)
-                  <tr>
-                    <td  class="text-center">{{ ($loop->index)+1 }}</td>
-                    <td class="text-left">
-                      @currency($db->nominal)</td>
-                   
-                 
-                    <td>{{ date('d M Y',strtotime($db->created_at)) }}</td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-            
-          </div>
-        </div>
+                      @yield('bodytable')
+                  
+                  </table>
+              </div>
+              <div class="card-footer text-right">
+                      @yield('foottable')
+              </div>
+          </div>   
+      
       </div>
-      @endif
+        
+     </div> 
+
+
 
 
       <div class="col-12 col-md-12 col-lg-7">
@@ -342,3 +341,106 @@ $sumdetailbayar = DB::table('tagihansiswadetail')
 @endsection
 
 
+
+@section('container-modals')
+
+@foreach ($datas as $data)
+@php
+  
+$sumdetailbayar = DB::table('pembayarandetail')
+      ->where('pembayaran_id', '=', $data->id)
+      ->sum('nominal');
+
+if($data->tipe==='perbulan'){
+
+  $kurang=($data->nominaltagihan*6)-$sumdetailbayar;
+  $persen=number_format((($sumdetailbayar/($data->nominaltagihan*6))*100),2);
+}else{
+
+$kurang=$data->nominaltagihan-$sumdetailbayar;
+$persen=number_format((($sumdetailbayar/$data->nominaltagihan)*100),2);
+}
+
+if($persen=='100'){
+
+  $warna='success';
+}else{
+
+  $warna='secondary';
+}
+@endphp
+<div class="modal fade" tabindex="-1" role="dialog" id="modalbayar{{ $data->id }}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Pembayaran "{{ $data->namatagihan }}"</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form action="/admin/datasiswa/{{ $data->id }}/bayar" method="post">
+          @csrf
+        <div class="form-group">
+
+          @if (old('nominal'))
+          @php                    
+            $nominal=old('nominal');
+          @endphp
+      @else
+          @php
+          $nominal=0;
+          @endphp                    
+      @endif
+
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Sisa Tagihan :
+          </div>
+        </div>  
+         <input type="text" class="form-control-plaintext" readonly="" value="@currency($kurang)" >
+      </div>
+
+        </div>
+
+    
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        {{-- <button type="submit" class="btn btn-primary">Bayar</button> --}}
+        </form>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-md">
+            <tr>
+              <th width="5%" class="text-center">Pembayaran ke-</th>
+              <th>Nominal</th>
+            </tr>
+            @php
+            $detailbayar = DB::table('pembayarandetail')
+              ->where('pembayaran_id', '=', $data->id)
+              ->get();
+            @endphp
+            @foreach ($detailbayar as $db)
+         
+            <tr>
+              <td  class="text-center">{{ ($loop->index)+1 }}</td>
+              <td class="text-left">
+                @currency($db->nominal)</td>
+           
+              </tr>
+
+            @endforeach
+
+
+          </table>
+      </div>
+
+  </div>
+</div>
+</div>
+</div>
+</div>
+@endforeach
+
+@endsection

@@ -80,14 +80,20 @@ class tagihansiswaController extends Controller
 
         $tapel=tapel::all();
         $kelas=kelas::all();
-        $datas=DB::table('tagihansiswa')->orderBy('siswa_nis','asc')->where('siswa_nis',$nis)
-        ->paginate($this->paginationjml());
+        // $datas=DB::table('tagihansiswa')->orderBy('siswa_nis','asc')->where('siswa_nis',$nis)
+        // ->paginate($this->paginationjml());
 
-        $caridatas=DB::table('tagihansiswa')->orderBy('siswa_nis','asc')->where('siswa_nis',$nis)
-        ->count();
+        $caridatas=2;
         // // $tagihansiswa=tagihansiswa::all();
         // $tagihansiswa = DB::table('tagihansiswa')->where('prefix','tagihansiswa')->get();
         $jmldata = DB::table('tagihansiswa')->count();
+
+
+
+        $datas=DB::table('pembayaran')->where('siswa_nis',$nis)
+        ->where('tapel_nama',$this->tapelaktif())
+        ->where('semester',$this->semesteraktif())
+        ->get();
 
         return view('siswa.tagihansiswa.index',compact('pages','jmldata','datas','caridatas','tapel','kelas','request'));
     }
