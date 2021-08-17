@@ -26,12 +26,25 @@ $sumpemasukanbos = DB::table('pemasukan')->where('kategori_nama','Dana Bos')
 $countpemasukanbos = DB::table('pemasukan')->where('kategori_nama','Dana Bos')
   ->count();
 
-$countpengeluaran = DB::table('pengeluaran')
+
+$sumpengeluaran = DB::table('pengeluaran')->whereNotIn('kategori_nama', ['Dana Bos'])
+  ->sum('nominal');
+
+$countpengeluaran = DB::table('pengeluaran')->whereNotIn('kategori_nama', ['Dana Bos'])
   ->count();
 
-
-$sumpengeluaran = DB::table('pengeluaran')
+  $sumpengeluaranbos = DB::table('pengeluaran')->where('kategori_nama','Dana Bos')
   ->sum('nominal');
+
+$countpengeluaranbos = DB::table('pengeluaran')->where('kategori_nama','Dana Bos')
+  ->count();
+
+// $countpengeluaran = DB::table('pengeluaran')
+//   ->count();
+
+
+// $sumpengeluaran = DB::table('pengeluaran')
+//   ->sum('nominal');
 
 $sumtagihansiswa = DB::table('pembayarandetail')
   ->sum('nominal');
@@ -40,7 +53,8 @@ $counttagihansiswa = DB::table('pembayarandetail')
   ->count();
 
 $totalpemasukan=$sumpemasukan+$sumtagihansiswa+$sumpemasukanbos;
-$sisasaldo=$totalpemasukan-$sumpengeluaran;
+$totalpengeluaran=$sumpengeluaran+$sumpengeluaranbos;
+$sisasaldo=$totalpemasukan-$totalpengeluaran;
 
 
 $ambilkepsek = DB::table('users')
@@ -81,7 +95,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 @section('bodytable')
 <tr>
     <td align="center">1</td>
-    <td align="left"><b>Dana BOS</b></td>
+    <td align="left"><b>Pemasukan dari Dana BOS</b></td>
     <td align="center"><b>{{ $countpemasukanbos }} Transaksi</b></td>
     <td align="center"><b>@currency($sumpemasukanbos)</b></td>
     
@@ -101,7 +115,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 
 <tr>
   <td align="center">2</td>
-  <td align="left"><b>Pemasukan</b></td>
+  <td align="left"><b>Pemasukan Selain Dana BOS</b></td>
   <td align="center"><b>{{ $countpemasukan }} Transaksi</b></td>
   <td align="center"><b>@currency($sumpemasukan)</b></td>
   
@@ -122,7 +136,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 
   <tr>
     <td align="center">3</td>
-    <td align="left"><b>Pembayaran</b></td>
+    <td align="left"><b>Pembayaran Siswa</b></td>
     <td align="center"><b>{{ $counttagihansiswa }} Transaksi</b></td>
     <td align="center"><b>@currency($sumtagihansiswa)</b></td>
     
@@ -148,25 +162,43 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 
 <tr>
   <td align="center">1</td>
-  <td align="left"><b>Pengeluaran</b></td>
-  <td align="center"><b>{{ $countpengeluaran }} Transaksi</b></td>
-  <td align="center"><b>@currency($sumpengeluaran)</b></td>
+  <td align="left"><b>Pengeluaran Dana BOS</b></td>
+  <td align="center"><b>{{ $countpengeluaranbos }} Transaksi</b></td>
+  <td align="center"><b>@currency($sumpengeluaranbos)</b></td>
   
 </tr>
-@foreach ($datapengeluaran as $dpeng)
+@foreach ($pengeluaranbos as $pb)
   
 <tr>
     <td align="center"></td>
-    <td align="left">{{ $dpeng->nama }}</td>
-    <td align="center">{{ $dpeng->kategori_nama }}</td>
-    <td align="center">@currency($dpeng->nominal)</td>
+    <td align="left">{{ $pb->nama }}</td>
+    <td align="center">{{ $pb->kategori_nama }}</td>
+    <td align="center">@currency($pb->nominal)</td>
     
   </tr>
 
   @endforeach
   <tr>
-    <td align="left" colspan="3"><b>Total Pengeluaran</b></td>
+    <td align="center">2</td>
+    <td align="left"><b>Pengeluaran Selain Dana BOS</b></td>
+    <td align="center"><b>{{ $countpengeluaran }} Transaksi</b></td>
     <td align="center"><b>@currency($sumpengeluaran)</b></td>
+    
+  </tr>
+  @foreach ($datapengeluaran as $dpeng)
+    
+  <tr>
+      <td align="center"></td>
+      <td align="left">{{ $dpeng->nama }}</td>
+      <td align="center">{{ $dpeng->kategori_nama }}</td>
+      <td align="center">@currency($dpeng->nominal)</td>
+      
+    </tr>
+  
+    @endforeach
+  <tr>
+    <td align="left" colspan="3"><b>Total Pengeluaran</b></td>
+    <td align="center"><b>@currency($totalpengeluaran)</b></td>
     
   </tr>
   
@@ -187,7 +219,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 
 <tr>
   <td align="center">1</td>
-  <td align="left"><b>Dana BOS</b></td>
+  <td align="left"><b>Pemasukan dari Dana BOS</b></td>
   <td align="center"><b>{{ $countpemasukanbos }} Transaksi</b></td>
   <td align="center"><b>@currency($sumpemasukanbos)</b></td>
   
@@ -195,7 +227,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 
 <tr>
   <td align="center">2</td>
-  <td align="left"><b>Pemasukan</b></td>
+  <td align="left"><b>Pemasukan Selain Dana BOS</b></td>
   <td align="center"><b>{{ $countpemasukan }} Transaksi</b></td>
   <td align="center"><b>@currency($sumpemasukan)</b></td>
   
@@ -211,7 +243,14 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 
 <tr>
   <td align="center">4</td>
-  <td align="left"><b>Pengeluaran</b></td>
+  <td align="left"><b>Pengeluaran dari Dana BOS</b></td>
+  <td align="center"><b>{{ $countpengeluaranbos }} Transaksi</b></td>
+  <td align="center"><b>@currency($sumpengeluaranbos)</b></td>
+  
+</tr>
+<tr>
+  <td align="center">4</td>
+  <td align="left"><b>Pengeluaran selain dari BOS</b></td>
   <td align="center"><b>{{ $countpengeluaran }} Transaksi</b></td>
   <td align="center"><b>@currency($sumpengeluaran)</b></td>
   
