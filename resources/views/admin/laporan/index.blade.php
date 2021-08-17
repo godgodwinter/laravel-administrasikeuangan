@@ -96,7 +96,7 @@ $sisasaldo=$sumpemasukan+$sumtagihansiswa-$sumpengeluaran;
   <td>{{ $counttagihansiswa }}</td>
   <td>@currency($sumtagihansiswa)</td>
   <td class="text-center">
-    <a href="{{ route('tagihansiswa') }}"  class="btn btn-icon icon-left btn-info btn-sm"><i class="fas fa-search"></i>Detail</a>
+    <a href="{{ route('siswa') }}"  class="btn btn-icon icon-left btn-info btn-sm"><i class="fas fa-search"></i>Detail</a>
   </td>
 </tr>
 <tr>
