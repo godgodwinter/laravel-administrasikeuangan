@@ -80,21 +80,30 @@ $sumpemasukanbos = DB::table('pemasukan')->where('kategori_nama','Dana Bos')
 $countpemasukanbos = DB::table('pemasukan')->where('kategori_nama','Dana Bos')
   ->count();
 
-$countpengeluaran = DB::table('pengeluaran')
+
+$sumpemasukan = DB::table('pemasukan')->whereNotIn('kategori_nama', ['Dana Bos'])
+  ->sum('nominal');
+
+$sumpengeluaran = DB::table('pemasukan')->whereNotIn('kategori_nama', ['Dana Bos'])
   ->count();
 
-
-$sumpengeluaran = DB::table('pengeluaran')
+$sumpengeluaranbos = DB::table('pengeluaran')->where('kategori_nama','Dana Bos')
   ->sum('nominal');
 
-$sumtagihansiswa = DB::table('tagihansiswadetail')
+$countpengeluaranbos = DB::table('pengeluaran')->where('kategori_nama','Dana Bos')
+  ->count();
+  
+
+$sumtagihansiswa = DB::table('pembayarandetail')
   ->sum('nominal');
 
-$counttagihansiswa = DB::table('tagihansiswadetail')
+$counttagihansiswa = DB::table('pembayarandetail')
   ->count();
 
 $totalpemasukan=$sumpemasukan+$sumtagihansiswa+$sumpemasukanbos;
-$sisasaldo=$totalpemasukan-$sumpengeluaran;
+$totalpengeluaran=$sumpengeluaran+$sumpengeluaranbos;
+
+$sisasaldo=$totalpemasukan-$totalpengeluaran;
 
 
 $ambilkepsek = DB::table('users')
@@ -139,11 +148,11 @@ $ambilkepsek = DB::table('users')
                 <div class="profile-widget-item-value">{{ $siswa }} Siswa</div>
               </div>
               <div class="profile-widget-item">
-                <div class="profile-widget-item-label">Lunas</div>
+                <div class="profile-widget-item-label">Pembayaran Lunas</div>
                 <div class="profile-widget-item-value">{{ $lunas }} </div>
               </div>
               <div class="profile-widget-item">
-                <div class="profile-widget-item-label">Belum Lunas</div>
+                <div class="profile-widget-item-label">Pembayaran Belum Lunas</div>
                 <div class="profile-widget-item-value"> {{ $belumlunas }} </div>
               </div>
             </div>
@@ -167,7 +176,7 @@ $ambilkepsek = DB::table('users')
               <div class="profile-widget-items">
              
                 <div class="profile-widget-item">
-                  <div class="profile-widget-item-label">Dana BOS</div>
+                  <div class="profile-widget-item-label">Pemasukan Dana BOS</div>
                   <div class="profile-widget-item-value">@currency($sumpemasukanbos)</div>
                 </div>
                 <div class="profile-widget-item">
@@ -182,8 +191,13 @@ $ambilkepsek = DB::table('users')
 
               <div class="profile-widget-items mt-4">
              
+               
                 <div class="profile-widget-item">
-                  <div class="profile-widget-item-label">Pengeluaran</div>
+                  <div class="profile-widget-item-label">Pengeluaran dari Dana BOS</div>
+                  <div class="profile-widget-item-value">@currency($sumpengeluaranbos)</div>
+                </div>
+                <div class="profile-widget-item">
+                  <div class="profile-widget-item-label">Pengeluaran Selain Dana BOS</div>
                   <div class="profile-widget-item-value">@currency($sumpengeluaran)</div>
                 </div>
                 <div class="profile-widget-item">

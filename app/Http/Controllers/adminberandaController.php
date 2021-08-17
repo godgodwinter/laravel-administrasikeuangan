@@ -20,16 +20,16 @@ class adminberandaController extends Controller
         $belumlunas=0;
 
 
-        $counttagihansiswa = DB::table('tagihansiswa')
+        $counttagihansiswa = DB::table('pembayaran')
         ->count();
         // 1.ambil tagihansiswa >nominal , ambil total tagihansiswadetail where id
-            $gettagihansiswa = DB::table('tagihansiswa')
+            $gettagihansiswa = DB::table('pembayaran')
             ->get();
             foreach ($gettagihansiswa as $ts){
                 $tagihansiswa_id=$ts->id;
 
-            $sumdetailbayar = DB::table('tagihansiswadetail')
-            ->where('tagihansiswa_id', '=', $ts->id)
+            $sumdetailbayar = DB::table('pembayarandetail')
+            ->where('pembayaran_id', '=', $ts->id)
             ->sum('nominal');
 
             // dd($sumdetailbayar);
