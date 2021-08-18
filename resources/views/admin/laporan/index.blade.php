@@ -96,7 +96,12 @@ $sisasaldo=$sumpemasukan+$sumtagihansiswa-$sumpengeluaran;
   <td>{{ $counttagihansiswa }}</td>
   <td>@currency($sumtagihansiswa)</td>
   <td class="text-center">
+
+    @if(Auth::user()->tipeuser==='admin')
     <a href="{{ route('siswa') }}"  class="btn btn-icon icon-left btn-info btn-sm"><i class="fas fa-search"></i>Detail</a>
+    @else
+    <a href="/kepsek/tagihansiswa"  class="btn btn-icon icon-left btn-info btn-sm"><i class="fas fa-search"></i>Detail</a>
+    @endif
   </td>
 </tr>
 <tr>

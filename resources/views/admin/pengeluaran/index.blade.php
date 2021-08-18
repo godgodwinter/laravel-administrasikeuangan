@@ -50,7 +50,9 @@
   <th>Nominal</th>
   <th>Tanggal</th>
   <th>Tanggung Jawab</th>
+  @if(Auth::user()->tipeuser==='admin')
   <th width="100px" class="text-center">Aksi</th>
+  @endif
 @endsection
 
 @section('bodytable')
@@ -66,10 +68,13 @@
     @endphp
     <td>{{ $datetime->format('d M Y') }}</td>
     <td>{{ $data->catatan }}</td>
+    
+    @if(Auth::user()->tipeuser==='admin')
     <td class="text-center">
         <x-button-edit link="/admin/{{ $pages }}/{{$data->id}}" />
         <x-button-delete link="/admin/{{ $pages }}/{{$data->id}}" />
     </td>
+    @endif
   </tr>
 @endforeach
 @endsection
@@ -164,6 +169,8 @@
       <div class="col-12 col-md-12 col-lg-12">
         <x-layout-table pages="{{ $pages }}" pagination="{{ $datas->perPage() }}"/>
        </div> 
+
+    @if(Auth::user()->tipeuser==='admin')
       <div class="col-12 col-md-12 col-lg-7">
         <div class="card">
             <form action="/admin/{{ $pages }}" method="post">
@@ -280,6 +287,7 @@
         
 
       </div>
+      @endif
     </div>
   </div>
 @endsection
