@@ -451,6 +451,7 @@ if($persen=='100'){
             <tr>
               <th width="5%" class="text-center">Pembayaran ke-</th>
               <th>Nominal</th>
+              <th class="text-center">Tgl Bayar</th>
               <th width="5%" class="text-center">Aksi</th>
             </tr>
             @php
@@ -464,6 +465,16 @@ if($persen=='100'){
               <td  class="text-center">{{ ($loop->index)+1 }}</td>
               <td class="text-left">
                 @currency($db->nominal)</td>
+                @php
+
+            $blndsni2=date('d M Y', strtotime('+7 month', strtotime( $db->tglbayar ))); 
+
+            // $datetime = DateTime::createFromFormat('Y-m-d', $blndsni);
+
+            // $maxbln=$datetime->format('Y-m');
+
+                @endphp
+              <td class="text-center">{{ $blndsni2 }}</td>
               <td class="text-center"> 
                 <form action="/admin/datasiswa/bayar/{{$db->id}}/hapus  " method="post" class="d-inline">
                     @method('delete')

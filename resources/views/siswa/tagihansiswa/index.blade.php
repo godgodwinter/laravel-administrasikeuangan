@@ -415,6 +415,7 @@ if($persen=='100'){
             <tr>
               <th width="5%" class="text-center">Pembayaran ke-</th>
               <th>Nominal</th>
+              <th class="text-center">Tanggal Bayar</th>
             </tr>
             @php
             $detailbayar = DB::table('pembayarandetail')
@@ -427,6 +428,17 @@ if($persen=='100'){
               <td  class="text-center">{{ ($loop->index)+1 }}</td>
               <td class="text-left">
                 @currency($db->nominal)</td>
+
+                @php
+
+            $blndsni2=date('d M Y', strtotime('+7 month', strtotime( $db->tglbayar ))); 
+
+            // $datetime = DateTime::createFromFormat('Y-m-d', $blndsni);
+
+            // $maxbln=$datetime->format('Y-m');
+
+                @endphp
+              <td class="text-center">{{ $blndsni2 }}</td>
            
               </tr>
 
