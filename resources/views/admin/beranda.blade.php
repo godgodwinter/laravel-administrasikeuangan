@@ -100,7 +100,8 @@ $sumtagihansiswa = DB::table('pembayarandetail')
 $counttagihansiswa = DB::table('pembayarandetail')
   ->count();
 
-$totalpemasukan=$sumpemasukan+$sumtagihansiswa+$sumpemasukanbos;
+// $totalpemasukan=$sumpemasukan+$sumtagihansiswa+$sumpemasukanbos;
+$totalpemasukan=$sumtagihansiswa+$sumpemasukanbos;
 $totalpengeluaran=$sumpengeluaran+$sumpengeluaranbos;
 
 $sisasaldo=$totalpemasukan-$totalpengeluaran;
@@ -181,10 +182,10 @@ $ambilkepsek = DB::table('users')
                   <div class="profile-widget-item-label">Pemasukan Dana BOS</div>
                   <div class="profile-widget-item-value">@currency($sumpemasukanbos)</div>
                 </div>
-                <div class="profile-widget-item">
+                {{-- <div class="profile-widget-item">
                   <div class="profile-widget-item-label">Pemasukan Selain Dana BOS</div>
                   <div class="profile-widget-item-value">@currency($sumpemasukan)</div>
-                </div>
+                </div> --}}
                 <div class="profile-widget-item">
                   <div class="profile-widget-item-label">Pembayaran Siswa</div>
                   <div class="profile-widget-item-value">@currency($sumtagihansiswa)</div>

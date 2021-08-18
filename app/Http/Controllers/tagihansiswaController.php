@@ -88,7 +88,7 @@ class tagihansiswaController extends Controller
         $caridatas=2;
         // // $tagihansiswa=tagihansiswa::all();
         // $tagihansiswa = DB::table('tagihansiswa')->where('prefix','tagihansiswa')->get();
-        $jmldata = DB::table('tagihansiswa')->count();
+        $jmldata = DB::table('siswa')->count();
 
 
 

@@ -52,7 +52,8 @@ $sumtagihansiswa = DB::table('pembayarandetail')
 $counttagihansiswa = DB::table('pembayarandetail')
   ->count();
 
-$totalpemasukan=$sumpemasukan+$sumtagihansiswa+$sumpemasukanbos;
+// $totalpemasukan=$sumpemasukan+$sumtagihansiswa+$sumpemasukanbos;
+$totalpemasukan=$sumtagihansiswa+$sumpemasukanbos;
 $totalpengeluaran=$sumpengeluaran+$sumpengeluaranbos;
 $sisasaldo=$totalpemasukan-$totalpengeluaran;
 
@@ -112,7 +113,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
     
     @endforeach
     
-
+{{-- 
 <tr>
   <td align="center">2</td>
   <td align="left"><b>Pemasukan Selain Dana BOS</b></td>
@@ -130,12 +131,12 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
     
   </tr>
   
-  @endforeach
+  @endforeach --}}
   
 
 
   <tr>
-    <td align="center">3</td>
+    <td align="center">2</td>
     <td align="left"><b>Pembayaran Siswa</b></td>
     <td align="center"><b>{{ $counttagihansiswa }} Transaksi</b></td>
     <td align="center"><b>@currency($sumtagihansiswa)</b></td>
@@ -225,24 +226,24 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
   
 </tr>
 
-<tr>
+{{-- <tr>
   <td align="center">2</td>
   <td align="left"><b>Pemasukan Selain Dana BOS</b></td>
   <td align="center"><b>{{ $countpemasukan }} Transaksi</b></td>
   <td align="center"><b>@currency($sumpemasukan)</b></td>
   
-</tr>
+</tr> --}}
 
 <tr>
-  <td align="center">3</td>
-  <td align="left"><b>Pembayaran</b></td>
+  <td align="center">2</td>
+  <td align="left"><b>Pembayaran Siswa</b></td>
   <td align="center"><b>{{ $counttagihansiswa }} Transaksi</b></td>
   <td align="center"><b>@currency($sumtagihansiswa)</b></td>
   
 </tr>
 
 <tr>
-  <td align="center">4</td>
+  <td align="center">3</td>
   <td align="left"><b>Pengeluaran dari Dana BOS</b></td>
   <td align="center"><b>{{ $countpengeluaranbos }} Transaksi</b></td>
   <td align="center"><b>@currency($sumpengeluaranbos)</b></td>

@@ -140,6 +140,7 @@
                       <option value="pegawai">Pegawai</option>
                       <option value="pemasukan">Pemasukan</option>
                       <option value="pengeluaran">Pengeluaran</option>
+                      <option value="semester">Semester</option>
                     </select>
                   </div>
 
