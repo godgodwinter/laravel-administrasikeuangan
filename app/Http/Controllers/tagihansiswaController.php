@@ -94,7 +94,7 @@ class tagihansiswaController extends Controller
 
         $datas=DB::table('pembayaran')->where('siswa_nis',$nis)
         ->where('tapel_nama',$this->tapelaktif())
-        ->where('semester',$this->semesteraktif())
+        // ->where('semester',$this->semesteraktif())
         ->get();
 
         return view('siswa.tagihansiswa.index',compact('pages','jmldata','datas','caridatas','tapel','kelas','request'));
