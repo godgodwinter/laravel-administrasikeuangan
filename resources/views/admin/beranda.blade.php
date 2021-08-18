@@ -170,6 +170,8 @@ $ambilkepsek = DB::table('users')
         </div>
 
 
+
+        @if(Auth::user()->tipeuser!=='siswa')
         <div class="card profile-widget mt-5">
             <div class="profile-widget-header">
               <img alt="image" src="../assets/img/products/product-4-50.png" class="rounded-circle profile-widget-picture">
@@ -215,6 +217,9 @@ $ambilkepsek = DB::table('users')
               </div> --}}
         
           </div>
+
+          
+        @endif
 
 
           @if($tipeuser==='admin')
