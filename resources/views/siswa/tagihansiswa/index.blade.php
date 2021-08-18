@@ -431,7 +431,7 @@ if($persen=='100'){
 
                 @php
 
-            $blndsni2=date('d M Y', strtotime('+7 month', strtotime( $db->tglbayar ))); 
+$blndsni2=date('d M Y', strtotime( $db->tglbayar )); 
 
             // $datetime = DateTime::createFromFormat('Y-m-d', $blndsni);
 
