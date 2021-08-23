@@ -22,6 +22,9 @@ class AddFieldOnSettingsandkategoriTable extends Migration
         Schema::table('kategori', function (Blueprint $table) {
             $table->string('defaultvalue')->nullable();
             $table->string('tipe')->nullable();
+            $table->string('semester')->nullable();
+            $table->string('tapel_nama')->nullable();
+            $table->string('bln')->nullable();
         });
 
         Schema::table('pemasukan', function (Blueprint $table) {

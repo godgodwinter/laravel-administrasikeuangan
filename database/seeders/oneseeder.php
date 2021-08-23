@@ -212,21 +212,14 @@ class oneseeder extends Seeder
          ]);
 
         //tagianseeder
-         DB::table('kategori')->insert([
-            'nama' => 'HER',
-            'prefix' => 'tagihan',
-            'defaultvalue' => '1000000',
-            'tipe' => 'sekali',      //sekali //perbulan //persemester
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-         ]);
-         
-
-         DB::table('kategori')->insert([
+        DB::table('kategori')->insert([
             'nama' => 'Uang Gedung',
             'prefix' => 'tagihan',
             'defaultvalue' => '1000000',
             'tipe' => 'sekali',      //sekali //perbulan //persemester
+            'semester' => 'Semester 1',      //sekali //perbulan //persemester
+            'tapel_nama' => '2021/2022', 
+            'bln' => '2021-08',      //sekali //perbulan //persemester
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
          ]);
@@ -236,6 +229,9 @@ class oneseeder extends Seeder
             'prefix' => 'tagihan',
             'defaultvalue' => '1000000',
             'tipe' => 'perbulan',      //sekali //perbulan //persemester
+            'semester' => 'Semester 1',      //sekali //perbulan //persemester
+            'bln' => '2021-08',      //sekali //perbulan //persemester
+            'tapel_nama' => '2021/2022', 
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
          ]);
@@ -245,6 +241,9 @@ class oneseeder extends Seeder
             'prefix' => 'tagihan',
             'defaultvalue' => '1000000',
             'tipe' => 'persemester',      //sekali //perbulan //persemester
+            'semester' => 'Semester 1',      //sekali //perbulan //persemester
+            'bln' => '2021-08',  
+            'tapel_nama' => '2021/2022', 
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
          ]);
@@ -254,6 +253,9 @@ class oneseeder extends Seeder
             'prefix' => 'tagihan',
             'defaultvalue' => '1000000',
             'tipe' => 'persemester',      //sekali //perbulan //persemester
+            'semester' => 'Semester 1',      //sekali //perbulan //persemester
+            'bln' => '2021-08',  
+            'tapel_nama' => '2021/2022',  
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
          ]);

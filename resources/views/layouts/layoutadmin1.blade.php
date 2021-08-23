@@ -140,6 +140,11 @@ if((Auth::user()->tipeuser)=='admin'){
                 class="active"
                 @endif >
                 <a href="{{ route('pengeluaran') }}" class="nav-link"><i class="fas fa-file-invoice-dollar"></i><span>Pengeluaran</span></a>
+              </li> 
+               <li @if ($pages==='pembayaran')
+                class="active"
+                @endif >
+                <a href="{{ route('pembayaran') }}" class="nav-link"><i class="far fa-money-bill-alt"></i><span>Pembayaran</span></a>
               </li>
             
 

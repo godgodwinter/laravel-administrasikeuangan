@@ -16,5 +16,8 @@ class kategori extends Model
         'prefix',
         'tipe',
         'defaultvalue',
+        'semester',
+        'tapel_nama',
+        'bln',
     ];
 }

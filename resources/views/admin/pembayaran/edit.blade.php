@@ -118,6 +118,31 @@
                     </select>
                   </div>
 
+                  <div class="form-group col-md-6 col-6">
+                    <label>Tahun Pelajaran <code>*)</code></label>
+                    <select class="form-control form-control-lg" required name="tapel_nama">  
+                         
+
+                          <option>{{$pembayaran->tapel_nama}}</option>  
+                          
+                      @foreach ($tapel as $t)
+                          <option>{{ $t->nama }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+
+                  <div class="form-group col-md-6 col-6">
+                    <label>Semester <code>*)</code></label>
+                    <select class="form-control form-control-lg" required name="semester">  
+                        
+                      <option>{{$pembayaran->semester}}</option> 
+
+                          <option>Semester 1</option>   
+                          <option>Semester 2</option>   
+                    </select>
+                  </div>
+
+
 
 
                   @if (old('defaultvalue'))
