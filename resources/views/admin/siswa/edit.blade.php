@@ -15,7 +15,7 @@
 
 @if (session('tipe'))
         @php
-        $tipe=session('tipe');    
+        $tipe=session('tipe');
         @endphp
 @else
         @php
@@ -25,7 +25,7 @@
 
 @if (session('icon'))
         @php
-        $icon=session('icon');    
+        $icon=session('icon');
         @endphp
 @else
         @php
@@ -40,12 +40,12 @@
 <x-alert tipe="{{ $tipe }}" message="{{ $message }}" icon="{{ $icon }}"/>
 
 @endif
-@endsection 
+@endsection
 
 
 @section('container')
 @foreach ($datausers as $du)
-  
+
 @endforeach
 
   <div class="section-body">
@@ -63,41 +63,41 @@
                   </div>
 
                   <div class="form-group col-md-2 col-2 mt-1 text-right">
-                
-                    <select class="form-control form-control-sm" name="tapel_nama"> 
+
+                    <select class="form-control form-control-sm" name="tapel_nama">
                       @if($request->tapel_nama)
                         <option>{{$request->tapel_nama}}</option>
                       @else
                        <option value="" disabled selected>Pilih Tahun Pelajaran</option>
                       @endif
-                   
+
                   @foreach ($tapel as $t)
                       <option>{{ $t->nama }}</option>
                   @endforeach
                 </select>
                   </div>
                   <div class="form-group  col-md-2 col-2 text-right">
-             
-                  <select class="form-control form-control-sm" name="kelas_nama"> 
+
+                  <select class="form-control form-control-sm" name="kelas_nama">
                     @if($request->kelas_nama)
                       <option>{{$request->kelas_nama}}</option>
                     @else
                      <option value="" disabled selected>Pilih Kelas</option>
                     @endif
-                 
+
                 @foreach ($kelas as $t)
                     <option>{{ $t->nama }}</option>
                 @endforeach
               </select>
                   </div>
               <div class="form-group   text-right">
-         
+
               <button type="submit" value="CARI" class="btn btn-icon btn-info btn-sm mt-1" ><span
               class="pcoded-micon"> <i class="fas fa-search"></i> Pecarian</span></button>
 
                   </div>
-               
-             
+
+
             </form>
             <div class="form-group col-md-4 col-4 mt-1 text-right">
               <a href="/admin/{{  $pages }}/#add" type="submit" value="CARI" class="btn btn-icon btn-primary btn-sm"><span
@@ -112,7 +112,7 @@
       </div>
     </div>
     </div>
-          
+
 
     <div class="row mt-sm-4">
       <div class="col-12 col-md-12 col-lg-12">
@@ -131,14 +131,14 @@
                     @error('nis')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>
-                 
+
                   <div class="form-group col-md-6 col-6">
                     <label for="nama">Nama <code>*)</code></label>
                     <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ $siswa->nama }}" required>
                     @error('nama')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>
-                 
+
                   <div class="form-group col-md-6 col-6">
                     <label for="tempatlahir">Tempat Lahir <code>*)</code></label>
                     <input type="text" name="tempatlahir" id="tempatlahir" class="form-control @error('tempatlahir') is-invalid @enderror" value="{{ $siswa->tempatlahir }}" required>
@@ -155,9 +155,9 @@
 
                   <div class="form-group col-md-6 col-6">
                     <label>Agama <code>*)</code></label>
-                    <select class="form-control form-control-lg" required name="agama"> 
+                    <select class="form-control form-control-lg" required name="agama">
                       @if ($siswa->agama)
-                      <option>{{ $siswa->agama }}</option>                        
+                      <option>{{ $siswa->agama }}</option>
                       @endif
                       <option>Islam</option>
                       <option>Kristen</option>
@@ -177,7 +177,7 @@
                   </div>
 
                   <div class="form-group col-md-6 col-6">
-                    <label for="hp">No. Hp <code>*) Contoh 085xxxxxxx</code></label>
+                    <label for="hp">No. Hp <code>*) Contoh 6285xxxxxxx</code></label>
                     <input type="text" name="hp" id="hp" class="form-control @error('hp') is-invalid @enderror" value="{{ $siswa->hp }}" >
                     @error('hp')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
@@ -186,9 +186,9 @@
 
                   <div class="form-group col-md-6 col-6">
                     <label>Tahun Pelajaran <code>*)</code></label>
-                    <select class="form-control form-control-lg" required name="tapel_nama">  
+                    <select class="form-control form-control-lg" required name="tapel_nama">
                           @if ($siswa->tapel_nama)
-                          <option>{{ $siswa->tapel_nama }}</option>                        
+                          <option>{{ $siswa->tapel_nama }}</option>
                           @endif
                       @foreach ($tapel as $t)
                           <option>{{ $t->nama }}</option>
@@ -200,14 +200,14 @@
                     <label>Kelas <code>*)</code></label>
                     <select class="form-control form-control-lg" required name="kelas_nama">
                           @if ($siswa->kelas_nama)
-                          <option>{{ $siswa->kelas_nama }}</option>                        
+                          <option>{{ $siswa->kelas_nama }}</option>
                           @endif
                       @foreach ($kelas as $k)
                           <option>{{ $k->nama }}</option>
                       @endforeach
                     </select>
                   </div>
-                  
+
                   <div class="form-group col-md-12 col-12">
                     <label for="email">Email <code>*)</code></label>
                     <input type="text" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ $du->email }}" onblur="duplicateEmail(this)"  required>
@@ -228,9 +228,9 @@
                     @error('password2')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>
-                 
+
                 </div>
-             
+
             </div>
             <div class="card-footer text-right">
               <button class="btn btn-primary">Simpan</button>
@@ -253,14 +253,14 @@
                     @error('nis')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>
-                 
+
                   <div class="form-group col-md-6 col-6">
                     <label for="nama">Nama <code>*)</code></label>
                     <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" value="{{old('nama')}}" required>
                     @error('nama')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>
-                 
+
                   <div class="form-group col-md-6 col-6">
                     <label for="tempatlahir">Tempat Lahir <code>*)</code></label>
                     <input type="text" name="tempatlahir" id="tempatlahir" class="form-control @error('tempatlahir') is-invalid @enderror" value="{{old('tempatlahir')}}" required>
@@ -277,9 +277,9 @@
 
                   <div class="form-group col-md-6 col-6">
                     <label>Agama <code>*)</code></label>
-                    <select class="form-control form-control-lg" required name="agama"> 
+                    <select class="form-control form-control-lg" required name="agama">
                       @if (old('agama'))
-                      <option>{{old('agama')}}</option>                        
+                      <option>{{old('agama')}}</option>
                       @endif
                       <option>Islam</option>
                       <option>Kristen</option>
@@ -301,9 +301,9 @@
 
                   <div class="form-group col-md-6 col-6">
                     <label>Tahun Pelajaran <code>*)</code></label>
-                    <select class="form-control form-control-lg" required name="tapel_nama">  
+                    <select class="form-control form-control-lg" required name="tapel_nama">
                           @if (old('tapel_nama'))
-                          <option>{{old('tapel_nama')}}</option>                        
+                          <option>{{old('tapel_nama')}}</option>
                           @endif
                       @foreach ($tapel as $t)
                           <option>{{ $t->nama }}</option>
@@ -315,7 +315,7 @@
                     <label>Kelas <code>*)</code></label>
                     <select class="form-control form-control-lg" required name="kelas_nama">
                           @if (old('kelas_nama'))
-                          <option>{{old('kelas_nama')}}</option>                        
+                          <option>{{old('kelas_nama')}}</option>
                           @endif
                       @foreach ($kelas as $k)
                           <option>{{ $k->nama }}</option>
@@ -343,16 +343,16 @@
                     @error('password2')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>
-                 
+
                 </div>
-             
+
             </div>
             <div class="card-footer text-right">
               <button class="btn btn-primary">Simpan</button>
             </div>
           </form>
         </div>{{old('password2')}}
-        
+
 
       </div>
     </div>
