@@ -449,10 +449,10 @@ if($persen=='100'){
         <div class="table-responsive">
           <table class="table table-bordered table-md">
             <tr>
-              <th width="5%" class="text-center">Pembayaran ke-</th>
+              <th width="5%" class="text-center">No</th>
               <th>Nominal</th>
               <th class="text-center">Tgl Bayar</th>
-              <th width="5%" class="text-center">Aksi</th>
+              <th width="25%" class="text-center">Aksi</th>
             </tr>
             @php
             $detailbayar = DB::table('pembayarandetail')
@@ -476,6 +476,7 @@ if($persen=='100'){
                 @endphp
               <td class="text-center">{{ $blndsni2 }}</td>
               <td class="text-center"> 
+                <a href="https://api.whatsapp.com/send/?phone={{ $siswa->hp }}&text={{ $siswa->nis }}-{{ $siswa->nama }}+telah+melakukan+pembayaran+pada+hari+ini+.+ Sejumlah+@currency($db->nominal)+!&app_absent=0" class="btn btn-icon btn-success" target="_blank"> <i class="fab fa-whatsapp"></i> </a>
                 <form action="/admin/datasiswa/bayar/{{$db->id}}/hapus  " method="post" class="d-inline">
                     @method('delete')
                     @csrf

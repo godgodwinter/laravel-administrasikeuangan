@@ -20,6 +20,7 @@ class siswa extends Model
         'alamat',
         'kelas_nama',
         'tapel_nama',
+        'hp',
         'jk',
     ];
 }

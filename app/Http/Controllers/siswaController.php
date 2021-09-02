@@ -150,6 +150,7 @@ class siswaController extends Controller
                'alamat'     =>   $request->alamat,
                'tapel_nama'     =>   $request->tapel_nama,
                'kelas_nama'     =>   $request->kelas_nama,
+               'hp'     =>   $request->hp,
                'created_at'=>date("Y-m-d H:i:s"),
                'updated_at'=>date("Y-m-d H:i:s")
         ));
@@ -354,6 +355,7 @@ class siswaController extends Controller
                'alamat'     =>   $request->alamat,
                'tapel_nama'     =>   $request->tapel_nama,
                'kelas_nama'     =>   $request->kelas_nama,
+               'hp'     =>   $request->hp,
                'updated_at'=>date("Y-m-d H:i:s")
             ]);
 

@@ -176,6 +176,13 @@
                     @enderror
                   </div>
 
+                  <div class="form-group col-md-6 col-6">
+                    <label for="hp">No. Hp <code>*) Contoh 085xxxxxxx</code></label>
+                    <input type="text" name="hp" id="hp" class="form-control @error('hp') is-invalid @enderror" value="{{ $siswa->hp }}" >
+                    @error('hp')<div class="invalid-feedback"> {{$message}}</div>
+                    @enderror
+                  </div>
+
 
                   <div class="form-group col-md-6 col-6">
                     <label>Tahun Pelajaran <code>*)</code></label>
