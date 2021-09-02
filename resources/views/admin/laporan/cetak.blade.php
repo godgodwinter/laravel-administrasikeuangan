@@ -88,7 +88,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 {{ $settings->sekolahnama }}
 @endsection
 
-@section('logo','logotutwuri.png')
+@section('logo','logoyayasan.png')
 
 {{-- DATATABLE --}}
 
@@ -306,21 +306,25 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
             .spa{
               letter-spacing:3px;
             }
+          hr.style2 {
+            border-top: 3px double #8c8b8b;
+          }
         </style>
         <table width="100%" border="0">
             <tr>
-            <td width="13%" align="right"><img src="assets/upload/@yield('logo')" width="110" height="110"></td>
-            <td width="80%" align="center"><p><b><font size="28px">@yield('namasekolah')</font><br>
+            <td width="13%" align="right"><img src="assets/upload/@yield('logo')" width="140" height="140"></td>
+            <td width="80%" align="center"><p><b><font size="28px">YAYASAN PENDIDIKAN ISLAM <br> " SMPI LUKMAN HAKIM "</font><br>
+              <font size="18px"> KENDAL PAYAK - KECAMATAN PAKISAJI - KABUPATEN MALANG</font>
             </b>
-            <br>@yield('alamat')
-            <BR>Telp: @yield('telp')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br>
+            <br> <font size="14px">Sekretariat : Jl. Kendalpayak No.98 Pakisaji - Malang. TELP. 085746911467</font>
                                         </p>
     
                                         </td>
             <td widht="7%"></td>
             </tr>
             <tr>
-                <td colspan="3"><hr style="border:2px;">
+                <td colspan="3"><hr  class="style2">
                 </td>
             </tr>
             </table>
