@@ -347,7 +347,6 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 
                 <br>
               
-    <br><br><br><br><br>
     <table width="100%" border="0">
         <tr>
             <th width="3%"></th>
