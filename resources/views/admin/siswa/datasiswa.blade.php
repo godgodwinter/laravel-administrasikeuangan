@@ -476,7 +476,7 @@ if($persen=='100'){
                 @endphp
               <td class="text-center">{{ $blndsni2 }}</td>
               <td class="text-center"> 
-                <a href="https://api.whatsapp.com/send/?phone={{ $siswa->hp }}&text={{ $siswa->nis }}-{{ $siswa->nama }}+telah+melakukan+pembayaran+{{ $data->namatagihan }}+pada+tanggal+{{ $blndsni2 }}+.+ Sejumlah+@currency($db->nominal)+!&app_absent=0" class="btn btn-icon btn-success" target="_blank"> <i class="fab fa-whatsapp"></i> </a>
+                <a href="https://api.whatsapp.com/send/?phone={{ $siswa->hp }}&text=Assalamualaikum+Wr.+Wb.+Yth+Bapak/Ibu+Walimurid+dari+{{ $siswa->nama }}+({{ $siswa->nis }})+telah+diterima+pembayaran+{{ $data->namatagihan }}+pada+tanggal+{{ $blndsni2 }}+.+ Sejumlah+@currency($db->nominal)+.+SMPI+LUKMAN+HAKIM+!&app_absent=0" class="btn btn-icon btn-success" target="_blank"> <i class="fab fa-whatsapp"></i> </a>
                 <form action="/admin/datasiswa/bayar/{{$db->id}}/hapus  " method="post" class="d-inline">
                     @method('delete')
                     @csrf
