@@ -40,7 +40,9 @@
                 {{-- <form method="POST" action="#" class="needs-validation" novalidate=""> --}}
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
+                    <input id="email" type="email" class="form-control @error('email')
+
+                    @enderror" name="email" tabindex="1" required autofocus>
 
                     @error('email')
                     <div class="invalid-feedback">
@@ -58,7 +60,9 @@
                         </a>
                       </div> --}}
                     </div>
-                    <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                    <input id="password" type="password" class="form-control @error('password')
+
+                    @enderror" name="password" tabindex="2" required>
 
                     @error('password')
                     <div class="invalid-feedback">

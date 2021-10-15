@@ -214,7 +214,7 @@
 
                   <script type="text/javascript">
 
-                    var rupiah = document.getElementById('nominal');
+                    var rupiah = document.getElementById('rupiah');
                     var labelrupiah = document.getElementById('labelrupiah');
                     rupiah.addEventListener('keyup', function(e){
                       // tambahkan 'Rp.' pada saat form di ketik
