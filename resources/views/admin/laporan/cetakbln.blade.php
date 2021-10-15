@@ -8,35 +8,66 @@
       ->get();
       foreach ($ambilsettings as $settings) {
       }
+
+      $inputan=$bln;
+        $bulanindo='Januari';
+        $str=explode("-",$inputan);
+                if($str[1]=='01'){
+                    $bulanindo='Januari';
+                }elseif($str[1]=='02'){
+                    $bulanindo='Februari';
+                }elseif($str[1]=='03'){
+                    $bulanindo='Maret';
+                }elseif($str[1]=='04'){
+                    $bulanindo='April';
+                }elseif($str[1]=='05'){
+                    $bulanindo='Mei';
+                }elseif($str[1]=='06'){
+                    $bulanindo='Juni';
+                }elseif($str[1]=='07'){
+                    $bulanindo='Juli';
+                }elseif($str[1]=='08'){
+                    $bulanindo='Agustus';
+                }elseif($str[1]=='09'){
+                    $bulanindo='September';
+                }elseif($str[1]=='10'){
+                    $bulanindo='Oktober';
+                }elseif($str[1]=='11'){
+                    $bulanindo='November';
+                }else{
+                    $bulanindo='Desember';
+                }
+
+
 @endphp
 
 
 
 {{-- DATALAPORAN --}}
 @php
-$sumpemasukan = DB::table('pemasukan')->whereNotIn('kategori_nama', ['Dana Bos'])
+$sumpemasukan = DB::table('pemasukan')->whereNotIn('kategori_nama', ['Dana Bos'])->whereMonth('tglbayar',$month)->whereYear('tglbayar',$year)
   ->sum('nominal');
 
-$countpemasukan = DB::table('pemasukan')->whereNotIn('kategori_nama', ['Dana Bos'])
+$countpemasukan = DB::table('pemasukan')->whereNotIn('kategori_nama', ['Dana Bos'])->whereMonth('tglbayar',$month)->whereYear('tglbayar',$year)
   ->count();
 
-$sumpemasukanbos = DB::table('pemasukan')->where('kategori_nama','Dana Bos')
+$sumpemasukanbos = DB::table('pemasukan')->where('kategori_nama','Dana Bos')->whereMonth('tglbayar',$month)->whereYear('tglbayar',$year)
   ->sum('nominal');
 
-$countpemasukanbos = DB::table('pemasukan')->where('kategori_nama','Dana Bos')
+$countpemasukanbos = DB::table('pemasukan')->where('kategori_nama','Dana Bos')->whereMonth('tglbayar',$month)->whereYear('tglbayar',$year)
   ->count();
 
 
-$sumpengeluaran = DB::table('pengeluaran')->whereNotIn('kategori_nama', ['Dana Bos'])
+$sumpengeluaran = DB::table('pengeluaran')->whereNotIn('kategori_nama', ['Dana Bos'])->whereMonth('tglbayar',$month)->whereYear('tglbayar',$year)
   ->sum('nominal');
 
-$countpengeluaran = DB::table('pengeluaran')->whereNotIn('kategori_nama', ['Dana Bos'])
+$countpengeluaran = DB::table('pengeluaran')->whereNotIn('kategori_nama', ['Dana Bos'])->whereMonth('tglbayar',$month)->whereYear('tglbayar',$year)
   ->count();
 
-  $sumpengeluaranbos = DB::table('pengeluaran')->where('kategori_nama','Dana Bos')
+  $sumpengeluaranbos = DB::table('pengeluaran')->where('kategori_nama','Dana Bos')->whereMonth('tglbayar',$month)->whereYear('tglbayar',$year)
   ->sum('nominal');
 
-$countpengeluaranbos = DB::table('pengeluaran')->where('kategori_nama','Dana Bos')
+$countpengeluaranbos = DB::table('pengeluaran')->where('kategori_nama','Dana Bos')->whereMonth('tglbayar',$month)->whereYear('tglbayar',$year)
   ->count();
 
 // $countpengeluaran = DB::table('pengeluaran')
@@ -46,10 +77,10 @@ $countpengeluaranbos = DB::table('pengeluaran')->where('kategori_nama','Dana Bos
 // $sumpengeluaran = DB::table('pengeluaran')
 //   ->sum('nominal');
 
-$sumtagihansiswa = DB::table('pembayarandetail')
+$sumtagihansiswa = DB::table('pembayarandetail')->whereMonth('tglbayar',$month)->whereYear('tglbayar',$year)
   ->sum('nominal');
 
-$counttagihansiswa = DB::table('pembayarandetail')
+$counttagihansiswa = DB::table('pembayarandetail')->whereMonth('tglbayar',$month)->whereYear('tglbayar',$year)
   ->count();
 
 // $totalpemasukan=$sumpemasukan+$sumtagihansiswa+$sumpemasukanbos;
@@ -330,17 +361,17 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
             </table>
             {{-- <center><h2>@yield('title')</h2></center> --}}
 
-                <h3>Laporan Pemasukan</h3>
+                <h3>Laporan Pemasukan {{$bulanindo}} {{$year}}</h3>
                 <table width="100%" border="1">
                 @yield('bodytable')
                 </table>
 
-                <h3>Laporan Pengeleuaran</h3>
+                <h3>Laporan Pengeleuaran {{$bulanindo}} {{$year}}</h3>
                 <table width="100%" border="1">
                 @yield('bodytable2')
                 </table>
 
-                <h3>Sisa saldo</h3>
+                <h3>Sisa saldo {{$bulanindo}} {{$year}}</h3>
                 <table width="100%" border="1">
                 @yield('bodytable3')
                 </table>

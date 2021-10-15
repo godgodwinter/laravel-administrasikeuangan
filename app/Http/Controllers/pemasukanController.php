@@ -114,7 +114,7 @@ if($yearmonth!==null){
             // dd($request);
         pemasukan::create($request->all());
         return redirect()->back()->with('status','Data berhasil di tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
-   
+
     }
 
     /**
@@ -193,6 +193,6 @@ if($yearmonth!==null){
     {
         pemasukan::destroy($pemasukan->id);
         return redirect(URL::to('/').'/admin/pemasukan')->with('status','Data berhasil dihapus!')->with('tipe','danger')->with('icon','fas fa-trash');
-    
+
     }
 }

@@ -13,7 +13,7 @@
 
 @if (session('tipe'))
         @php
-        $tipe=session('tipe');    
+        $tipe=session('tipe');
         @endphp
 @else
         @php
@@ -23,7 +23,7 @@
 
 @if (session('icon'))
         @php
-        $icon=session('icon');    
+        $icon=session('icon');
         @endphp
 @else
         @php
@@ -44,7 +44,7 @@
                       </div>
                     </div>
 @endif
-@endsection 
+@endsection
 
 @php
 $tipeuser=(Auth::user()->tipeuser);
@@ -71,6 +71,8 @@ $tipeuser=(Auth::user()->tipeuser);
 $sumpemasukan = DB::table('pemasukan')->whereNotIn('kategori_nama', ['Dana Bos'])
   ->sum('nominal');
 
+//   SELECT sum('nominal') from pemasukan where kateri_nama!=Dana Bos;
+
 $countpemasukan = DB::table('pemasukan')->whereNotIn('kategori_nama', ['Dana Bos'])
   ->count();
 
@@ -92,7 +94,7 @@ $sumpengeluaranbos = DB::table('pengeluaran')->where('kategori_nama','Dana Bos')
 
 $countpengeluaranbos = DB::table('pengeluaran')->where('kategori_nama','Dana Bos')
   ->count();
-  
+
 
 $sumtagihansiswa = DB::table('pembayarandetail')
   ->sum('nominal');
@@ -164,10 +166,10 @@ $ambilkepsek = DB::table('users')
             <a href="#" class="btn btn-info mr-1">
               <i class="fas fa-angle-double-right"></i>
             </a>
-            
+
           </div> --}}
-       
-      
+
+
         </div>
 
 
@@ -177,7 +179,7 @@ $ambilkepsek = DB::table('users')
             <div class="profile-widget-header">
               <img alt="image" src="../assets/img/products/product-4-50.png" class="rounded-circle profile-widget-picture">
               <div class="profile-widget-items">
-             
+
                 <div class="profile-widget-item">
                   <div class="profile-widget-item-label">Pemasukan Dana BOS</div>
                   <div class="profile-widget-item-value">@currency($sumpemasukanbos)</div>
@@ -193,8 +195,8 @@ $ambilkepsek = DB::table('users')
               </div>
 
               <div class="profile-widget-items mt-4">
-             
-               
+
+
                 <div class="profile-widget-item">
                   <div class="profile-widget-item-label">Pengeluaran dari Dana BOS</div>
                   <div class="profile-widget-item-value">@currency($sumpengeluaranbos)</div>
@@ -214,32 +216,32 @@ $ambilkepsek = DB::table('users')
                 <a href="#" class="btn btn-info mr-1">
                   <i class="fas fa-angle-double-right"></i>
                 </a>
-                
+
               </div> --}}
-        
+
           </div>
 
-          
+
         @endif
 
 
           @if($tipeuser==='admin')
-            
+
       <div class="card profile-widget mt-5">
         <div class="profile-widget-header">
           <img alt="image" src="../assets/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
           <div class="profile-widget-items">
             <h3 class="ml-5 mt-4">Menu Mastering</h3>
           </div>
-           
-            
+
+
             <div class="card-body">
               <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
                 <a  href="{{ route('kategori') }}" type="button" class="btn btn-warning"><i class="fab fa-korvue"></i> Kategori</a>
               </div>
               <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
                 <a  href="{{ route('tapel') }}" type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i> Tahun Pelajaran</a>
-                <a  href="{{ route('kelas') }}" type="button" class="btn btn-primary"><i class="fas fa-school"></i> Kelas</a>   
+                <a  href="{{ route('kelas') }}" type="button" class="btn btn-primary"><i class="fas fa-school"></i> Kelas</a>
               </div>
                 <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
                 <a  href="{{ route('siswa') }}" type="button" class="btn btn-info"><i class="fas fa-user-graduate"></i> Siswa</a>
@@ -254,7 +256,7 @@ $ambilkepsek = DB::table('users')
               </div>
               <div class="clearfix"></div>
               <div class="btn-group btn-group-lg mt-3" role="group" aria-label="Basic example">
-                
+
                 {{-- <a  href="{{ route('tagihanatur') }}" type="button" class="btn btn-danger"><i class="fas fa-fire"></i> Tagihan Atur </a>
                 <a  href="{{ route('tagihansiswa') }}" type="button" class="btn btn-danger"><i class="fas fa-graduation-cap"></i> Tagihan Siswa </a> --}}
               </div>
@@ -266,11 +268,11 @@ $ambilkepsek = DB::table('users')
                   <a  href="{{ route('laporan') }}" type="button" class="btn btn-success"> <i class="fab fa-resolving"></i> Laporan </a>
                 </div>
               </div>
-            
+
         </div>
 
-     
-    
+
+
       </div>
 
       @endif
@@ -336,9 +338,9 @@ $ambilkepsek = DB::table('users')
 
             <div class="form-group col-md-5 col-5  mt-3 ml-5">
               <label>Tahun Pelajaran Aktif<code>*)</code></label>
-              <select class="form-control form-control-lg @error('tapelaktif') is-invalid @enderror" required name="tapelaktif">  
+              <select class="form-control form-control-lg @error('tapelaktif') is-invalid @enderror" required name="tapelaktif">
                     @if ($tapelaktif)
-                    <option>{{$tapelaktif}}</option>                        
+                    <option>{{$tapelaktif}}</option>
                     @endif
                 @foreach ($tapel as $t)
                     <option>{{ $t->nama }}</option>
@@ -350,13 +352,13 @@ $ambilkepsek = DB::table('users')
 
             <div class="form-group col-md-5 col-5  mt-3 ml-5">
               <label>Semester Aktif<code>*)</code></label>
-              <select class="form-control form-control-lg @error('semesteraktif') is-invalid @enderror" required name="semesteraktif">  
+              <select class="form-control form-control-lg @error('semesteraktif') is-invalid @enderror" required name="semesteraktif">
                     @if ($semesteraktif)
-                    <option>{{$semesteraktif}}</option>                        
+                    <option>{{$semesteraktif}}</option>
                     @endif
-                    <option>Semester 1</option>     
-                    <option>Semester 2</option>     
-             
+                    <option>Semester 1</option>
+                    <option>Semester 2</option>
+
               </select>
               @error('semesteraktif')<div class="invalid-feedback"> {{$message}}</div>
               @enderror
@@ -380,29 +382,29 @@ $ambilkepsek = DB::table('users')
             <div class="card-footer text-right">
               <button class="btn btn-primary">Simpan</button>
             </div>
-          
-          
+
+
             </form>
           </div>
-             
-              
-              
+
+
+
           </div>
 
-       
-      
+
+
         </div>
         @endif
 
-        @if($tipeuser==='siswa') 
+        @if($tipeuser==='siswa')
         <div class="card profile-widget mt-5">
           <div class="profile-widget-header">
             <img alt="image" src="../assets/img/products/product-3-50.png" class="rounded-circle profile-widget-picture">
             <div class="profile-widget-items">
               <h3 class="ml-5 mt-4">Menu Siswa</h3>
             </div>
-             
-              
+
+
               <div class="card-body">
                 <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
                   <a  href="{{ url('user/profile') }}" type="button" class="btn btn-warning"><i class="fab fa-korvue"></i> Profile</a>
@@ -410,15 +412,15 @@ $ambilkepsek = DB::table('users')
                 <div class="btn-group mb-3 btn-group-lg" role="group" aria-label="Basic example">
                   <a  href="{{ route('siswa.tagihansiswa') }}" type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i> Tagihanku</a>
                 </div>
-              
+
           </div>
-  
-       
-      
+
+
+
         </div>
-          
+
         @endif
-        
+
 
 
 

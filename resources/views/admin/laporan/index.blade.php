@@ -18,7 +18,7 @@
 
 @if (session('tipe'))
         @php
-        $tipe=session('tipe');    
+        $tipe=session('tipe');
         @endphp
 @else
         @php
@@ -28,7 +28,7 @@
 
 @if (session('icon'))
         @php
-        $icon=session('icon');    
+        $icon=session('icon');
         @endphp
 @else
         @php
@@ -43,7 +43,7 @@
 <x-alert tipe="{{ $tipe }}" message="{{ $message }}" icon="{{ $icon }}"/>
 
 @endif
-@endsection 
+@endsection
 
 {{-- DATALAPORAN --}}
 @php
@@ -120,14 +120,14 @@ $sisasaldo=$sumpemasukan+$sumtagihansiswa-$sumpengeluaran;
   <td>@currency($sisasaldo)</td>
   <td class="text-center">
     <a href="{{ route('laporan.cetak') }}" class="btn btn-icon icon-left btn-info btn-sm"><i class="fas fa-print"></i>Cetak</a>
-  
+
   </td>
 </tr>
 
 
 @endsection
 
-@section('foottable') 
+@section('foottable')
   {{ $datas->links() }}
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -144,9 +144,94 @@ $sisasaldo=$sumpemasukan+$sumtagihansiswa-$sumpengeluaran;
     <div class="row mt-sm-4">
 
       <div class="col-12 col-md-12 col-lg-12">
-        <x-layout-table pages="{{ $pages }}" pagination="{{ $datas->perPage() }}"/>
-      </div>    
-     
+        <div class="card profile-widget">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group ml-3 mt-3">
+                @php
+                    if(old('bln')!=null){
+                        $bln=old('bln');
+                    }else{
+                        $bln=date('Y-m');
+                    }
+
+                @endphp
+                <input type="month" name="bln" id="bln"
+                    class="form-control " placeholder=""
+                    value="{{$bln}}" required>
+
+
+            </div>
+            </div>
+
+            <div class="col-3 mt-3">
+                <a href="{{url('/admin/laporan/cetak/'.$bln)}}" type="submit" value="cetak" id="blncetak"
+                 class="btn btn-primary btn-md"><span class="pcoded-micon"> <i class="fas fa-print"></i>   Cetak PDF </span></a>
+            </div>
+            </div>
+
+
+            <script>
+                $(document).ready(function(){
+
+                //  fetch_customer_data();
+                cari = $("input[name=cari]").val();
+                bln = $("input[name=bln]").val();
+
+                 function fetch_customer_data(query = '')
+                 {
+                  $.ajax({
+                   url:"{{ route('laporan.cetak') }}",
+                   method:'GET',
+                   data:{
+                            "_token": "{{ csrf_token() }}",
+                            bln: bln,
+                        },
+                   dataType:'json',
+                   success:function(data)
+                   {
+                       $('#tampilpemasukan').html(data.outputpemasukan);
+                       $('#tampilpengeluaran').html(data.outputpengeluaran);
+                       $('#tampildenda').html(data.outputdenda);
+                       $('#tampilsaldo').html(data.outputsaldo);
+                   }
+                  })
+                 }
+
+
+                 $(document).on('change', '#bln', function(){
+                bln = $("input[name=bln]").val();
+                $("#blncetak").prop('href','{{url('/admin/laporan/cetak/')}}/'+bln);
+                  var query = $(this).val();
+                  fetch_customer_data(query);
+                 });
+                //  $("button#clear").click(function(){
+
+                //     //  alert('');
+                //      $("input[name=cari]").val('');
+                //  });
+                });
+                </script>
+
+            <div class="card-body mt-0">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-md">
+                    <tr>
+                        @yield('headtable')
+                    </tr>
+                        @yield('bodytable')
+
+                    </table>
+                </div>
+                <div class="card-footer text-right">
+                        @yield('foottable')
+                </div>
+            </div>
+
+        </div>
+
+      </div>
+
     </div>
   </div>
 @endsection

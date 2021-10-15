@@ -25,6 +25,9 @@
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset("assets/") }}/css/style.css">
   <link rel="stylesheet" href="{{ asset("assets/") }}/css/components.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+  integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
+  crossorigin="anonymous"></script>
   @yield('csshere')
 </head>
 
@@ -40,31 +43,31 @@
           </ul>
         </form>
         <ul class="navbar-nav navbar-right">
-       
+
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
             <img alt="image" src="{{ asset("assets/") }}/img/avatar/avatar-1.png" class="rounded-circle mr-1">
             <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name }}</div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-title">Logged in</div>
-            
+
               <a href="{{ route('profile.show') }}"  class="dropdown-item has-icon">
                 <i class="fas fa-user"></i>
                 {{ __('Profile') }}
             </a>
-          
+
               <div class="dropdown-divider"></div>
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
 
-            
+
                     <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger"
                     onclick="event.preventDefault();
                                 this.closest('form').submit();">
-                        <i class="fas fa-sign-out-alt">    
+                        <i class="fas fa-sign-out-alt">
                         </i> Logout
                       </a>
             </form>
-             
+
             </div>
           </li>
         </ul>
@@ -79,7 +82,7 @@
           </div>
           <ul class="sidebar-menu">
               <li class="menu-header">Dashboard</li>
-            
+
               <li @if ($pages==='beranda')
               class="active"
               @endif >
@@ -125,9 +128,9 @@ if((Auth::user()->tipeuser)=='admin'){
                 @endif >
                 <a href="{{ route('pegawai') }}" class="nav-link"><i class="fas fa-building"></i><span>Pegawai</span></a>
               </li>
-         
+
               {{-- <li class="active"><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank Page</span></a></li> --}}
-             
+
               <li class="menu-header">Transaksi</li>
 
               <li @if ($pages==='pemasukan')
@@ -140,13 +143,13 @@ if((Auth::user()->tipeuser)=='admin'){
                 class="active"
                 @endif >
                 <a href="{{ route('pengeluaran') }}" class="nav-link"><i class="fas fa-file-invoice-dollar"></i><span>Pengeluaran</span></a>
-              </li> 
+              </li>
                <li @if ($pages==='pembayaran')
                 class="active"
                 @endif >
                 <a href="{{ route('pembayaran') }}" class="nav-link"><i class="far fa-money-bill-alt"></i><span>Pembayaran</span></a>
               </li>
-            
+
 
 
               <li class="menu-header">Reporting</li>
@@ -155,7 +158,7 @@ if((Auth::user()->tipeuser)=='admin'){
                 @endif >
                 <a href="{{ route('laporan') }}" class="nav-link"><i class="fab fa-resolving"></i><span>Laporan</span></a>
               </li>
-             
+
             </ul>
 
             @php

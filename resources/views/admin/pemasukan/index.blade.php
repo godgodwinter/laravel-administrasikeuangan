@@ -15,7 +15,7 @@
 
 @if (session('tipe'))
         @php
-        $tipe=session('tipe');    
+        $tipe=session('tipe');
         @endphp
 @else
         @php
@@ -25,7 +25,7 @@
 
 @if (session('icon'))
         @php
-        $icon=session('icon');    
+        $icon=session('icon');
         @endphp
 @else
         @php
@@ -40,7 +40,7 @@
 <x-alert tipe="{{ $tipe }}" message="{{ $message }}" icon="{{ $icon }}"/>
 
 @endif
-@endsection 
+@endsection
 
 {{-- DATATABLE --}}
 @section('headtable')
@@ -72,14 +72,14 @@
       <x-button-edit link="/admin/{{ $pages }}/{{$data->id}}" />
       <x-button-delete link="/admin/{{ $pages }}/{{$data->id}}" />
   </td>
-      
+
     @endif
-   
+
   </tr>
 @endforeach
 @endsection
 
-@section('foottable') 
+@section('foottable')
 @php
   $cari=$request->cari;
   $yearmonth=$request->yearmonth;
@@ -121,32 +121,32 @@
                   </div>
 
                   <div class="form-group col-md-2 col-2 mt-1 text-right">
-                
+
                   {{-- <input type="month" class="form-control form-control-sm" name="yearmonth"  value="{{$request->yearmonth}}"> --}}
                   <input placeholder="Pilih Bulan" type="text" onfocus="(this.type='month')" id="date" class="form-control form-control-sm" name="yearmonth"  value="{{$request->yearmonth}}">
                   </div>
                   <div class="form-group  col-md-2 col-2 text-right">
-             
-                  <select class="form-control form-control-sm" name="kategori_nama">   
+
+                  <select class="form-control form-control-sm" name="kategori_nama">
                     @if($request->kategori_nama)
                       <option>{{$request->kategori_nama}}</option>
                     @else
                      <option value="" disabled selected>Pilih Kategori</option>
                     @endif
-                 
+
                 @foreach ($kategori as $t)
                     <option>{{ $t->nama }}</option>
                 @endforeach
               </select>
                   </div>
               <div class="form-group   text-right">
-         
+
               <button type="submit" value="CARI" class="btn btn-icon btn-info btn-sm mt-1" ><span
               class="pcoded-micon"> <i class="fas fa-search"></i> Pecarian</span></button>
 
                   </div>
-               
-             
+
+
             </form>
             <div class="form-group col-md-4 col-4 mt-1 text-right">
               {{-- <button type="submit" value="CARI" class="btn btn-icon btn-success btn-sm"><span
@@ -165,16 +165,16 @@
         </div>
       </div>
     </div>
-              
-        
 
-          
+
+
+
     </div>
-    
+
     <div class="row mt-sm-4">
       <div class="col-12 col-md-12 col-lg-12">
         <x-layout-table pages="{{ $pages }}" pagination="{{ $datas->perPage() }}"/>
-       </div> 
+       </div>
 
     @if(Auth::user()->tipeuser==='admin')
       <div class="col-12 col-md-12 col-lg-12">
@@ -186,23 +186,23 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                 
+
                   <div class="form-group col-md-6 col-6">
                     <label for="nama">Nama <code>*)</code></label>
                     <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" value="{{old('nama')}}" required>
                     @error('nama')<div class="invalid-feedback"> {{$message}}</div>
                     @enderror
                   </div>
-                 
+
 
                   @if (old('nominal'))
-                      @php                    
+                      @php
                         $nominal=old('nominal');
                       @endphp
                   @else
                       @php
                       $nominal=0;
-                      @endphp                    
+                      @endphp
                   @endif
                   <div class="form-group col-md-6 col-6">
                     <label for="nominal">Nominal <code>*)</code> </label>
@@ -213,8 +213,8 @@
                   </div>
 
                   <script type="text/javascript">
-                    
-                    var rupiah = document.getElementById('rupiah');
+
+                    var rupiah = document.getElementById('nominal');
                     var labelrupiah = document.getElementById('labelrupiah');
                     rupiah.addEventListener('keyup', function(e){
                       // tambahkan 'Rp.' pada saat form di ketik
@@ -222,7 +222,7 @@
                       // rupiah.value = formatRupiah(this.value, 'Rp. ');
                       labelrupiah.value = formatRupiah(this.value, 'Rp. ');
                     });
-                
+
                     /* Fungsi formatRupiah */
                     function formatRupiah(angka, prefix){
                       var number_string = angka.replace(/[^,\d]/g, '').toString(),
@@ -230,13 +230,13 @@
                       sisa     		= split[0].length % 3,
                       rupiah     		= split[0].substr(0, sisa),
                       ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
-                
+
                       // tambahkan titik jika yang di input sudah menjadi angka ribuan
                       if(ribuan){
                         separator = sisa ? '.' : '';
                         rupiah += separator + ribuan.join('.');
                       }
-                
+
                       rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
                       return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
                     }
@@ -244,9 +244,9 @@
 
                   <div class="form-group col-md-6 col-6">
                     <label>Kategori <code>*)</code></label>
-                    <select class="form-control form-control-lg" required name="kategori_nama">  
+                    <select class="form-control form-control-lg" required name="kategori_nama">
                           @if (old('kategori_nama'))
-                          <option>{{old('kategori_nama')}}</option>                        
+                          <option>{{old('kategori_nama')}}</option>
                           @endif
                       @foreach ($kategori as $t)
                           <option>{{ $t->nama }}</option>
@@ -259,7 +259,7 @@
                       $tglbayar=old('tglbayar');
                     @endphp
                   @else
-                    @php                      
+                    @php
                       $tglbayar=date("Y-m-d")."T".date("H:i"); //2020-04-02T22:55
                     @endphp
                   @endif
@@ -277,9 +277,9 @@
                   </div>
 
 
-                 
+
                 </div>
-             
+
             </div>
             <div class="card-footer text-right">
               <button class="btn btn-primary">Simpan</button>

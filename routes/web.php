@@ -116,6 +116,7 @@ Route::delete('admin/tagihansiswa/bayartagihan/{tagihansiswadetail}/hapus', 'App
 // Route::resource('admin/laporan','App\Http\Controllers\laporanController')->except(['index']);
 Route::get('admin/laporan', 'App\Http\Controllers\laporanController@index')->name('laporan');
 Route::get('admin/laporan/cetak', 'App\Http\Controllers\laporanController@cetak')->name('laporan.cetak');
+Route::get('admin/laporan/cetak/{bln}', 'App\Http\Controllers\laporanController@cetakbln')->name('laporan.cetak.bln');
 
 
 Route::get('/404', 'App\Http\Controllers\adminberandaController@notfound');
