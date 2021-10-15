@@ -38,6 +38,35 @@
                     $bulanindo='Desember';
                 }
 
+                $inputan2=date('Y-m');
+        $bulanindo2='Januari';
+        $str=explode("-",$inputan2);
+                if($str[1]=='01'){
+                    $bulanindo2='Januari';
+                }elseif($str[1]=='02'){
+                    $bulanindo2='Februari';
+                }elseif($str[1]=='03'){
+                    $bulanindo2='Maret';
+                }elseif($str[1]=='04'){
+                    $bulanindo2='April';
+                }elseif($str[1]=='05'){
+                    $bulanindo2='Mei';
+                }elseif($str[1]=='06'){
+                    $bulanindo2='Juni';
+                }elseif($str[1]=='07'){
+                    $bulanindo2='Juli';
+                }elseif($str[1]=='08'){
+                    $bulanindo2='Agustus';
+                }elseif($str[1]=='09'){
+                    $bulanindo2='September';
+                }elseif($str[1]=='10'){
+                    $bulanindo2='Oktober';
+                }elseif($str[1]=='11'){
+                    $bulanindo2='November';
+                }else{
+                    $bulanindo2='Desember';
+                }
+
 
 @endphp
 
@@ -104,7 +133,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 @endsection
 
 @section('kepsek')
-{{ $kepsek->name }}
+Kepala Sekolah
 @endsection
 
 @section('alamat')
@@ -393,7 +422,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 
             <th width="34%"></th>
 
-            <th width="30%" align="center">.........,..........................,  @php
+            <th width="30%" align="center">{{date('d')}}, {{$bulanindo2}}  @php
                echo  date('Y');
             @endphp
 

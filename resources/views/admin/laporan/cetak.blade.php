@@ -102,7 +102,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 @endsection
 
 @section('kepsek')
-{{ $kepsek->name }}
+Kepala Sekolah
 @endsection
 
 @section('alamat')
@@ -391,7 +391,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 
             <th width="34%"></th>
 
-            <th width="30%" align="center">.........,..........................,  @php
+            <th width="30%" align="center">{{date('d')}} {{$bulanindo}}  @php
                echo  date('Y');
             @endphp
 
