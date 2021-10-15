@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class oneseeder extends Seeder
 {
@@ -16,12 +17,12 @@ class oneseeder extends Seeder
      */
     public function run()
     {
-        
+
         //ADMIN SEEDER
         DB::table('users')->insert([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'password' => '$2y$10$oOhE/tcF8MC9crGCw/Zv5.zFMGu0JLm591undChCaHJM6YrnGjgCu',
+            'password' => Hash::make('12345678'),
             'tipeuser' => 'admin',
             'nomerinduk' => '123',
             'created_at' => Carbon::now(),
@@ -33,7 +34,7 @@ class oneseeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Kepsek',
             'email' => 'kepsek@gmail.com',
-            'password' => '$2y$10$oOhE/tcF8MC9crGCw/Zv5.zFMGu0JLm591undChCaHJM6YrnGjgCu',
+            'password' => Hash::make('12345678'),
             'tipeuser' => 'kepsek',
             'nomerinduk' => '111',
             'created_at' => Carbon::now(),
@@ -45,7 +46,7 @@ class oneseeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Paijo',
             'email' => 'siswa@gmail.com',
-            'password' => '$2y$10$oOhE/tcF8MC9crGCw/Zv5.zFMGu0JLm591undChCaHJM6YrnGjgCu',
+            'password' => Hash::make('12345678'),
             'tipeuser' => 'siswa',
             'nomerinduk' => '1',
             'created_at' => Carbon::now(),
@@ -218,7 +219,7 @@ class oneseeder extends Seeder
             'defaultvalue' => '1000000',
             'tipe' => 'sekali',      //sekali //perbulan //persemester
             'semester' => 'Semester 1',      //sekali //perbulan //persemester
-            'tapel_nama' => '2021/2022', 
+            'tapel_nama' => '2021/2022',
             'bln' => '2021-08',      //sekali //perbulan //persemester
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
@@ -231,19 +232,19 @@ class oneseeder extends Seeder
             'tipe' => 'perbulan',      //sekali //perbulan //persemester
             'semester' => 'Semester 1',      //sekali //perbulan //persemester
             'bln' => '2021-08',      //sekali //perbulan //persemester
-            'tapel_nama' => '2021/2022', 
+            'tapel_nama' => '2021/2022',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
          ]);
-         
+
          DB::table('kategori')->insert([
             'nama' => 'UTS',
             'prefix' => 'tagihan',
             'defaultvalue' => '1000000',
             'tipe' => 'persemester',      //sekali //perbulan //persemester
             'semester' => 'Semester 1',      //sekali //perbulan //persemester
-            'bln' => '2021-08',  
-            'tapel_nama' => '2021/2022', 
+            'bln' => '2021-08',
+            'tapel_nama' => '2021/2022',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
          ]);
@@ -254,8 +255,8 @@ class oneseeder extends Seeder
             'defaultvalue' => '1000000',
             'tipe' => 'persemester',      //sekali //perbulan //persemester
             'semester' => 'Semester 1',      //sekali //perbulan //persemester
-            'bln' => '2021-08',  
-            'tapel_nama' => '2021/2022',  
+            'bln' => '2021-08',
+            'tapel_nama' => '2021/2022',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
          ]);
