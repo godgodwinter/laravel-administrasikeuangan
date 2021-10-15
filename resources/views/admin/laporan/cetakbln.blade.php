@@ -212,7 +212,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
   @endforeach
   <tr>
     <td align="center">2</td>
-    <td align="left"><b>Pengeluaran Selain Dana BOS</b></td>
+    <td align="left"><b>Pengeluaran Siswa</b></td>
     <td align="center"><b>{{ $countpengeluaran }} Transaksi</b></td>
     <td align="center"><b>@currency($sumpengeluaran)</b></td>
 
@@ -282,7 +282,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 </tr>
 <tr>
   <td align="center">4</td>
-  <td align="left"><b>Pengeluaran selain dari BOS</b></td>
+  <td align="left"><b>Pengeluaran Siswa</b></td>
   <td align="center"><b>{{ $countpengeluaran }} Transaksi</b></td>
   <td align="center"><b>@currency($sumpengeluaran)</b></td>
 
@@ -361,17 +361,17 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
             </table>
             {{-- <center><h2>@yield('title')</h2></center> --}}
 
-                <h3>Laporan Pemasukan {{$bulanindo}} {{$year}}</h3>
+                <h3>Laporan Pemasukan pada bulan {{$bulanindo}} {{$year}}</h3>
                 <table width="100%" border="1">
                 @yield('bodytable')
                 </table>
 
-                <h3>Laporan Pengeleuaran {{$bulanindo}} {{$year}}</h3>
+                <h3>Laporan Pengeluaran pada bulan {{$bulanindo}} {{$year}}</h3>
                 <table width="100%" border="1">
                 @yield('bodytable2')
                 </table>
 
-                <h3>Sisa saldo {{$bulanindo}} {{$year}}</h3>
+                <h3>Sisa saldo pada bulan {{$bulanindo}} {{$year}}</h3>
                 <table width="100%" border="1">
                 @yield('bodytable3')
                 </table>

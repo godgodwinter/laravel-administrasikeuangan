@@ -8,6 +8,35 @@
       ->get();
       foreach ($ambilsettings as $settings) {
       }
+      $year=date('Y');
+      $inputan=date('Y-m');
+        $bulanindo='Januari';
+        $str=explode("-",$inputan);
+                if($str[1]=='01'){
+                    $bulanindo='Januari';
+                }elseif($str[1]=='02'){
+                    $bulanindo='Februari';
+                }elseif($str[1]=='03'){
+                    $bulanindo='Maret';
+                }elseif($str[1]=='04'){
+                    $bulanindo='April';
+                }elseif($str[1]=='05'){
+                    $bulanindo='Mei';
+                }elseif($str[1]=='06'){
+                    $bulanindo='Juni';
+                }elseif($str[1]=='07'){
+                    $bulanindo='Juli';
+                }elseif($str[1]=='08'){
+                    $bulanindo='Agustus';
+                }elseif($str[1]=='09'){
+                    $bulanindo='September';
+                }elseif($str[1]=='10'){
+                    $bulanindo='Oktober';
+                }elseif($str[1]=='11'){
+                    $bulanindo='November';
+                }else{
+                    $bulanindo='Desember';
+                }
 @endphp
 
 
@@ -181,7 +210,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
   @endforeach
   <tr>
     <td align="center">2</td>
-    <td align="left"><b>Pengeluaran Selain Dana BOS</b></td>
+    <td align="left"><b>Pengeluaran Siswa</b></td>
     <td align="center"><b>{{ $countpengeluaran }} Transaksi</b></td>
     <td align="center"><b>@currency($sumpengeluaran)</b></td>
 
@@ -251,7 +280,7 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
 </tr>
 <tr>
   <td align="center">4</td>
-  <td align="left"><b>Pengeluaran selain dari BOS</b></td>
+  <td align="left"><b>Pengeluaran Siswa</b></td>
   <td align="center"><b>{{ $countpengeluaran }} Transaksi</b></td>
   <td align="center"><b>@currency($sumpengeluaran)</b></td>
 
@@ -335,12 +364,12 @@ Laporan Pemasukan dan Pengeluaran di {{ $settings->sekolahnama }}
                 @yield('bodytable')
                 </table>
 
-                <h3>Laporan Pengeleuaran</h3>
+                <h3>Laporan Pengeluaran</h3>
                 <table width="100%" border="1">
                 @yield('bodytable2')
                 </table>
 
-                <h3>Sisa saldo</h3>
+                <h3>Sisa saldo pada bulan {{$bulanindo}} {{$year}}</h3>
                 <table width="100%" border="1">
                 @yield('bodytable3')
                 </table>
